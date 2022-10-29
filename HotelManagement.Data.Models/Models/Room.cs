@@ -8,7 +8,9 @@ namespace HotelManagement.Data.Models.Models
     /// </summary>
     public class Room : BaseModel<int>
     {
-        public RoomEnums RoomType { get; set; }
+        public int RoomTypeId { get; set; }
+        [ForeignKey(nameof(RoomTypeId))]
+        public RoomType RoomType { get; set; }
         public int Capacity { get; set; }
         public bool IsOccupied { get; set; }
         public bool IsCleaned { get; set; }

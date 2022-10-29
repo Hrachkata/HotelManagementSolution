@@ -11,6 +11,6 @@ namespace HotelManagement.Data.Models.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int EmployeeCount { get; set; }
-
+        public ICollection<EmployeeDepartment> EmployeeDepartment { get; set; } = new HashSet<EmployeeDepartment>();
     }
 }

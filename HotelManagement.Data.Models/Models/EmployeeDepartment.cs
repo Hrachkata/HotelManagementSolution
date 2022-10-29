@@ -3,7 +3,7 @@ using HotelManagement.Data.Models.UserModels;
 
 namespace HotelManagement.Data.Models.Models
 {
-    internal class EmployeeDepartment
+    public class EmployeeDepartment
     {
         public Guid ApplicationUserId { get; set; }
         [ForeignKey(nameof(ApplicationUserId))]
