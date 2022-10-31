@@ -57,7 +57,7 @@ namespace HotelManagement.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            var model = await dataService.GetRegisterViewModelWithRolesAsync();
+            var model = await dataService.GetRegisterViewModelWithRolesAndDepartmentsAsync();
 
 
             return View(model);

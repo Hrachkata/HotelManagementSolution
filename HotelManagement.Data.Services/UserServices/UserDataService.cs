@@ -14,13 +14,16 @@ public class UserDataService : IUserDataService
     }
 
 
-    public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAsync()
+    public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync()
     {
         var roles = await context.Roles.ToListAsync();
 
+        var departments = await context.Departments.ToListAsync();
+
         var model = new RegisterViewModel()
         {
-            Roles = roles
+            Roles = roles,
+            Departments = departments
         };
 
         return model;

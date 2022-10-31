@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Models.UserModels;
 
 //using static Library.Constants.UserConstants;
@@ -34,8 +35,10 @@ namespace HotelManagement.Web.ViewModels.UserModels
 
         public DateTime CreatedOn { get; set; }
 
-        public ICollection<ApplicationUserRole> Roles{ get; set; }
+        public ICollection<ApplicationUserRole>? Roles{ get; set; }
 
         public Guid RoleId { get; set; }
+
+        public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
     }
 }

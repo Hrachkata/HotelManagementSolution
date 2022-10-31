@@ -4,5 +4,5 @@ namespace HotelManagement.Data.Services.UserServices.Contracts;
 
 public interface IUserDataService
 {
-    public Task<RegisterViewModel> GetRegisterViewModelWithRolesAsync();
+    public Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync();
 }
