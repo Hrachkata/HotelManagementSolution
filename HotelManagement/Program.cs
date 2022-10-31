@@ -1,5 +1,8 @@
+using HotelManagement.AutoMapper;
 using HotelManagement.Data;
 using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Data.Services.UserServices;
+using HotelManagement.Data.Services.UserServices.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +20,15 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
         options.SignIn.RequireConfirmedEmail = false;
     })
+    .AddRoles<ApplicationUserRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+//My services and configurations
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+builder.Services.AddScoped<IUserDataService, UserDataService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

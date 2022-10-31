@@ -15,5 +15,7 @@ namespace HotelManagement.Web.ViewModels.UserModels
         [DataType(DataType.Password)]
         //[StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
         public string Password { get; set; } = null!;
+
+        public bool RememberMe { get; set; }
     }
 }

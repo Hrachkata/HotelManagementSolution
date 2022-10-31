@@ -6,6 +6,7 @@ namespace HotelManagement.Data.Models.UserModels
 {
     public class ApplicationUser : IdentityUser<Guid>, IDeletableModel, IDateInfoModel
     {
+        public string RFID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal Salary { get; set; }

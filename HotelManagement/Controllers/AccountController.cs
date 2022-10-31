@@ -1,4 +1,6 @@
 ﻿using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Data.Services.UserServices;
+using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,17 +14,23 @@ namespace HotelManagement.Controllers
 
         public UserManager<ApplicationUser> userManager { get; set; }
 
+        public RoleManager<ApplicationUserRole> roleManager { get; set; }
 
+        public IUserDataService dataService { get; set; }
         public AccountController(
             SignInManager<ApplicationUser> _signInManager,
-            UserManager<ApplicationUser> _userManager
-        )
+            UserManager<ApplicationUser> _userManager,
+            RoleManager<ApplicationUserRole> _roleManager,
+            IUserDataService _dataService
+            )
         {
             signInManager = _signInManager;
 
             userManager = _userManager;
 
+            roleManager = _roleManager;
 
+            dataService = _dataService;
         }
 
 
@@ -32,7 +40,7 @@ namespace HotelManagement.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("All", "Books");
+                return RedirectToAction("Index", "Home");
             }
             var model = new LoginViewModel();
 
@@ -43,13 +51,13 @@ namespace HotelManagement.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("All", "Books");
+                return RedirectToAction("Index", "Home");
             }
-            var model = new RegisterViewModel();
+            var model = await dataService.GetRegisterViewModelWithRolesAsync();
 
 
             return View(model);
@@ -82,7 +90,7 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("All", "Books");
+            return RedirectToAction("Index", "Home");
 
         }
 
@@ -122,7 +130,7 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -131,6 +139,18 @@ namespace HotelManagement.Controllers
         {
             await signInManager.SignOutAsync();
 
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public async Task<IActionResult> CreateRoles()
+        {
+            await roleManager.CreateAsync(new ApplicationUserRole("Manager"));
+            await roleManager.CreateAsync(new ApplicationUserRole("Administrator"));
+            await roleManager.CreateAsync(new ApplicationUserRole("Front Desk"));
+            await roleManager.CreateAsync(new ApplicationUserRole("Director"));
+            await roleManager.CreateAsync(new ApplicationUserRole("H&R"));
+            
             return RedirectToAction("Index", "Home");
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using HotelManagement.Data.Models.UserModels;
 
 //using static Library.Constants.UserConstants;
 
@@ -28,5 +29,13 @@ namespace HotelManagement.Web.ViewModels.UserModels
         //[StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
+
+        public string RFID { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public ICollection<ApplicationUserRole> Roles{ get; set; }
+
+        public Guid RoleId { get; set; }
     }
 }
