@@ -1,6 +1,7 @@
 using HotelManagement.AutoMapper;
 using HotelManagement.Data;
 using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Data.Seeding;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +35,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";
 });
+
+//SampleData.Initialize(builder.Services);
 
 var app = builder.Build();
 

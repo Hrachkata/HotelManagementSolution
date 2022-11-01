@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HotelManagement.Data.Seeding\HotelManagement.Data.Seeding.csproj" />
     <ProjectReference Include="..\HotelManagement.Data.Services\HotelManagement.Data.Services.csproj" />
     <ProjectReference Include="..\HotelManagement.Data\HotelManagement.Data.csproj" />
     <ProjectReference Include="..\HotelManagement.Web.ViewModels\HotelManagement.Web.ViewModels.csproj" />

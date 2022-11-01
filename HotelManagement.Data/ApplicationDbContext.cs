@@ -38,7 +38,35 @@ namespace HotelManagement.Data
                 .WithMany(d => d.EmployeeDepartment)
                 .HasForeignKey(ed => ed.ApplicationUserId);
 
+            builder.Entity<Department>().HasData(new List<Department>() { new Department
+            {
+                Name = "F&B",
+                Description = "Some Department",
+                EmployeeCount = 23,
+                CreatedOn = DateTime.Now
+            }, new Department{
+                Name = "Human Resources",
+                Description = "Some Department",
+                EmployeeCount = 1,
+                CreatedOn = DateTime.Now
+            }, new Department{
+                Name = "IT department",
+                Description = "Some Department",
+                EmployeeCount = 4,
+                CreatedOn = DateTime.Now
+            }, new Department{
+                Name = "Reservations",
+                Description = "Some Department",
+                EmployeeCount = 10,
+                CreatedOn = DateTime.Now
+            }, new Department{
+                Name = "Director",
+                Description = "Some Department",
+                EmployeeCount = 1,
+                CreatedOn = DateTime.Now
+            } });
     
+
            
             base.OnModelCreating(builder);
 
