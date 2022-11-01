@@ -8,7 +8,7 @@ namespace HotelManagement.Web.ViewModels.UserModels
     public class LoginViewModel
     {
         [Required]
-        //[StringLength(MaxUserNameLength, MinimumLength = MinUserNameLength)]
+        [StringLength(35, MinimumLength = 2)]
         public string UserName { get; set; } = null!;
 
         [Required]

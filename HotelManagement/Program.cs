@@ -31,6 +31,9 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<IUserDataService, UserDataService>();
 
+builder.Services.AddSingleton<SeedUserData, SeedUserData>();
+
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";

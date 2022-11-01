@@ -31,6 +31,9 @@ namespace HotelManagement.Web.ViewModels.UserModels
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
 
+        public bool RememberMe { get; set; } = false;
+
+        public string PhoneNumber { get; set; }
         public string RFID { get; set; }
 
         public DateTime CreatedOn { get; set; }

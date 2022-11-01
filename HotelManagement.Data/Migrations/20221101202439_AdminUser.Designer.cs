@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagement.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221031203222_userRolesAdded")]
-    partial class userRolesAdded
+    [Migration("20221101202439_AdminUser")]
+    partial class AdminUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,53 @@ namespace HotelManagement.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedOn = new DateTime(2022, 11, 1, 22, 24, 38, 366, DateTimeKind.Local).AddTicks(3871),
+                            Description = "Some Department",
+                            EmployeeCount = 23,
+                            IsActive = true,
+                            Name = "F&B"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedOn = new DateTime(2022, 11, 1, 22, 24, 38, 366, DateTimeKind.Local).AddTicks(3932),
+                            Description = "Some Department",
+                            EmployeeCount = 1,
+                            IsActive = true,
+                            Name = "Human Resources"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedOn = new DateTime(2022, 11, 1, 22, 24, 38, 366, DateTimeKind.Local).AddTicks(3939),
+                            Description = "Some Department",
+                            EmployeeCount = 4,
+                            IsActive = true,
+                            Name = "IT department"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedOn = new DateTime(2022, 11, 1, 22, 24, 38, 366, DateTimeKind.Local).AddTicks(3944),
+                            Description = "Some Department",
+                            EmployeeCount = 10,
+                            IsActive = true,
+                            Name = "Reservations"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedOn = new DateTime(2022, 11, 1, 22, 24, 38, 366, DateTimeKind.Local).AddTicks(3949),
+                            Description = "Some Department",
+                            EmployeeCount = 1,
+                            IsActive = true,
+                            Name = "Director"
+                        });
                 });
 
             modelBuilder.Entity("HotelManagement.Data.Models.Models.EmployeeDepartment", b =>
@@ -332,6 +379,28 @@ namespace HotelManagement.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6b71f31f-d145-4b65-894a-408c9c807271"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7e6fc61c-0f08-4360-940b-18c084e8e0bd",
+                            CreatedOn = new DateTime(2022, 11, 1, 22, 24, 38, 356, DateTimeKind.Local).AddTicks(973),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            IsActive = true,
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEKTEzQRug2mMdD08iDgIcv2zlkOLcq3IHLCg6NniPv0PJ9fQ9FiSK6FrkxGmE1GLtQ==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            RFID = "234",
+                            Salary = 1m,
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("HotelManagement.Data.Models.UserModels.ApplicationUserRole", b =>
@@ -360,6 +429,36 @@ namespace HotelManagement.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("454f70be-fd78-404e-a29e-299d7f3c898f"),
+                            ConcurrencyStamp = "3d9e129b-d624-4ede-af8f-df953b7d1d13",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("9fc721d8-ccc2-449c-b1be-f7a5057bfe51"),
+                            ConcurrencyStamp = "55cc9c8f-4692-4ca4-ac37-2d6fd308abfa",
+                            Name = "HumanResources",
+                            NormalizedName = "HUMANRESOURCES"
+                        },
+                        new
+                        {
+                            Id = new Guid("171c3186-f57e-4327-ad5d-52464b754891"),
+                            ConcurrencyStamp = "3aee67b8-1b57-4caf-a16e-4c56e112746d",
+                            Name = "Director",
+                            NormalizedName = "DIRECTOR"
+                        },
+                        new
+                        {
+                            Id = new Guid("93349ce1-1ba0-40d7-8313-4c766388168d"),
+                            ConcurrencyStamp = "8f74fcc3-0a39-47a3-8f05-838c13fe47fa",
+                            Name = "FrontDesk",
+                            NormalizedName = "FRONTDESK"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -446,6 +545,13 @@ namespace HotelManagement.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("6b71f31f-d145-4b65-894a-408c9c807271"),
+                            RoleId = new Guid("454f70be-fd78-404e-a29e-299d7f3c898f")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

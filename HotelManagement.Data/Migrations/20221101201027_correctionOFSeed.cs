@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelManagement.Data.Migrations
 {
-    public partial class userRolesAdded : Migration
+    public partial class correctionOFSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -304,6 +304,39 @@ namespace HotelManagement.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { new Guid("16481f01-7bd9-48d2-9b12-7f394d8ed00d"), "d8b8376d-4137-4480-812f-6cd71612c9d0", "HumanResources", "HUMANRESOURCES" },
+                    { new Guid("3147518d-6626-4d32-92df-f91c9f3ff7d1"), "fa1ee725-5e58-4576-a321-26c69d43b735", "Director", "DIRECTOR" },
+                    { new Guid("8e0f37ef-2b53-4348-b8ad-82b5449094c9"), "2ba1ebc4-3f07-4ebc-bac8-2b6315371996", "Admin", "ADMIN" },
+                    { new Guid("a8da73b8-a1db-4f20-b99a-b1c467783094"), "315f85e1-8e10-45f2-a54e-61fbd12b94dd", "FrontDesk", "FRONTDESK" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "EditedOn", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RFID", "Salary", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("47012d7f-fc35-4a08-bb38-dd9739557c5a"), 0, "fff81d6d-9bed-41b6-8631-dec2deb58ce0", new DateTime(2022, 11, 1, 22, 10, 27, 262, DateTimeKind.Local).AddTicks(2242), null, null, "admin@gmail.com", true, "Admin", true, "Admin", false, null, null, null, null, "1234567890", false, "234", 1m, null, false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "Departments",
+                columns: new[] { "Id", "CreatedOn", "DeletedOn", "Description", "EditedOn", "EmployeeCount", "IsActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5738), null, "Some Department", null, 23, true, "F&B" },
+                    { 2, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5787), null, "Some Department", null, 1, true, "Human Resources" },
+                    { 3, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5792), null, "Some Department", null, 4, true, "IT department" },
+                    { 4, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5797), null, "Some Department", null, 10, true, "Reservations" },
+                    { 5, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5802), null, "Some Department", null, 1, true, "Director" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { new Guid("8e0f37ef-2b53-4348-b8ad-82b5449094c9"), new Guid("47012d7f-fc35-4a08-bb38-dd9739557c5a") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

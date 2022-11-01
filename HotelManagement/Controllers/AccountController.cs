@@ -73,6 +73,7 @@ namespace HotelManagement.Controllers
             {
                 return View(model);
             }
+            
 
             var user = await userManager.FindByNameAsync(model.UserName);
 
@@ -142,17 +143,6 @@ namespace HotelManagement.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-        public async Task<IActionResult> CreateRoles()
-        {
-            await roleManager.CreateAsync(new ApplicationUserRole("Manager"));
-            await roleManager.CreateAsync(new ApplicationUserRole("Administrator"));
-            await roleManager.CreateAsync(new ApplicationUserRole("Front Desk"));
-            await roleManager.CreateAsync(new ApplicationUserRole("Director"));
-            await roleManager.CreateAsync(new ApplicationUserRole("H&R"));
-            
-            return RedirectToAction("Index", "Home");
-        }
     }
     
 }
