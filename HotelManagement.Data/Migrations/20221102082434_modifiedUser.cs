@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelManagement.Data.Migrations
 {
-    public partial class correctionOFSeed : Migration
+    public partial class modifiedUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,8 +30,11 @@ namespace HotelManagement.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RFID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EGN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -310,33 +313,33 @@ namespace HotelManagement.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("16481f01-7bd9-48d2-9b12-7f394d8ed00d"), "d8b8376d-4137-4480-812f-6cd71612c9d0", "HumanResources", "HUMANRESOURCES" },
-                    { new Guid("3147518d-6626-4d32-92df-f91c9f3ff7d1"), "fa1ee725-5e58-4576-a321-26c69d43b735", "Director", "DIRECTOR" },
-                    { new Guid("8e0f37ef-2b53-4348-b8ad-82b5449094c9"), "2ba1ebc4-3f07-4ebc-bac8-2b6315371996", "Admin", "ADMIN" },
-                    { new Guid("a8da73b8-a1db-4f20-b99a-b1c467783094"), "315f85e1-8e10-45f2-a54e-61fbd12b94dd", "FrontDesk", "FRONTDESK" }
+                    { new Guid("147bddf4-18ca-4560-896a-edaaf2acea31"), "73afb782-53da-4910-a3fd-6c6afc9cbe3a", "FrontDesk", "FRONTDESK" },
+                    { new Guid("244224d9-b456-4586-9232-ea2310c76d5c"), "08b2deb6-4c52-4e94-b552-a2e54a5141e4", "Admin", "ADMIN" },
+                    { new Guid("5c7ed573-2b38-4bb9-8424-58fe3e985a80"), "fcd168a7-6e97-49cd-9761-16b1458d2646", "HumanResources", "HUMANRESOURCES" },
+                    { new Guid("a67ef30c-0402-4826-8749-3de7a464b90c"), "59cd6708-3162-4ccb-bc73-955acc7f81c2", "Director", "DIRECTOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "EditedOn", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RFID", "Salary", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("47012d7f-fc35-4a08-bb38-dd9739557c5a"), 0, "fff81d6d-9bed-41b6-8631-dec2deb58ce0", new DateTime(2022, 11, 1, 22, 10, 27, 262, DateTimeKind.Local).AddTicks(2242), null, null, "admin@gmail.com", true, "Admin", true, "Admin", false, null, null, null, null, "1234567890", false, "234", 1m, null, false, "Admin" });
+                columns: new[] { "Id", "AccessFailedCount", "BirthDate", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "EGN", "EditedOn", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RFID", "Salary", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("bf73c622-0bf2-4fa1-8ff2-ce5a95fd3b35"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0500eab2-9fe4-4cb6-8552-8a484c6d2cd2", new DateTime(2022, 11, 2, 10, 24, 32, 848, DateTimeKind.Local).AddTicks(1860), null, "124124124", null, "admin@gmail.com", true, "Admin", true, "Admin", false, null, "Admin", null, null, "AQAAAAEAACcQAAAAEFbTt16hmwW7gBn95EtkD8ICrxH0oOKP2U9vESEzBvt0dEUD3foBTvVK6rDdP2P6gQ==", "1234567890", false, "234", 1m, "decc10fe-18a6-4178-a291-00cd598e8840", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "Id", "CreatedOn", "DeletedOn", "Description", "EditedOn", "EmployeeCount", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5738), null, "Some Department", null, 23, true, "F&B" },
-                    { 2, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5787), null, "Some Department", null, 1, true, "Human Resources" },
-                    { 3, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5792), null, "Some Department", null, 4, true, "IT department" },
-                    { 4, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5797), null, "Some Department", null, 10, true, "Reservations" },
-                    { 5, new DateTime(2022, 11, 1, 22, 10, 27, 272, DateTimeKind.Local).AddTicks(5802), null, "Some Department", null, 1, true, "Director" }
+                    { 1, new DateTime(2022, 11, 2, 10, 24, 32, 858, DateTimeKind.Local).AddTicks(6470), null, "Some Department", null, 23, true, "F&B" },
+                    { 2, new DateTime(2022, 11, 2, 10, 24, 32, 858, DateTimeKind.Local).AddTicks(6520), null, "Some Department", null, 1, true, "Human Resources" },
+                    { 3, new DateTime(2022, 11, 2, 10, 24, 32, 858, DateTimeKind.Local).AddTicks(6530), null, "Some Department", null, 4, true, "IT department" },
+                    { 4, new DateTime(2022, 11, 2, 10, 24, 32, 858, DateTimeKind.Local).AddTicks(6540), null, "Some Department", null, 10, true, "Reservations" },
+                    { 5, new DateTime(2022, 11, 2, 10, 24, 32, 858, DateTimeKind.Local).AddTicks(6550), null, "Some Department", null, 1, true, "Director" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("8e0f37ef-2b53-4348-b8ad-82b5449094c9"), new Guid("47012d7f-fc35-4a08-bb38-dd9739557c5a") });
+                values: new object[] { new Guid("244224d9-b456-4586-9232-ea2310c76d5c"), new Guid("bf73c622-0bf2-4fa1-8ff2-ce5a95fd3b35") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -16,67 +16,93 @@
                 <label asp-for="@Model.FirstName"></label>
                 <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
             </div>
+            <p></p>
+            <div class="form-floating">
+                <input asp-for="@Model.MiddleName" class="form-control" autocomplete="middleName" aria-required="true" />
+                <label asp-for="@Model.MiddleName"></label>
+                <span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+            </div>
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.LastName" class="form-control" autocomplete="lastName" aria-required="true" />
                 <label asp-for="@Model.LastName"></label>
                 <span asp-validation-for="@Model.LastName" class="text-danger"></span>
             </div>
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.Salary" class="form-control" autocomplete="salary" aria-required="true" />
                 <label asp-for="@Model.Salary"></label>
                 <span asp-validation-for="@Model.Salary" class="text-danger"></span>
             </div>
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.RFID" class="form-control" autocomplete="RFID" aria-required="true" />
                 <label asp-for="@Model.RFID"></label>
                 <span asp-validation-for="@Model.RFID" class="text-danger"></span>
             </div>
+            <p></p>
+            <div class="form-floating">
+                <input asp-for="@Model.EGN" class="form-control" autocomplete="EGN" aria-required="true" />
+                <label asp-for="@Model.EGN"></label>
+                <span asp-validation-for="@Model.EGN" class="text-danger"></span>
+            </div>
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.UserName" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="@Model.UserName"></label>
                 <span asp-validation-for="@Model.UserName" class="text-danger"></span>
             </div>
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.Email" class="form-control" autocomplete="email" aria-required="true" />
                 <label asp-for="@Model.Email"></label>
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
-
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.PhoneNumber" class="form-control" autocomplete="phoneNumber" aria-required="true" />
                 <label asp-for="@Model.PhoneNumber"></label>
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
-
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="@Model.Password"></label>
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
+            <p></p>
             <div class="form-floating">
                 <input asp-for="@Model.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="@Model.ConfirmPassword"></label>
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
+            <p></p>
+            <div class="form-floating">
+                    <input asp-for="@Model.BirthDate" type="date" id="start" class="form-control" autocomplete="birthDate" aria-required="true" 
+                       value=@DateTime.Now>
+                <label asp-for="@Model.BirthDate">Birth Date</label>
+            </div>          
+            <p></p>
             <div class="mb-3">
-                <label asp-for="@Model.RoleId" class="form-label">Role</label>
+                <label asp-for="@Model.RoleId" class="form-label">Category</label>
                 <select asp-for="@Model.RoleId" class="form-control">
-                    @foreach (var role in Model.Roles)
+                    @foreach (var category in Model.Roles)
                     {
-                        <option value="@role.Id">@role.Name</option>
+                        <option value="@category.Id">@category.Name</option>
                     }
                 </select>
                 <span asp-validation-for="RoleId" class="text-danger"></span>
             </div>
+            <p></p>
             <div class="mb-3">
-                <label asp-for="@Model.Departments" class="form-label">Department/s</label>
-                <select asp-for="@Model.Departments" class="form-control">
+                <label asp-for="@Model.DepartmentId" class="form-label">Department/s</label>
+                <select asp-for="@Model.DepartmentId" class="form-control">
                     @foreach (var dep in Model.Departments)
                     {
                         <option value="@dep.Id">@dep.Name</option>
                     }
                 </select>
-                <span asp-validation-for="RoleId" class="text-danger"></span>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
             </div>
             
             

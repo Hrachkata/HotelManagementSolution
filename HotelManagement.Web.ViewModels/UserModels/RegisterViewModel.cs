@@ -9,9 +9,12 @@ namespace HotelManagement.Web.ViewModels.UserModels
     public class RegisterViewModel
     {
         public string FirstName { get; set; }
+
+        public string MiddleName { get; set; }
+
         public string LastName { get; set; }
         public decimal Salary { get; set; }
-
+        public string EGN { get; set; }
         [Required]
         //[StringLength(MaxUserNameLength, MinimumLength = MinUserNameLength)]
         public string UserName { get; set; } = null!;
@@ -31,6 +34,8 @@ namespace HotelManagement.Web.ViewModels.UserModels
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
 
+        public DateTime BirthDate { get; set; }
+
         public bool RememberMe { get; set; } = false;
 
         public string PhoneNumber { get; set; }
@@ -38,10 +43,12 @@ namespace HotelManagement.Web.ViewModels.UserModels
 
         public DateTime CreatedOn { get; set; }
 
-        public ICollection<ApplicationUserRole>? Roles{ get; set; }
+        public ICollection<ApplicationUserRole> Roles { get; set; }
 
-        public Guid RoleId { get; set; }
+        public Guid RoleId { get; set; } 
 
-        public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
+        public ICollection<Department> Departments { get; set; }
+
+        public int DepartmentId { get; set; }
     }
 }

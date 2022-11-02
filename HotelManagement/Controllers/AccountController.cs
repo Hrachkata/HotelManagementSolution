@@ -1,10 +1,12 @@
-﻿using HotelManagement.Data.Models.UserModels;
+﻿using AutoMapper;
+using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 
 namespace HotelManagement.Controllers
 {
@@ -16,12 +18,15 @@ namespace HotelManagement.Controllers
 
         public RoleManager<ApplicationUserRole> roleManager { get; set; }
 
+        public IMapper mapper { get; set; }
+
         public IUserDataService dataService { get; set; }
         public AccountController(
             SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
             RoleManager<ApplicationUserRole> _roleManager,
-            IUserDataService _dataService
+            IUserDataService _dataService,
+            IMapper _mapper
             )
         {
             signInManager = _signInManager;
@@ -31,6 +36,8 @@ namespace HotelManagement.Controllers
             roleManager = _roleManager;
 
             dataService = _dataService;
+
+            mapper = _mapper;
         }
 
 
@@ -50,13 +57,10 @@ namespace HotelManagement.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Register()
         {
-            if (User?.Identity?.IsAuthenticated ?? false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            
             var model = await dataService.GetRegisterViewModelWithRolesAndDepartmentsAsync();
 
 
@@ -96,7 +100,7 @@ namespace HotelManagement.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
 
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -106,24 +110,25 @@ namespace HotelManagement.Controllers
             }
 
             var doesUserExist = await userManager.FindByNameAsync(model.UserName);
+            var doesEmailExist = await userManager.FindByEmailAsync(model.Email);
 
-            if (doesUserExist != null)
+            if (doesUserExist != null || doesEmailExist != null)
             {
                 ModelState.AddModelError("", "User already exists.");
                 return View(model);
             }
 
-            var user = new ApplicationUser()
-            {
-                UserName = model.UserName,
-                Email = model.Email
-            };
+            var user = mapper.Map<ApplicationUser>(model);
 
-            var result = await userManager.CreateAsync(user, model.Password);
+            user.CreatedOn = DateTime.Now;
 
-            if (!result.Succeeded)
+            user.Id = Guid.NewGuid();
+
+            var resultUser = await userManager.CreateAsync(user, model.Password);
+
+            if (!resultUser.Succeeded)
             {
-                foreach (var error in result.Errors)
+                foreach (var error in resultUser.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }

@@ -1,4 +1,6 @@
-﻿using HotelManagement.Data.Services.UserServices.Contracts;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +10,14 @@ public class UserDataService : IUserDataService
 {
     private ApplicationDbContext context { get; set; }
 
-    public UserDataService(ApplicationDbContext _context)
+    private IMapper mapper { get; set; }
+
+    public UserDataService(ApplicationDbContext _context,
+        IMapper _mapper)
     {
         context = _context;
+        mapper = _mapper;   
     }
-
-
     public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync()
     {
         var roles = await context.Roles.ToListAsync();
@@ -27,5 +31,12 @@ public class UserDataService : IUserDataService
         };
 
         return model;
+    }
+
+    public IEnumerable<UserViewModel> GetUserViewModelsAsync()
+    {
+        var users = context.Users.Include(u => u.EmployeeDepartment).ThenInclude(d => d.Department).ProjectTo<UserViewModel>(mapper.ConfigurationProvider);
+
+        return users;
     }
 }

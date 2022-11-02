@@ -1,0 +1,34 @@
+﻿@model IEnumerable<UserViewModel>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div class="container">
+    <div class="card-deck">
+        <div class="card mb-4">
+            @foreach (var user in Model)
+            {
+                <div class="card-body">
+                    <h4 class="card-title" id="user-names">@user.FirstName @user.LastName</h4>
+                    <div class="container" id="names">
+                        @foreach (var name in user.DepartmentNames)
+                        {
+                            <h5 class="card-text">@name</h5>
+                        }
+                    </div>
+                    
+                    <h5 class="card-text" id="role">@user.RoleName</h5>
+                </div>
+                <div class="container">
+                    <button type="button" id="button1">Details</button>
+                    <button type="button" id="button2">Edit</button>
+                </div>
+            }            
+        </div>
+        
+    </div>
+</div>
