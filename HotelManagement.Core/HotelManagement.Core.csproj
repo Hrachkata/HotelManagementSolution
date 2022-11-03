@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HotelManagement.Data.Models\HotelManagement.Data.Models.csproj" />
+    <ProjectReference Include="..\HotelManagement.Data.Services\HotelManagement.Data.Services.csproj" />
+    <ProjectReference Include="..\HotelManagement.Web.ViewModels\HotelManagement.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\HotelManagment.AutoMapper\HotelManagement.AutoMapper.csproj" />
+  </ItemGroup>
+
+</Project>

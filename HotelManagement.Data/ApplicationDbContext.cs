@@ -48,39 +48,7 @@ namespace HotelManagement.Data
 
             UserSeeder.SeedUserRoles(builder);
 
-            builder.Entity<Department>().HasData(new List<Department>() { new Department
-            {
-                Id = 1,
-                Name = "F&B",
-                Description = "Some Department",
-                EmployeeCount = 23,
-                CreatedOn = DateTime.Now
-            }, new Department{
-                Id = 2,
-                Name = "Human Resources",
-                Description = "Some Department",
-                EmployeeCount = 1,
-                CreatedOn = DateTime.Now
-            }, new Department{
-                Id = 3,
-                Name = "IT department",
-                Description = "Some Department",
-                EmployeeCount = 4,
-                CreatedOn = DateTime.Now
-            }, new Department{
-                Id = 4,
-                Name = "Reservations",
-                Description = "Some Department",
-                EmployeeCount = 10,
-                CreatedOn = DateTime.Now
-            }, new Department{
-                Id = 5,
-                Name = "Director",
-                Description = "Some Department",
-                EmployeeCount = 1,
-                CreatedOn = DateTime.Now
-            } });
-    
+            UserSeeder.SeedDepartments(builder);   
 
            
             base.OnModelCreating(builder);

@@ -1,4 +1,5 @@
-﻿using HotelManagement.Data.Models.UserModels;
+﻿using HotelManagement.Data.Models.Models;
+using HotelManagement.Data.Models.UserModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -73,6 +74,45 @@ namespace HotelManagement.Data.Seeding
                     { RoleId = adminRoleGuid, UserId = adminGuid }
         );
 
+        }
+
+        public void SeedDepartments(ModelBuilder builder)
+        {
+                var models = new List<Department>() { new Department
+                    {
+                        Id = 1,
+                        Name = "F&B",
+                        Description = "Some Department",
+                        EmployeeCount = 23,
+                        CreatedOn = DateTime.Now
+                    }, new Department{
+                        Id = 2,
+                        Name = "Human Resources",
+                        Description = "Some Department",
+                        EmployeeCount = 1,
+                        CreatedOn = DateTime.Now
+                    }, new Department{
+                        Id = 3,
+                        Name = "IT department",
+                        Description = "Some Department",
+                        EmployeeCount = 4,
+                        CreatedOn = DateTime.Now
+                    }, new Department{
+                        Id = 4,
+                        Name = "Reservations",
+                        Description = "Some Department",
+                        EmployeeCount = 10,
+                        CreatedOn = DateTime.Now
+                    }, new Department{
+                        Id = 5,
+                        Name = "Director",
+                        Description = "Some Department",
+                        EmployeeCount = 1,
+                        CreatedOn = DateTime.Now
+                    } 
+                };
+
+            builder.Entity<Department>().HasData(models);
         }
     }
 }

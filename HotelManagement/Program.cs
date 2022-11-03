@@ -17,12 +17,21 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     {
+        options.Password.RequireNonAlphanumeric = false;
+
+        options.Password.RequireDigit = false;
+
+        options.Password.RequireUppercase = false;
+
+        options.Password.RequiredLength = 1;
+
         options.SignIn.RequireConfirmedAccount = false;
 
         options.SignIn.RequireConfirmedEmail = false;
     })
     .AddRoles<ApplicationUserRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 //My services and configurations

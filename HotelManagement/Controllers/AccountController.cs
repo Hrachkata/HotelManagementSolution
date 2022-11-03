@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
@@ -118,15 +119,15 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
+            model.Id = Guid.NewGuid();
+
             var user = mapper.Map<ApplicationUser>(model);
-
-            user.CreatedOn = DateTime.Now;
-
-            user.Id = Guid.NewGuid();
-
+                        
             var resultUser = await userManager.CreateAsync(user, model.Password);
 
-            if (!resultUser.Succeeded)
+            var roleResult = await userManager.AddToRoleAsync(user, model.RoleName);
+
+            if (!resultUser.Succeeded || !roleResult.Succeeded)
             {
                 foreach (var error in resultUser.Errors)
                 {

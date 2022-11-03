@@ -4,12 +4,19 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+<style>
+    .center {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<h1 class="center">@ViewData["Title"]</h1>
+<div class="row center"  >
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                <h2 class="center">Sign in form</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
@@ -26,13 +33,21 @@
                     <div class="checkbox">
                         <label asp-for="@Model.RememberMe" class="form-label">
                             <input class="form-check-input" asp-for="@Model.RememberMe" />
-                            @Html.DisplayNameFor(m => m.RememberMe)
+                            Remember me
+                            @*@Html.DisplayNameFor(m => m.RememberMe)*@
                         </label>
+                        <div>
+                            <button class="w-100 btn btn-lg btn-primary">Forgot my password</button>
+                        </div>
+                        <p></p>
+                        <p></p>
                     </div>
+                    
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
+
                @* <div>
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>

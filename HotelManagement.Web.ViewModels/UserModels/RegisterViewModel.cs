@@ -8,6 +8,8 @@ namespace HotelManagement.Web.ViewModels.UserModels
 {
     public class RegisterViewModel
     {
+        public Guid Id { get; set; }
+
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
@@ -43,11 +45,11 @@ namespace HotelManagement.Web.ViewModels.UserModels
 
         public DateTime CreatedOn { get; set; }
 
-        public ICollection<ApplicationUserRole> Roles { get; set; }
+        public ICollection<ApplicationUserRole>? Roles { get; set; } = new HashSet<ApplicationUserRole>();
 
-        public Guid RoleId { get; set; } 
+        public string RoleName { get; set; }
 
-        public ICollection<Department> Departments { get; set; }
+        public ICollection<Department>? Departments { get; set; } = new HashSet<Department>();
 
         public int DepartmentId { get; set; }
     }

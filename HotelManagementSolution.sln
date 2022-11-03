@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagement.AutoMapper"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagement.Data.Services", "HotelManagement.Data.Services\HotelManagement.Data.Services.csproj", "{E8007A5D-AEBE-4634-BBAB-D21CAB4B93EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagement.Data.Seeding", "HotelManagement.Data.Seeding\HotelManagement.Data.Seeding.csproj", "{D4EB50EA-D506-47FA-98F0-407DDEA68F67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagement.Data.Seeding", "HotelManagement.Data.Seeding\HotelManagement.Data.Seeding.csproj", "{D4EB50EA-D506-47FA-98F0-407DDEA68F67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagement.Core", "HotelManagement.Core\HotelManagement.Core.csproj", "{EE598733-E691-4813-B84F-E3E2D70A4BE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{D4EB50EA-D506-47FA-98F0-407DDEA68F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4EB50EA-D506-47FA-98F0-407DDEA68F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4EB50EA-D506-47FA-98F0-407DDEA68F67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE598733-E691-4813-B84F-E3E2D70A4BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE598733-E691-4813-B84F-E3E2D70A4BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE598733-E691-4813-B84F-E3E2D70A4BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE598733-E691-4813-B84F-E3E2D70A4BE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
