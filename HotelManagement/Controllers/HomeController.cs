@@ -9,18 +9,13 @@ namespace HotelManagement.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private SendGridEmail _emailService;
-
         public HomeController(ILogger<HomeController> logger, SendGridEmail emailService)
         {
             _logger = logger;
-            _emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
         {
-
-            await _emailService.Execute();
             return View();
         }
 

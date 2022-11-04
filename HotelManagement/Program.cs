@@ -31,11 +31,20 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
         options.SignIn.RequireConfirmedEmail = false;
     })
     .AddRoles<ApplicationUserRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
 
 //My services and configurations
+
+
+//this is for email sending
+IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddUserSecrets<Program>()
+            .Build();
+
+builder.Services.AddSingleton(configuration);
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
@@ -43,7 +52,7 @@ builder.Services.AddScoped<IUserDataService, UserDataService>();
 
 builder.Services.AddSingleton<SeedUserData, SeedUserData>();
 
-builder.Services.AddScoped<SendGridEmail, SendGridEmail>();
+builder.Services.AddTransient<SendGridEmail, SendGridEmail>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

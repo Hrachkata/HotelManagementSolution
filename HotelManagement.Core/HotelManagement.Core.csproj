@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HotelManagement.Data.Models\HotelManagement.Data.Models.csproj" />
     <ProjectReference Include="..\HotelManagement.Data.Services\HotelManagement.Data.Services.csproj" />
     <ProjectReference Include="..\HotelManagement.EmailService\HotelManagement.EmailService.csproj" />

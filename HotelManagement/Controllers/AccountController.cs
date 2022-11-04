@@ -113,6 +113,8 @@ namespace HotelManagement.Controllers
             var doesUserExist = await userManager.FindByNameAsync(model.UserName);
             var doesEmailExist = await userManager.FindByEmailAsync(model.Email);
 
+
+
             if (doesUserExist != null || doesEmailExist != null)
             {
                 ModelState.AddModelError("", "User already exists.");
@@ -123,7 +125,14 @@ namespace HotelManagement.Controllers
                         
             var resultUser = await userManager.CreateAsync(user, model.Password);
 
-            var roleResult = await userManager.AddToRoleAsync(user, "DIRECTOR");
+            if (resultUser.Succeeded == true)
+            {
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var confirmUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, token = token}, Request.Scheme);
+            }
+
+            var roleResult = await userManager.AddToRoleAsync(user, model.RoleName);
 
             if (!resultUser.Succeeded || !roleResult.Succeeded)
             {

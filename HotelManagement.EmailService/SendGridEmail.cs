@@ -1,24 +1,44 @@
-﻿using SendGrid.Helpers.Mail;
-using SendGrid;
+﻿using FluentEmail.Core.Models;
+using FluentEmail.Core;
+using FluentEmail.SendGrid;
+using Microsoft.Extensions.Configuration;
 
-namespace HotelManagement.EmailService
+namespace HotelManagement.EmailService;
+public class SendGridEmail
 {
-    public class SendGridEmail
+    public IConfigurationRoot config { get; set; }
+    public SendGridEmail(IConfigurationRoot _config)
     {
-            public async Task<Response> Execute()
-            {
-                var apiKey = Environment.GetEnvironmentVariable("SENDGRID");
-                var client = new SendGridClient("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");
-                var from = new EmailAddress("test@example.com", "Example User");
-                var subject = "Sending with SendGrid is Fun";
-                var to = new EmailAddress("virvoda@abv.bg", "Example User");
-                var plainTextContent = "and easy to do anywhere, even with C#";
-                var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                var response = await client.SendEmailAsync(msg);
+        config = _config;  
+    }
 
-                return response;
-            }
+    public void fluentMailSend(string mailReceiver, string subject, string tag, string body)
+    {
+        IFluentEmail fluentEmail = Email
+            .From("virvoda6@abv.bg")
+            .To(mailReceiver)
+            .Subject(subject)
+            .Tag(tag)
+            .Body(body);
         
+        SendGridSender sendGridSender = new SendGridSender(config["SendGridApiKey"]);
+        SendResponse response = sendGridSender.Send(fluentEmail);
+
+        if (response.Successful)
+        {
+            Console.WriteLine("The email was sent successfully");
+        }
+        else
+        {
+            Console.WriteLine("The email could not be sent. Check the errors: ");
+            foreach (string error in response.ErrorMessages)
+            {
+                Console.WriteLine(error);
+            }
+        }
     }
 }
+
+
+
+
