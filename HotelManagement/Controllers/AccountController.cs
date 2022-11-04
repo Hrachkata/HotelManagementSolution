@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Models.UserModels;
-using HotelManagement.Data.Services.UserServices;
+using static HotelManagement.ViewConstants;
 using HotelManagement.Data.Services.UserServices.Contracts;
+using HotelManagement.EmailService;
 using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using NuGet.Common;
 
 namespace HotelManagement.Controllers
 {
@@ -17,6 +19,7 @@ namespace HotelManagement.Controllers
 
         public UserManager<ApplicationUser> userManager { get; set; }
 
+        private readonly SendGridEmail sendGridEmail;
         public RoleManager<ApplicationUserRole> roleManager { get; set; }
 
         public IMapper mapper { get; set; }
@@ -27,9 +30,12 @@ namespace HotelManagement.Controllers
             UserManager<ApplicationUser> _userManager,
             RoleManager<ApplicationUserRole> _roleManager,
             IUserDataService _dataService,
-            IMapper _mapper
+            IMapper _mapper,
+            SendGridEmail _sendGridEmail
             )
         {
+            sendGridEmail = _sendGridEmail;
+
             signInManager = _signInManager;
 
             userManager = _userManager;
@@ -88,7 +94,18 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+            if (user.EmailConfirmed == false)
+            {
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id.ToString(), token = token }, Request.Scheme);
+
+                return View("ResendEmail", confirmUrl);
+            }
+
+            var rememberMeCheckbox = model.RememberMe;
+
+            var result = await signInManager.PasswordSignInAsync(user, model.Password, rememberMeCheckbox, false);
 
             if (!result.Succeeded || result.IsNotAllowed)
             {
@@ -99,6 +116,21 @@ namespace HotelManagement.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ResendEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResendEmail(string model)
+        {
+            Console.WriteLine(model);
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         [HttpPost]
         [Authorize]
@@ -129,7 +161,8 @@ namespace HotelManagement.Controllers
             {
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                var confirmUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, token = token}, Request.Scheme);
+                var confirmUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id.ToString(), token = token}, Request.Scheme);
+                Console.WriteLine(confirmUrl);
             }
 
             var roleResult = await userManager.AddToRoleAsync(user, model.RoleName);
@@ -147,6 +180,44 @@ namespace HotelManagement.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (String.IsNullOrEmpty(userId) || String.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewData[ErrorTitle] = "User Id is invalid";
+
+                ViewData[ErrorDescription] = "Please resend the confirmation email and try again.";
+
+                return View("UserErrorModel");
+            }
+
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            
+            if (!result.Succeeded)
+            {
+                ViewData[ErrorTitle] = "Error occurred";
+
+                ViewData[ErrorDescription] = "Please try again later.";
+
+                var statusCode = HttpContext.Response.StatusCode;
+
+                ViewData[StatusCodeForError] = "404"; 
+                
+                return View("UserErrorModel");
+            }
+
+            return View();
+        }
+
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Logout()
@@ -155,6 +226,7 @@ namespace HotelManagement.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
 
     }
     
