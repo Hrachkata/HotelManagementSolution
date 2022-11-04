@@ -4,6 +4,7 @@ using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Seeding;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
+using HotelManagement.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,7 @@ builder.Services.AddScoped<IUserDataService, UserDataService>();
 
 builder.Services.AddSingleton<SeedUserData, SeedUserData>();
 
+builder.Services.AddScoped<SendGridEmail, SendGridEmail>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

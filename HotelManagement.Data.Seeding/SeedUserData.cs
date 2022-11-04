@@ -8,8 +8,6 @@ namespace HotelManagement.Data.Seeding
     public class SeedUserData
     {
         private Guid adminGuid = Guid.NewGuid();
-
-        private Guid adminRoleGuid = Guid.NewGuid();
         public void SeedUsers(ModelBuilder builder)
         {
             
@@ -44,37 +42,41 @@ namespace HotelManagement.Data.Seeding
         public void SeedRoles(ModelBuilder builder)
         {
             builder.Entity<ApplicationUserRole>().HasData(
-                new ApplicationUserRole("Admin")
+                new ApplicationUserRole()
                 {
-                    Id = adminRoleGuid,
+                    Name = "Admin",
+                    Id = Guid.NewGuid(),
                     NormalizedName = "ADMIN"
                 },
-                new ApplicationUserRole("HumanResources")
+                new ApplicationUserRole()
                 {
                     Id = Guid.NewGuid(),
+                    Name = "Human Resources",
                     NormalizedName = "HUMANRESOURCES"
                 },
-                new ApplicationUserRole("Director")
+                new ApplicationUserRole()
                 {
                     Id = Guid.NewGuid(),
+                    Name = "Director",
                     NormalizedName = "DIRECTOR"
                 },
-                new ApplicationUserRole("FrontDesk")
+                new ApplicationUserRole()
                 {
                     Id = Guid.NewGuid(),
+                    Name = "Front Desk",
                     NormalizedName = "FRONTDESK"
                 }
         );
     }
 
-        public void SeedUserRoles(ModelBuilder builder)
-        {
-            builder.Entity<IdentityUserRole<Guid>>().HasData(
-                new IdentityUserRole<Guid>()
-                    { RoleId = adminRoleGuid, UserId = adminGuid }
-        );
+        //public void SeedUserRoles(ModelBuilder builder)
+        //{
+        //    builder.Entity<IdentityUserRole<Guid>>().HasData(
+        //        new IdentityUserRole<Guid>()
+        //            { RoleId = adminRoleGuid, UserId = adminGuid }
+        //);
 
-        }
+        //}
 
         public void SeedDepartments(ModelBuilder builder)
         {

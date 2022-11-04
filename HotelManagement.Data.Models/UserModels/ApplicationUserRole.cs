@@ -4,8 +4,8 @@ namespace HotelManagement.Data.Models.UserModels;
 
 public class ApplicationUserRole : IdentityRole<Guid>
 {
-    public ApplicationUserRole(string name)
+    public ApplicationUserRole()
     {
-        Name = name;
+    
     }
 }

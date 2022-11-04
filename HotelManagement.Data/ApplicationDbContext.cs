@@ -46,7 +46,7 @@ namespace HotelManagement.Data
 
             UserSeeder.SeedUsers(builder);
 
-            UserSeeder.SeedUserRoles(builder);
+            //UserSeeder.SeedUserRoles(builder);
 
             UserSeeder.SeedDepartments(builder);   
 

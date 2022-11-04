@@ -11,16 +11,20 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<RegisterViewModel, ApplicationUser>()
             .ForMember(d => d.EmployeeDepartment,
-            o => o.MapFrom(s => new List<EmployeeDepartment>() { new EmployeeDepartment
+                o => o.MapFrom(s => new List<EmployeeDepartment>()
                 {
-                    DepartmentId = s.DepartmentId,
-                    ApplicationUserId = s.Id
-                } 
-            }))
+                    new EmployeeDepartment
+                    {
+                        DepartmentId = s.DepartmentId,
+                        ApplicationUserId = s.Id
+                    }
+                }))
             .ForMember(d => d.CreatedOn,
-            o => o.MapFrom(s => DateTime.Now))
+                o => o.MapFrom(s => DateTime.Now))
             .ForMember(d => d.SecurityStamp,
-            o => o.MapFrom(s => Guid.NewGuid()));
+                o => o.MapFrom(s => Guid.NewGuid()))
+            .ForMember(d => d.Id, 
+                o => o.MapFrom(s => Guid.NewGuid()));
 
         CreateMap<ApplicationUser, UserViewModel>().ForMember(d => d.DepartmentNames,
             o => o.MapFrom(s => s.EmployeeDepartment.Select(ed => ed.Department.Name).ToList()));  

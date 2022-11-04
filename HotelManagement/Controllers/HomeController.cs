@@ -1,6 +1,7 @@
 ﻿using HotelManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using HotelManagement.EmailService;
 
 namespace HotelManagement.Controllers
 {
@@ -8,13 +9,18 @@ namespace HotelManagement.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private SendGridEmail _emailService;
+
+        public HomeController(ILogger<HomeController> logger, SendGridEmail emailService)
         {
             _logger = logger;
+            _emailService = emailService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+
+            await _emailService.Execute();
             return View();
         }
 

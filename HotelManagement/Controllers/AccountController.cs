@@ -119,13 +119,11 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            model.Id = Guid.NewGuid();
-
             var user = mapper.Map<ApplicationUser>(model);
                         
             var resultUser = await userManager.CreateAsync(user, model.Password);
 
-            var roleResult = await userManager.AddToRoleAsync(user, model.RoleName);
+            var roleResult = await userManager.AddToRoleAsync(user, "DIRECTOR");
 
             if (!resultUser.Succeeded || !roleResult.Succeeded)
             {
