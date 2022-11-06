@@ -193,8 +193,7 @@ namespace HotelManagement.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
