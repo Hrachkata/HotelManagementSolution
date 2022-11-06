@@ -79,7 +79,7 @@
             <p></p>
             <div class="form-floating">
                     <input asp-for="@Model.BirthDate" type="date" id="start" class="form-control" autocomplete="birthDate" aria-required="true" 
-                       value=@DateTime.Now>
+                       value=@DateTime.Now aria-valuemax="@DateTime.Now.ToString("YYYY-MM-DD")" aria-valuemin="@DateTime.Now.AddYears(-100).ToString("YYYY-MM-DD")">
                 <label asp-for="@Model.BirthDate">Birth Date</label>
             </div>          
             <p></p>

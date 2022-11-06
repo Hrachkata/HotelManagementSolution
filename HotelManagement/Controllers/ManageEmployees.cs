@@ -8,9 +8,9 @@ namespace HotelManagement.Controllers
 {
     public class ManageEmployees : Controller
     {
-        public IUserDataService dataService { get; set; }
+        public IAccountDataService dataService { get; set; }
         public ManageEmployees(
-            IUserDataService _dataService
+            IAccountDataService _dataService
             )
         {
            

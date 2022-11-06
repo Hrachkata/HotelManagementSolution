@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Runtime.InteropServices;
+using AutoMapper;
 using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Models.UserModels;
-using static HotelManagement.ViewConstants;
 using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.EmailService;
 using HotelManagement.Web.ViewModels.UserModels;
@@ -10,41 +10,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using NuGet.Common;
+using Newtonsoft.Json.Linq;
 
 namespace HotelManagement.Controllers
 {
     public class AccountController : Controller
     {
         public SignInManager<ApplicationUser> signInManager { get; set; }
-
         public UserManager<ApplicationUser> userManager { get; set; }
-
-        private readonly SendGridEmail sendGridEmail;
-        public RoleManager<ApplicationUserRole> roleManager { get; set; }
-
-        public IMapper mapper { get; set; }
-
-        public IUserDataService dataService { get; set; }
+        public IAccountServices accountServices { get; set; }
+        public IAccountDataService dataService { get; set; }
         public AccountController(
             SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
-            RoleManager<ApplicationUserRole> _roleManager,
-            IUserDataService _dataService,
-            IMapper _mapper,
-            SendGridEmail _sendGridEmail
-            )
+            IAccountDataService _dataService,
+            IAccountServices _accountServices)
         {
-            sendGridEmail = _sendGridEmail;
+            accountServices = _accountServices;
 
             signInManager = _signInManager;
 
             userManager = _userManager;
 
-            roleManager = _roleManager;
-
             dataService = _dataService;
-
-            mapper = _mapper;
         }
 
 
@@ -84,9 +72,8 @@ namespace HotelManagement.Controllers
             {
                 return View(model);
             }
-            
 
-            var user = await userManager.FindByNameAsync(model.UserName);
+            var user = await accountServices.GetUserByUserNameAsync(model.UserName);
 
             if (user == null)
             {
@@ -96,11 +83,13 @@ namespace HotelManagement.Controllers
 
             if (user.EmailConfirmed == false)
             {
-                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                var ConfirmEmailViewModel = new ConfirmEmailViewModel()
+                {
+                    Email = user.Email,
+                    EmailVerified = false
+                };
 
-                var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id.ToString(), token = token }, Request.Scheme);
-
-                return View("ResendEmail", confirmUrl);
+                return RedirectToAction("ConfirmEmail", ConfirmEmailViewModel);
             }
 
             var rememberMeCheckbox = model.RememberMe;
@@ -116,25 +105,9 @@ namespace HotelManagement.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
-        [HttpGet]
-        public async Task<IActionResult> ResendEmail()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ResendEmail(string model)
-        {
-            Console.WriteLine(model);
-
-            return RedirectToAction("Index", "Home");
-        }
-
-
+        
         [HttpPost]
         [Authorize]
-
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -142,32 +115,18 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            var doesUserExist = await userManager.FindByNameAsync(model.UserName);
-            var doesEmailExist = await userManager.FindByEmailAsync(model.Email);
-
-
-
+            var doesUserExist = await accountServices.GetUserByUserNameAsync(model.UserName);
+            var doesEmailExist = await accountServices.GetUserByEmailAsync(model.Email);
+            
             if (doesUserExist != null || doesEmailExist != null)
             {
                 ModelState.AddModelError("", "User already exists.");
                 return View(model);
             }
+            
+            var resultUser = await accountServices.CreateUserAsync(model);
 
-            var user = mapper.Map<ApplicationUser>(model);
-                        
-            var resultUser = await userManager.CreateAsync(user, model.Password);
-
-            if (resultUser.Succeeded == true)
-            {
-                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                var confirmUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id.ToString(), token = token}, Request.Scheme);
-                Console.WriteLine(confirmUrl);
-            }
-
-            var roleResult = await userManager.AddToRoleAsync(user, model.RoleName);
-
-            if (!resultUser.Succeeded || !roleResult.Succeeded)
+            if (resultUser.Errors.Any() || !resultUser.Succeeded)//|| !roleResult.Succeeded)
             {
                 foreach (var error in resultUser.Errors)
                 {
@@ -181,42 +140,58 @@ namespace HotelManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(string userId, string token, string email)
         {
-            if (String.IsNullOrEmpty(userId) || String.IsNullOrEmpty(token))
+            var model = new ConfirmEmailViewModel()
             {
-                return RedirectToAction("Index", "Home");
-            }
-            
-            var user = await userManager.FindByIdAsync(userId);
+                Email = email
+            };
 
-            if (user == null)
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
             {
-                ViewData[ErrorTitle] = "User Id is invalid";
-
-                ViewData[ErrorDescription] = "Please resend the confirmation email and try again.";
-
-                return View("UserErrorModel");
+                return View(model);
             }
 
-            var result = await userManager.ConfirmEmailAsync(user, token);
-            
-            if (!result.Succeeded)
+            var result = await accountServices.ConfirmEmailAsync(userId, token);
+
+            if (result.Succeeded)
             {
-                ViewData[ErrorTitle] = "Error occurred";
-
-                ViewData[ErrorDescription] = "Please try again later.";
-
-                var statusCode = HttpContext.Response.StatusCode;
-
-                ViewData[StatusCodeForError] = "404"; 
-                
-                return View("UserErrorModel");
+                model.EmailVerified = true;
             }
 
-            return View();
+            return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailViewModel model)
+        {
+
+            var user = await accountServices.GetUserByEmailAsync(model.Email);
+
+            if (user != null)
+            {
+                if (user.EmailConfirmed)
+                {
+                    model.IsConfirmed = true;
+
+                    return View(model);
+                }
+
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                accountServices.SendConfirmationEmail(user, token);
+
+                model.EmailSent = true;
+
+                ModelState.Clear();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Something went wrong, please contact your system administrator.");
+            }
+
+            return View(model);
+        }
 
         [HttpPost]
         [Authorize]
@@ -227,6 +202,69 @@ namespace HotelManagement.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await accountServices.GetUserByEmailAsync(model.Email);
+
+                if (user != null)
+                {
+                    var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+                    accountServices.SendForgotPasswordEmailAsync(user, token);
+                }
+
+                ModelState.Clear();
+
+                model.EmailSent = true;
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(string userId, string token)
+        {
+            var resetModel = new ResetPasswordModel()
+            {
+                UserId = userId,
+                Token = token
+            };
+
+            return View(resetModel);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await accountServices.ResetPasswordAsync(model);
+
+                if (result.Succeeded)
+                {
+                    return Redirect("/Account/ResetPasswordConfirmation");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
+        }
 
     }
     

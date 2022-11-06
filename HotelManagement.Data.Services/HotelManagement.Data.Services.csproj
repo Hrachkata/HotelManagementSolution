@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HotelManagement.Data\HotelManagement.Data.csproj" />
+    <ProjectReference Include="..\HotelManagement.EmailService\HotelManagement.EmailService.csproj" />
     <ProjectReference Include="..\HotelManagement.Web.ViewModels\HotelManagement.Web.ViewModels.csproj" />
     <ProjectReference Include="..\HotelManagment.AutoMapper\HotelManagement.AutoMapper.csproj" />
   </ItemGroup>

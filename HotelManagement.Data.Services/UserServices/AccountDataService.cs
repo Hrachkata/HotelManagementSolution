@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.UserServices;
 
-public class UserDataService : IUserDataService
+public class AccountDataService : IAccountDataService
 {
     private ApplicationDbContext context { get; set; }
 
     private IMapper mapper { get; set; }
 
-    public UserDataService(ApplicationDbContext _context,
+    public AccountDataService(ApplicationDbContext _context,
         IMapper _mapper)
     {
         context = _context;
