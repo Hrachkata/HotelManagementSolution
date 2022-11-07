@@ -22,7 +22,7 @@
                         @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ManageEmployees" asp-action="Index">Manage Employees</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ManageEmployees" asp-action="All">Manage Employees</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Add Employee</a>

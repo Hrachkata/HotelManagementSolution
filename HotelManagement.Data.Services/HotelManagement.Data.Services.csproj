@@ -17,4 +17,8 @@
     <ProjectReference Include="..\HotelManagment.AutoMapper\HotelManagement.AutoMapper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EmployeeServices\Contracts\" />
+  </ItemGroup>
+
 </Project>

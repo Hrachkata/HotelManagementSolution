@@ -2,6 +2,8 @@
 using AutoMapper;
 using HotelManagement.Web.ViewModels.UserModels;
 using HotelManagement.Data.Models.Models;
+using HotelManagement.Web.ViewModels.ManageEmployeesModels;
+using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 
 namespace HotelManagement.AutoMapper;
 
@@ -26,9 +28,18 @@ public class AutoMapperProfile : Profile
             .ForMember(d => d.Id, 
                 o => o.MapFrom(s => Guid.NewGuid()));
 
-        CreateMap<ApplicationUser, UserViewModel>().ForMember(d => d.DepartmentNames,
-            o => o.MapFrom(s => s.EmployeeDepartment.Select(ed => ed.Department.Name).ToList()));  
-        
+        CreateMap<ApplicationUser, SingleEmployeeServiceModel>().ForMember(d => d.DepartmentName,
+            o => o.MapFrom(s 
+                => s.EmployeeDepartment.Select(ed => ed.Department.Name).FirstOrDefault()))
+            .ForMember(d => d.UserId,
+                o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.IsActive,
+                o => o.MapFrom(s => s.IsActive));
+
+        CreateMap<ApplicationUser, EditViewModel>().ForMember(d => d.PhoneNumber,
+            o => o.MapFrom(s => s.PhoneNumber))
+            .ForMember(d => d.Id,
+            o => o.MapFrom(s => s.Id));
 
     }
 }

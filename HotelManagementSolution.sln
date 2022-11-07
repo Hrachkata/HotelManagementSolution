@@ -25,7 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagement.Data.Seedin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagement.Core", "HotelManagement.Core\HotelManagement.Core.csproj", "{EE598733-E691-4813-B84F-E3E2D70A4BE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagement.EmailService", "HotelManagement.EmailService\HotelManagement.EmailService.csproj", "{11E15B37-F92D-4F83-A502-FE1236792CFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagement.EmailService", "HotelManagement.EmailService\HotelManagement.EmailService.csproj", "{11E15B37-F92D-4F83-A502-FE1236792CFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74E69663-0798-4591-BB42-8215265459ED}"
+	ProjectSection(SolutionItems) = preProject
+		HotelManagement\ConfigurationBuilderService.cs = HotelManagement\ConfigurationBuilderService.cs
+		TODO.txt = TODO.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

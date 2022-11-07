@@ -2,6 +2,8 @@ using HotelManagement.AutoMapper;
 using HotelManagement.Data;
 using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Seeding;
+using HotelManagement.Data.Services.EmployeeServices;
+using HotelManagement.Data.Services.EmployeeServices.Contracts;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.EmailService;
@@ -49,18 +51,13 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
             .Build();
 
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-builder.Services.AddScoped<IUrlHelper>(x => {
-    var actionContext = x.GetRequiredService<IActionContextAccessor>().ActionContext;
-    var factory = x.GetRequiredService<IUrlHelperFactory>();
-    return factory.GetUrlHelper(actionContext);
-});
 
+builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
 builder.Services.AddSingleton(configuration);
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-builder.Services.AddScoped<IAccountDataService, AccountDataService>();
 
 builder.Services.AddSingleton<SeedUserData, SeedUserData>();
 

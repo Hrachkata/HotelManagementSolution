@@ -23,6 +23,11 @@ public interface IAccountServices
 
     Task GenerateEmailConfirmationTokenAsync(ApplicationUser user);
 
+    Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync();
 
     Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
+
+    Task<EditViewModel> GetEditViewModelByUserNameAsync(string userName);
+
+    EditViewModel ProjectApplicationUserToEditViewModel(ApplicationUser user);
 }

@@ -1,6 +1,6 @@
 ﻿@model RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Create employee";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -8,10 +8,10 @@
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" method="post">
-            <h2>Create a new account.</h2>
+            <h2>Create a new employee account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-floating ">
                 <input asp-for="@Model.FirstName" class="form-control" autocomplete="firstName" aria-required="true" />
                 <label asp-for="@Model.FirstName"></label>
                 <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
@@ -41,7 +41,7 @@
                 <span asp-validation-for="@Model.RFID" class="text-danger"></span>
             </div>
             <p></p>
-            <div class="form-floating">
+            <div class="form-floating" >
                 <input asp-for="@Model.EGN" class="form-control" autocomplete="EGN" aria-required="true" />
                 <label asp-for="@Model.EGN"></label>
                 <span asp-validation-for="@Model.EGN" class="text-danger"></span>

@@ -26,8 +26,11 @@ public class SendGridEmail
             .Subject(subject)
             .Tag(tag)
             .Body(body);
-        
-        SendGridSender sendGridSender = new SendGridSender("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");
+
+        var SendGridApiKey = config["SendGrid:SendGridApiKey"];
+
+        SendGridSender sendGridSender = new SendGridSender(SendGridApiKey);
+
         SendResponse response = sendGridSender.Send(fluentEmail);
 
         return response;

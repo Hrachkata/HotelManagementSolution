@@ -19,11 +19,9 @@ namespace HotelManagement.Controllers
         public SignInManager<ApplicationUser> signInManager { get; set; }
         public UserManager<ApplicationUser> userManager { get; set; }
         public IAccountServices accountServices { get; set; }
-        public IAccountDataService dataService { get; set; }
         public AccountController(
             SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
-            IAccountDataService _dataService,
             IAccountServices _accountServices)
         {
             accountServices = _accountServices;
@@ -31,8 +29,6 @@ namespace HotelManagement.Controllers
             signInManager = _signInManager;
 
             userManager = _userManager;
-
-            dataService = _dataService;
         }
 
 
@@ -56,7 +52,7 @@ namespace HotelManagement.Controllers
         public async Task<IActionResult> Register()
         {
             
-            var model = await dataService.GetRegisterViewModelWithRolesAndDepartmentsAsync();
+            var model = await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync();
 
 
             return View(model);
@@ -136,7 +132,7 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return View(new RegisterViewModel());
         }
 
         [HttpGet]

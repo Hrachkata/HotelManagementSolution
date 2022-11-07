@@ -22,11 +22,11 @@
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+                    My Account
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout</a></li>
+                    <li><a class="dropdown-item" asp-controller="ManageAccount" asp-action="Settings" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Settings</a></li>
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                 </ul>
             </li>

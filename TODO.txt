@@ -1,0 +1,17 @@
+Implement change password on first login												
+																						
+With register roles should be defined by the department or the other way around			
+																						
+Manage employees																		
+																						
+Front desk - reception																	
+																						
+Reservations																			
+																						
+Floors																					
+																						
+Logging																					
+																						
+Redis cache																				
+																						
+Search NotActive users																	

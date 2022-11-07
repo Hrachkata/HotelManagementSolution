@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using FluentEmail.Core.Models;
 using HotelManagement.EmailService;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.UserServices;
 
@@ -17,13 +18,15 @@ public class AccountServices : IAccountServices
     private readonly IConfiguration configuration;
     private readonly IMapper mapper;
     private readonly SendGridEmail emailService;
+    private readonly ApplicationDbContext context;
 
-     public AccountServices(UserManager<ApplicationUser> _userManager,
+    public AccountServices(UserManager<ApplicationUser> _userManager,
         UserManager<ApplicationUser> _signInManager,
         RoleManager<ApplicationUserRole> _roleManager,
         IConfiguration _configuration,
         IMapper _mapper,
-        SendGridEmail _emailService)
+        SendGridEmail _emailService,
+        ApplicationDbContext _context)
     {
         this.userManager = _userManager;
         this.signInManager = _signInManager;
@@ -31,6 +34,7 @@ public class AccountServices : IAccountServices
         this.configuration = _configuration;
         this.mapper = _mapper;
         this.emailService = _emailService;
+        this.context = _context;
     }
 
 
@@ -93,6 +97,20 @@ public class AccountServices : IAccountServices
         throw new NotImplementedException();
     }
 
+    public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync()
+    {
+        var departments = await this.context.Departments.ToListAsync();
+
+        var roles = await this.context.Roles.ToListAsync();
+
+        return new RegisterViewModel()
+        {
+            Departments = departments,
+            Roles = roles
+        };
+
+    }
+
     public SendResponse SendForgotPasswordEmailAsync(ApplicationUser user, string token)
     {
         return emailService.SendForgotPasswordEmail(user.Id.ToString(), token, user.Email);
@@ -106,5 +124,21 @@ public class AccountServices : IAccountServices
                 model.NewPassword);
 
         return await result;
+    }
+
+    public async Task<EditViewModel> GetEditViewModelByUserNameAsync(string userName)
+    {
+        var user = await userManager.FindByNameAsync(userName);
+
+        var result = mapper.Map<EditViewModel>(user);
+
+        return result;
+    }
+
+    public EditViewModel ProjectApplicationUserToEditViewModel(ApplicationUser user)
+    {
+        var result = mapper.Map<EditViewModel>(user);
+
+        return result;
     }
 }
