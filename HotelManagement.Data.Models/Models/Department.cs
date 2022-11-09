@@ -10,7 +10,8 @@ namespace HotelManagement.Data.Models.Models
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public int EmployeeCount { get; set; }
+        public int? EmployeeCount { get; set; }
+        public ICollection<RoleDepartment> RoleDepartment { get; set; } = new HashSet<RoleDepartment>();
         public ICollection<EmployeeDepartment> EmployeeDepartment { get; set; } = new HashSet<EmployeeDepartment>();
     }
 }

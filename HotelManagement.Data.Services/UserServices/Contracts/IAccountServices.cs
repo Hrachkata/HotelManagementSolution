@@ -7,6 +7,7 @@ namespace HotelManagement.Data.Services.UserServices.Contracts;
 
 public interface IAccountServices
 {
+    Task<ApplicationUser>? GetUserIncludedDepartmentsByIdAsync(string id);
     Task<ApplicationUser> GetUserByEmailAsync(string email);
 
     Task<ApplicationUser> GetUserByIdAsync(string id);

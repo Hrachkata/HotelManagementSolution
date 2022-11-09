@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelManagement.Data.Migrations
 {
-    public partial class tryingFixRemoveSeedAdminRoleAssingment : Migration
+    public partial class Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,7 +67,7 @@ namespace HotelManagement.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmployeeCount = table.Column<int>(type: "int", nullable: false),
+                    EmployeeCount = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -93,6 +93,19 @@ namespace HotelManagement.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Floors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleName",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameOfRole = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleName", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,6 +257,30 @@ namespace HotelManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RolesDepartments",
+                columns: table => new
+                {
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    RoleNameId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolesDepartments", x => new { x.RoleNameId, x.DepartmentId });
+                    table.ForeignKey(
+                        name: "FK_RolesDepartments_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RolesDepartments_RoleName_RoleNameId",
+                        column: x => x.RoleNameId,
+                        principalTable: "RoleName",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -313,27 +350,44 @@ namespace HotelManagement.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("0fa0b69c-bbcf-407f-b9ad-653f4bbcc808"), "525429d1-4133-4fce-8b71-d1c0ae10826d", "Front Desk", "FRONTDESK" },
-                    { new Guid("52c8017b-f43b-4b13-bf55-ef306a13bef6"), "04aa10e6-b46f-4478-92f6-b325bfc5dc9a", "Director", "DIRECTOR" },
-                    { new Guid("b3bbd0ab-1bd0-4acf-a19b-cb4729734a18"), "db3712da-8a4e-45df-a940-72c5443368e0", "Human Resources", "HUMANRESOURCES" },
-                    { new Guid("f3101a96-c198-4957-84ab-946d5260c738"), "57e123ae-e14d-4bea-87b7-a78ce3ecb834", "Admin", "ADMIN" }
+                    { new Guid("224fcb7e-4cf2-4b79-9b0e-6c5e66b6e2fb"), "31b89a3b-adda-4765-8ac4-933f49a48189", "Director", "DIRECTOR" },
+                    { new Guid("5eaee231-c6e5-466b-8496-9f4b00bc6d9f"), "4edd4ba0-0984-4a3c-967d-27e2b4b760ee", "Human Resources", "HUMAN RESOURCES" },
+                    { new Guid("8a9279bf-2862-4383-be06-fce1abd1f485"), "6b2e37e1-a6f4-404d-8e72-42203027fa79", "f&b", "F&B" },
+                    { new Guid("99c55569-1edf-4ac1-a1c7-46be55b6d707"), "0ec40cd2-0367-454f-9743-cee3e0d931ed", "Front Desk", "FRONT DESK" },
+                    { new Guid("a35d3a90-36a4-4cdc-8c67-5e1ea4447a86"), "5d4b38be-a11f-44f5-b31e-7229ccc6eed8", "Manager", "MANAGER" },
+                    { new Guid("b4f3ae33-46f3-4540-bc4b-ffc825ff4a2b"), "2d70d64a-e5e6-4a7c-9665-0a0a675fb53e", "Admin", "ADMIN" },
+                    { new Guid("f056ab5a-60c4-4dfd-ae14-e973ab69276c"), "5fefa8b4-3e38-4c20-a325-4ea20b597c95", "Owner", "OWNER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BirthDate", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "EGN", "EditedOn", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RFID", "Salary", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("4e3512ef-104b-48ed-bc8e-b89e9ee95fd0"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "e1343b25-1466-41fc-930f-8e21f7ad667a", new DateTime(2022, 11, 3, 23, 42, 52, 600, DateTimeKind.Local).AddTicks(2686), null, "124124124", null, "admin@gmail.com", true, "Admin", true, "Admin", false, null, "Admin", null, "ADMIN", "AQAAAAEAACcQAAAAEG3qTwFwZJsgn/cAZMVBEEwpxNu+3mTs6VzvwyKitq1aw3lqCa7J6SyKPi7l+h+y/Q==", "1234567890", false, "234", 1m, "a741116b-875b-486d-8ef3-3386f73943aa", false, "Admin" });
+                values: new object[] { new Guid("b3b355ca-1fc4-4a7b-b881-33d7ace0f390"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "56a4ebfa-1df9-4df0-bef3-5057a94ae87c", new DateTime(2022, 11, 9, 14, 21, 3, 954, DateTimeKind.Local).AddTicks(9902), null, "123", null, null, true, "Admin", true, "Admin", false, null, "Admin", null, "ADMIN", "AQAAAAEAACcQAAAAECZAGVqqU4c13g0F3Y5EulPf9u7bEUkpbwUnwb+RoPUpVH58opvrS8chxVyGBLBv0A==", "1234567890", false, "123456789", 0m, "21e15b46-11cb-433f-a2a9-7139b52071c0", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "Id", "CreatedOn", "DeletedOn", "Description", "EditedOn", "EmployeeCount", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 3, 23, 42, 52, 608, DateTimeKind.Local).AddTicks(6539), null, "Some Department", null, 23, true, "F&B" },
-                    { 2, new DateTime(2022, 11, 3, 23, 42, 52, 608, DateTimeKind.Local).AddTicks(6590), null, "Some Department", null, 1, true, "Human Resources" },
-                    { 3, new DateTime(2022, 11, 3, 23, 42, 52, 608, DateTimeKind.Local).AddTicks(6594), null, "Some Department", null, 4, true, "IT department" },
-                    { 4, new DateTime(2022, 11, 3, 23, 42, 52, 608, DateTimeKind.Local).AddTicks(6598), null, "Some Department", null, 10, true, "Reservations" },
-                    { 5, new DateTime(2022, 11, 3, 23, 42, 52, 608, DateTimeKind.Local).AddTicks(6602), null, "Some Department", null, 1, true, "Director" }
+                    { 1, new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7265), null, "Some Department", null, null, true, "F&B" },
+                    { 2, new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7279), null, "This is the human resource department with access to employee management and hiring new employees.", null, null, true, "Human Resources" },
+                    { 3, new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7282), null, "This is the IT department with access to employee management, hiring new employees, admin panel and front desk.", null, null, true, "IT department" },
+                    { 4, new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7285), null, "This is the front desk/reception department with access to reservations and front desk.", null, null, true, "Reservations" },
+                    { 5, new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7287), null, "This is the director department with access to employee management, hiring new employees, admin panel and front desk.", null, null, true, "Director" },
+                    { 6, new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7292), null, "This is full access! NOT RECOMMENDED", null, null, true, "Owner" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RoleName",
+                columns: new[] { "Id", "NameOfRole" },
+                values: new object[,]
+                {
+                    { 1, "F&B" },
+                    { 2, "HUMAN RESOURCES" },
+                    { 3, "ADMIN" },
+                    { 4, "DIRECTOR" },
+                    { 5, "OWNER" },
+                    { 6, "FRONT DESK" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -386,6 +440,11 @@ namespace HotelManagement.Data.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RolesDepartments_DepartmentId",
+                table: "RolesDepartments",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rooms_FloorId",
                 table: "Rooms",
                 column: "FloorId");
@@ -420,16 +479,22 @@ namespace HotelManagement.Data.Migrations
                 name: "Reservations");
 
             migrationBuilder.DropTable(
+                name: "RolesDepartments");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Rooms");
+
+            migrationBuilder.DropTable(
                 name: "Departments");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "RoleName");
 
             migrationBuilder.DropTable(
                 name: "Floors");

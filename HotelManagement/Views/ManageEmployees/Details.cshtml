@@ -1,5 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model EmployeeDetailsModel
+
 @{
+    ViewBag.Title = "Employee details";
 }
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="card col-8 border-0" style="font-size:20px;">
+            <p style="font-size:40px;">Username: <b><u>@Model.UserName</u></b></p>
+            <p >Name: <b>@Model.FirstName @Model.MiddleName @Model.LastName </b></p>
+            <p>Departments: <b>@(String.Join(",", Model.Departments))</b></p>
+            <p>Salary: <b>@Model.Salary</b></p>
+            <p>RFID: <b>@Model.RFID</b></p>
+            <p>Email: <b>@Model.Email</b></p>
+            <p>Created on: <b>@Model.CreatedOn</b></p>
+            @if (Model.EditedOn != null)
+            {
+                <p>Edited on: <b>@Model.EditedOn</b></p>
+            }
+
+            @if (Model.DeletedOn != null && Model.IsActive == false)
+            {
+                <p>Deleted on: <b>@Model.DeletedOn</b></p>
+            }
+
+            <p>Birth date: <b>@($"{Model.BirthDate:d}")</b></p>
+            <p><i>(@(Model.IsActive ? "Active" : "Disabled"))</i></p>
+            
+            <p style="font-size:40px;">Email confirmed: @if (Model.EmailConfirmed)
+                    {
+                        <b style="background-color:green;">Yes</b>
+                    }
+                    else{
+                        <b style="background-color:tomato;">No</b>
+                    }    
+                </b></p>
+            <p></p>
+
+            <div class="form-inline">
+                @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("HUMAN RESOURCES"))
+                {
+                    <a class="btn btn-warning" asp-controller="ManageEmployees" asp-action="Edit"
+                   asp-route-id="@Model.Id">Edit</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="ManageEmployees" asp-action="Delete"
+                   asp-route-id="@Model.Id">Delete</a>
+
+                }
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Currently viewing as: @User.Identity?.Name</h5>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

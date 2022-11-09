@@ -41,5 +41,11 @@ public class AutoMapperProfile : Profile
             .ForMember(d => d.Id,
             o => o.MapFrom(s => s.Id));
 
+        CreateMap<ApplicationUser, EmployeeDetailsModel>()
+            .ForMember(d => d.Departments,
+            o => o.MapFrom(s => s.EmployeeDepartment.Select(ed => ed.Department.Name)));
+
+        CreateMap<ApplicationUser, EmployeeEditViewModel>();
+
     }
 }

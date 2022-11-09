@@ -2,8 +2,12 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Data.Services.EmployeeServices.Contracts;
+using HotelManagement.Data.Services.UserServices.Contracts;
+using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Errors.Model;
 using static HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels.EmployeeSortingClass;
 namespace HotelManagement.Data.Services.EmployeeServices
 {
@@ -11,15 +15,18 @@ namespace HotelManagement.Data.Services.EmployeeServices
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly IAccountServices accountServices;
 
         public EmployeeServices(
             ApplicationDbContext _context,
-            IMapper _mapper
+            IMapper _mapper,
+            IAccountServices _accountServices
             )
         {
             context = _context;
 
             mapper = _mapper;
+            this.accountServices = _accountServices;
         }
        
         public async Task<EmployeeQueryServiceModel> All(EmployeeSorting sorting = EmployeeSorting.Newest,
@@ -83,6 +90,25 @@ namespace HotelManagement.Data.Services.EmployeeServices
         public async Task<IEnumerable<string>> AllDeparmentsNames()
         {
             return await this.context.Departments.Select(d => d.Name).Distinct().ToListAsync();
+        }
+
+        public async Task<EmployeeDetailsModel> GetUserDetailsModel(string id)
+        {
+            var user = await accountServices.GetUserIncludedDepartmentsByIdAsync(id);
+
+            if (user == null)
+            {
+                throw new NotFoundException($"User with id {id} not found.");
+            }
+
+            return mapper.Map<EmployeeDetailsModel>(user);
+        }
+
+        public async Task<EmployeeEditViewModel>? GetUserEditViewModelByIdAsync(string id)
+        {
+            var user = await accountServices.GetUserByIdAsync(id);
+
+            return mapper.Map<EmployeeEditViewModel>(user);
         }
     }
 }

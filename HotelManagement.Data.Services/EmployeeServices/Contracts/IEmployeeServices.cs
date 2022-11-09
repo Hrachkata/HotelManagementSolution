@@ -19,4 +19,5 @@ public interface IEmployeeServices
     public Task<IEnumerable<string>> AllDeparmentsNames();
 
     public Task<EmployeeDetailsModel> GetUserDetailsModel(string id);
+    public Task<EmployeeEditViewModel>? GetUserEditViewModelByIdAsync(string id);
 }

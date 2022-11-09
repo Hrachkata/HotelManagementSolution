@@ -49,9 +49,31 @@ namespace HotelManagement.Controllers
         [Authorize]
         public async Task<IActionResult> Details(string id)
         {
-            var user = employeeServices.GetUserDetailsModel(id);
+            var user = await employeeServices.GetUserDetailsModel(id);
 
             return View(user);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var user = await employeeServices.GetUserEditViewModelByIdAsync(id);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", $"User with id {id} doesnt exist.");
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(EmployeeEditViewModel employee)
+        {
+            Console.WriteLine("OK");
+            return View(employee);
         }
 
     }

@@ -24,8 +24,13 @@ namespace HotelManagement.Data
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<EmployeeDepartment> EmployeesDepartments { get; set; }
+
+
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Reservation>Reservations{ get; set; }
+
+        public DbSet<RoleDepartment> RolesDepartments { get; set; }  
+        public DbSet<RoleName> RoleName { get; set; }
         public DbSet<Room> Rooms{ get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,17 +47,36 @@ namespace HotelManagement.Data
                 .WithMany(d => d.EmployeeDepartment)
                 .HasForeignKey(ed => ed.ApplicationUserId);
 
+
+
+            builder.Entity<RoleDepartment>()
+                .HasKey(rd => new { rd.RoleNameId, rd.DepartmentId });
+
+            builder.Entity<RoleDepartment>()
+                .HasOne(rd => rd.RoleName)
+                .WithMany(rn => rn.RoleDepartment)
+                .HasForeignKey(rd => rd.RoleNameId);
+
+            builder.Entity<RoleDepartment>()
+                .HasOne(rd => rd.Department)
+                .WithMany(d => d.RoleDepartment)
+                .HasForeignKey(rd => rd.DepartmentId);
+
+
+
             UserSeeder.SeedRoles(builder);
 
             UserSeeder.SeedUsers(builder);
 
-            //UserSeeder.SeedUserRoles(builder);
+            UserSeeder.SeedUserRoles(builder);
 
-            UserSeeder.SeedDepartments(builder);   
+            UserSeeder.SeedDepartments(builder);
 
+            UserSeeder.SeedRoleNameItems(builder);
+
+            UserSeeder.SeedDepartmentRoles(builder);
            
             base.OnModelCreating(builder);
-
         }
     }
 }

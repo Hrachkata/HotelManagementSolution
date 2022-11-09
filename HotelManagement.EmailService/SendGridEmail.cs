@@ -27,7 +27,7 @@ public class SendGridEmail
             .Tag(tag)
             .Body(body);
 
-        var SendGridApiKey = config["SendGrid:SendGridApiKey"];
+        var SendGridApiKey = config["SendGridApiKey"];
 
         SendGridSender sendGridSender = new SendGridSender(SendGridApiKey);
 

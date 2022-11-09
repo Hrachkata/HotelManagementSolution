@@ -17,10 +17,10 @@ namespace HotelManagement.Data.Models.UserModels
         public DateTime? DeletedOn { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public DateTime? EditedOn { get; set; }
-
         public ICollection<EmployeeDepartment> EmployeeDepartment { get; set; } = new HashSet<EmployeeDepartment>();
-        //public int? ManagerID { get; set; }
+
         //public ApplicationUser Manager { get; set; }
+        //public int? ManagerID { get; set; }
 
     }
 }

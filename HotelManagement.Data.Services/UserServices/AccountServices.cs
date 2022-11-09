@@ -7,6 +7,7 @@ using AutoMapper;
 using FluentEmail.Core.Models;
 using HotelManagement.EmailService;
 using Microsoft.EntityFrameworkCore;
+using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 
 namespace HotelManagement.Data.Services.UserServices;
 
@@ -47,7 +48,12 @@ public class AccountServices : IAccountServices
     {
         return await userManager.FindByIdAsync(id);
     }
+     
 
+    public async Task<ApplicationUser>? GetUserIncludedDepartmentsByIdAsync(string id)
+    {
+        return await context.Users.Include(u => u.EmployeeDepartment).ThenInclude(ed => ed.Department).Where(u => u.Id.ToString() == id).FirstOrDefaultAsync();
+    }
     public async Task<ApplicationUser>? GetUserByUserNameAsync(string username)
     {
         return await userManager.FindByNameAsync(username);
@@ -59,11 +65,22 @@ public class AccountServices : IAccountServices
 
         var resultUser = await userManager.CreateAsync(user, userModel.Password);
 
-        var resultRoles = await userManager.AddToRoleAsync(user, userModel.RoleName);
-        
-        resultUser.Errors.Concat(resultRoles.Errors);
+        var department = await context.Departments.Where(d => d.Id == userModel.DepartmentId).Include(d => d.RoleDepartment).ThenInclude(d => d.RoleName).FirstOrDefaultAsync();
 
-        if (resultUser.Succeeded)
+        var roleNames = department.RoleDepartment.Select(rd => rd.RoleName.NameOfRole).ToList();
+
+        if (department != null && roleNames != null)
+        {
+            var resultRoles = await userManager.AddToRolesAsync(user, roleNames);
+
+            if (!resultRoles.Succeeded)
+            {
+                resultUser.Errors.Concat(resultRoles.Errors);
+            }
+        }
+                
+
+        if (resultUser.Succeeded && resultUser.Errors.Count() == 0)
         {
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -101,12 +118,9 @@ public class AccountServices : IAccountServices
     {
         var departments = await this.context.Departments.ToListAsync();
 
-        var roles = await this.context.Roles.ToListAsync();
-
         return new RegisterViewModel()
         {
             Departments = departments,
-            Roles = roles
         };
 
     }

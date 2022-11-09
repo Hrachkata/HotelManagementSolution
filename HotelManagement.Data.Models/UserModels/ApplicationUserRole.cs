@@ -6,6 +6,6 @@ public class ApplicationUserRole : IdentityRole<Guid>
 {
     public ApplicationUserRole()
     {
-    
+        
     }
 }

@@ -48,6 +48,7 @@ builder.Services.AddScoped<IAccountServices, AccountServices>();
 //this is for email sending
 IConfigurationRoot configuration = new ConfigurationBuilder()
             .AddUserSecrets<Program>()
+            .AddUserSecrets<SendGridEmail>()
             .Build();
 
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();

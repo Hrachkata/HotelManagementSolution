@@ -132,10 +132,11 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            return View(new RegisterViewModel());
+            return View(model);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token, string email)
         {
             var model = new ConfirmEmailViewModel()
@@ -159,6 +160,7 @@ namespace HotelManagement.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailViewModel model)
         {
 
@@ -190,6 +192,7 @@ namespace HotelManagement.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

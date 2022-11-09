@@ -4,6 +4,7 @@ using HotelManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagement.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221109122104_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +63,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 123, DateTimeKind.Local).AddTicks(5191),
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7265),
                             Description = "Some Department",
                             IsActive = true,
                             Name = "F&B"
@@ -69,7 +71,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 123, DateTimeKind.Local).AddTicks(5209),
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7279),
                             Description = "This is the human resource department with access to employee management and hiring new employees.",
                             IsActive = true,
                             Name = "Human Resources"
@@ -77,7 +79,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 123, DateTimeKind.Local).AddTicks(5212),
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7282),
                             Description = "This is the IT department with access to employee management, hiring new employees, admin panel and front desk.",
                             IsActive = true,
                             Name = "IT department"
@@ -85,7 +87,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 123, DateTimeKind.Local).AddTicks(5215),
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7285),
                             Description = "This is the front desk/reception department with access to reservations and front desk.",
                             IsActive = true,
                             Name = "Reservations"
@@ -93,7 +95,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 123, DateTimeKind.Local).AddTicks(5217),
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7287),
                             Description = "This is the director department with access to employee management, hiring new employees, admin panel and front desk.",
                             IsActive = true,
                             Name = "Director"
@@ -101,7 +103,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 123, DateTimeKind.Local).AddTicks(5265),
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 962, DateTimeKind.Local).AddTicks(7292),
                             Description = "This is full access! NOT RECOMMENDED",
                             IsActive = true,
                             Name = "Owner"
@@ -223,83 +225,6 @@ namespace HotelManagement.Data.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("RolesDepartments");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleNameId = 1,
-                            DepartmentId = 1
-                        },
-                        new
-                        {
-                            RoleNameId = 2,
-                            DepartmentId = 2
-                        },
-                        new
-                        {
-                            RoleNameId = 3,
-                            DepartmentId = 3
-                        },
-                        new
-                        {
-                            RoleNameId = 2,
-                            DepartmentId = 3
-                        },
-                        new
-                        {
-                            RoleNameId = 6,
-                            DepartmentId = 3
-                        },
-                        new
-                        {
-                            RoleNameId = 6,
-                            DepartmentId = 4
-                        },
-                        new
-                        {
-                            RoleNameId = 3,
-                            DepartmentId = 5
-                        },
-                        new
-                        {
-                            RoleNameId = 2,
-                            DepartmentId = 5
-                        },
-                        new
-                        {
-                            RoleNameId = 5,
-                            DepartmentId = 5
-                        },
-                        new
-                        {
-                            RoleNameId = 1,
-                            DepartmentId = 6
-                        },
-                        new
-                        {
-                            RoleNameId = 2,
-                            DepartmentId = 6
-                        },
-                        new
-                        {
-                            RoleNameId = 3,
-                            DepartmentId = 6
-                        },
-                        new
-                        {
-                            RoleNameId = 4,
-                            DepartmentId = 6
-                        },
-                        new
-                        {
-                            RoleNameId = 5,
-                            DepartmentId = 6
-                        },
-                        new
-                        {
-                            RoleNameId = 6,
-                            DepartmentId = 6
-                        });
                 });
 
             modelBuilder.Entity("HotelManagement.Data.Models.Models.RoleName", b =>
@@ -536,11 +461,11 @@ namespace HotelManagement.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("be78793b-260f-435e-bc1a-91cd6c39b7c5"),
+                            Id = new Guid("b3b355ca-1fc4-4a7b-b881-33d7ace0f390"),
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "084da9c4-7a80-4eba-bb3a-6a7e666b42d9",
-                            CreatedOn = new DateTime(2022, 11, 9, 14, 33, 28, 115, DateTimeKind.Local).AddTicks(5683),
+                            ConcurrencyStamp = "56a4ebfa-1df9-4df0-bef3-5057a94ae87c",
+                            CreatedOn = new DateTime(2022, 11, 9, 14, 21, 3, 954, DateTimeKind.Local).AddTicks(9902),
                             EGN = "123",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -549,12 +474,12 @@ namespace HotelManagement.Data.Migrations
                             LockoutEnabled = false,
                             MiddleName = "Admin",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFr5AqvPiGwaAVH0MrpbwdARBvXk+iZm3JoC8kkvTAI+Hw4TwIBbHT0beNheeexAJQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECZAGVqqU4c13g0F3Y5EulPf9u7bEUkpbwUnwb+RoPUpVH58opvrS8chxVyGBLBv0A==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
                             RFID = "123456789",
                             Salary = 0m,
-                            SecurityStamp = "2d5f8b4c-2c61-4972-9766-29f57eef592a",
+                            SecurityStamp = "21e15b46-11cb-433f-a2a9-7139b52071c0",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -590,50 +515,50 @@ namespace HotelManagement.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e17d0ad3-e193-43e2-a013-85f58c6fc037"),
-                            ConcurrencyStamp = "63ca2c04-11cf-418d-a56e-28a03dc29e6a",
+                            Id = new Guid("b4f3ae33-46f3-4540-bc4b-ffc825ff4a2b"),
+                            ConcurrencyStamp = "2d70d64a-e5e6-4a7c-9665-0a0a675fb53e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("865f129d-81a1-4109-91d1-6a448a16bf04"),
-                            ConcurrencyStamp = "a7d07c24-ee4b-49d9-bcf4-c6addaf9d817",
+                            Id = new Guid("8a9279bf-2862-4383-be06-fce1abd1f485"),
+                            ConcurrencyStamp = "6b2e37e1-a6f4-404d-8e72-42203027fa79",
                             Name = "f&b",
                             NormalizedName = "F&B"
                         },
                         new
                         {
-                            Id = new Guid("547fd860-99d3-4f19-ad8f-824ee837941d"),
-                            ConcurrencyStamp = "649a73ee-0b38-4fd4-a956-adbf0cdf7139",
+                            Id = new Guid("5eaee231-c6e5-466b-8496-9f4b00bc6d9f"),
+                            ConcurrencyStamp = "4edd4ba0-0984-4a3c-967d-27e2b4b760ee",
                             Name = "Human Resources",
                             NormalizedName = "HUMAN RESOURCES"
                         },
                         new
                         {
-                            Id = new Guid("365bf314-9750-4a29-b676-20545aea6d21"),
-                            ConcurrencyStamp = "a4953987-955b-4762-a84c-ce31abfb17af",
+                            Id = new Guid("224fcb7e-4cf2-4b79-9b0e-6c5e66b6e2fb"),
+                            ConcurrencyStamp = "31b89a3b-adda-4765-8ac4-933f49a48189",
                             Name = "Director",
                             NormalizedName = "DIRECTOR"
                         },
                         new
                         {
-                            Id = new Guid("8e3f7bb5-23c9-4edf-90a1-fb7df35bd9b6"),
-                            ConcurrencyStamp = "20eb8503-3dc1-4dc6-989f-4dc96479ead2",
+                            Id = new Guid("a35d3a90-36a4-4cdc-8c67-5e1ea4447a86"),
+                            ConcurrencyStamp = "5d4b38be-a11f-44f5-b31e-7229ccc6eed8",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = new Guid("3b6d48ea-0f56-4dee-bc00-7e4489cd1d51"),
-                            ConcurrencyStamp = "b4b648dd-de75-4887-ab5b-3b6bd7d5ee42",
+                            Id = new Guid("f056ab5a-60c4-4dfd-ae14-e973ab69276c"),
+                            ConcurrencyStamp = "5fefa8b4-3e38-4c20-a325-4ea20b597c95",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = new Guid("ab08c546-b7a7-4c31-9417-526f542c3812"),
-                            ConcurrencyStamp = "8c2b7eb1-6223-4110-841b-53320d383838",
+                            Id = new Guid("99c55569-1edf-4ac1-a1c7-46be55b6d707"),
+                            ConcurrencyStamp = "0ec40cd2-0367-454f-9743-cee3e0d931ed",
                             Name = "Front Desk",
                             NormalizedName = "FRONT DESK"
                         });
@@ -723,13 +648,6 @@ namespace HotelManagement.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("be78793b-260f-435e-bc1a-91cd6c39b7c5"),
-                            RoleId = new Guid("3b6d48ea-0f56-4dee-bc00-7e4489cd1d51")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
