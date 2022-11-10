@@ -5,7 +5,7 @@ using HotelManagement.Data.Services.EmployeeServices.Contracts;
 using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
-using Microsoft.AspNetCore.Identity;
+using HotelManagement.Data.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
 using static HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels.EmployeeSortingClass;
@@ -28,7 +28,7 @@ namespace HotelManagement.Data.Services.EmployeeServices
             mapper = _mapper;
             this.accountServices = _accountServices;
         }
-       
+             
         public async Task<EmployeeQueryServiceModel> All(EmployeeSorting sorting = EmployeeSorting.Newest,
             string department = "",
             bool active = true,
@@ -106,9 +106,60 @@ namespace HotelManagement.Data.Services.EmployeeServices
 
         public async Task<EmployeeEditViewModel>? GetUserEditViewModelByIdAsync(string id)
         {
-            var user = await accountServices.GetUserByIdAsync(id);
+            Guid idToGuid;
 
-            return mapper.Map<EmployeeEditViewModel>(user);
+            bool idValidation = Guid.TryParse(id, out idToGuid);
+
+            if (!idValidation)
+            {
+                throw new ArgumentException("Id is invalid.");
+            }
+
+
+
+            var user = await context.Users
+                .Include(u => u.EmployeeDepartment)
+                .ThenInclude(ed => ed.Department)
+                .Where(u => u.Id == idToGuid).FirstOrDefaultAsync();
+
+            var employeeDepartments = user.EmployeeDepartment.Select(d => d.DepartmentId).ToList();
+
+            var departmentsEmployeeNotPresentIn = await context.Departments.Where(d => !employeeDepartments.Contains(d.Id)).ProjectTo<DepartmentDto>(mapper.ConfigurationProvider).ToListAsync();
+
+            var result = mapper.Map<EmployeeEditViewModel>(user);
+
+            result.DepartmentsEmployeeDoesntHave = departmentsEmployeeNotPresentIn;
+
+            return result;
+        }
+
+        public async Task<bool> AddDepartmentToUser(int departmentId, string userId)
+        {
+            Guid idToGuid;
+
+            bool idValidation = Guid.TryParse(userId, out idToGuid);
+
+            if (!idValidation)
+            {
+                throw new ArgumentException("Id is invalid.");
+            }
+
+            var result = await context.Users.FindAsync(idToGuid);
+
+            result.EmployeeDepartment.Add(new EmployeeDepartment
+            {
+                DepartmentId = departmentId,
+                ApplicationUserId = idToGuid
+            });
+
+            var resultSaveChanges = await context.SaveChangesAsync();
+
+            if (resultSaveChanges > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

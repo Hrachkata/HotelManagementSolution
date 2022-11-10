@@ -126,7 +126,7 @@ namespace HotelManagement.Controllers
             {
                 foreach (var error in resultUser.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("", error.Description);    
                 }
 
                 return View(model);

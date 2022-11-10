@@ -89,7 +89,7 @@
                     
                     @foreach (var dep in Model.Departments)
                     {
-                        <option value="@dep.Id">@dep.Name</option>
+                        <option value="@dep.DepartmentId">@dep.DepartmentName</option>
                     }
                 </select>
                 <span asp-validation-for="DepartmentId" class="text-danger"></span>

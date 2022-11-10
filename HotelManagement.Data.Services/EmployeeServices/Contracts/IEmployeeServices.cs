@@ -20,4 +20,5 @@ public interface IEmployeeServices
 
     public Task<EmployeeDetailsModel> GetUserDetailsModel(string id);
     public Task<EmployeeEditViewModel>? GetUserEditViewModelByIdAsync(string id);
+    public Task<bool> AddDepartmentToUser(int departmentId, string userId);
 }

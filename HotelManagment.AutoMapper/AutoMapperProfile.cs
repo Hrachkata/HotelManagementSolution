@@ -11,6 +11,12 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
+        CreateMap<Department, DepartmentDto>()
+            .ForMember(d => d.DepartmentId,
+                o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.DepartmentName,
+                o => o.MapFrom(s => s.Name));
+
         CreateMap<RegisterViewModel, ApplicationUser>()
             .ForMember(d => d.EmployeeDepartment,
                 o => o.MapFrom(s => new List<EmployeeDepartment>()
@@ -45,7 +51,9 @@ public class AutoMapperProfile : Profile
             .ForMember(d => d.Departments,
             o => o.MapFrom(s => s.EmployeeDepartment.Select(ed => ed.Department.Name)));
 
-        CreateMap<ApplicationUser, EmployeeEditViewModel>();
+        CreateMap<ApplicationUser, EmployeeEditViewModel>()
+            .ForMember(d => d.DepartmentsOfEmployee,
+            o => o.MapFrom(s => s.EmployeeDepartment.Select(ed => ed.Department)));
 
     }
 }

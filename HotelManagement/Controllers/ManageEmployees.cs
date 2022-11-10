@@ -58,9 +58,23 @@ namespace HotelManagement.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            var user = await employeeServices.GetUserEditViewModelByIdAsync(id);
+            EmployeeEditViewModel user = new EmployeeEditViewModel();
 
-            if (user == null)
+            try
+            {
+                user = await employeeServices.GetUserEditViewModelByIdAsync(id);
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", $"User id invalid.");
+
+                return View(user);
+            }
+
+            
+
+            if (String.IsNullOrWhiteSpace(user.UserName))
             {
                 ModelState.AddModelError("", $"User with id {id} doesnt exist.");
             }
@@ -76,5 +90,30 @@ namespace HotelManagement.Controllers
             return View(employee);
         }
 
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult RemoveDepartment(EmployeeEditViewModel model)
+        {
+            var departmentId = model.DepartmentOfEmployeeId;
+
+            var userId = model.Id;
+
+            return RedirectToAction("Details", model.Id);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddDepartment(EmployeeEditViewModel model)
+        {
+            var result = await employeeServices.AddDepartmentToUser(model.DepartmentEmployeeDoesntHaveId, model.Id.ToString());
+
+            if (!result)
+            {
+                return View(model);
+            }
+
+            return View("Details", new {id= model.Id.ToString() });
+        }
     }
 }

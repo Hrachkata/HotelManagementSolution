@@ -9,14 +9,15 @@ namespace HotelManagement.Web.ViewModels.ManageEmployeesModels
     public class EmployeeEditViewModel
     {
         public Guid Id { get; set; }
-
         public DateTimeOffset LockoutEnd { get; set; }
-
-        public bool LockoutEnabled { get; set; }
-
         public string PhoneNumber{ get; set; }
         public string RFID { get; set; }
-        public IEnumerable<string> Departments { get; set; }
+        public ICollection<DepartmentDto> DepartmentsOfEmployee { get; set; }
+        public int DepartmentOfEmployeeId { get; set; }
+
+        public ICollection<DepartmentDto> DepartmentsEmployeeDoesntHave { get; set; }
+        public int DepartmentEmployeeDoesntHaveId { get; set; }
+        
         public bool EmailConfirmed { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }

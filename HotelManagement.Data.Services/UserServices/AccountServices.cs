@@ -8,6 +8,7 @@ using FluentEmail.Core.Models;
 using HotelManagement.EmailService;
 using Microsoft.EntityFrameworkCore;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
+using AutoMapper.QueryableExtensions;
 
 namespace HotelManagement.Data.Services.UserServices;
 
@@ -116,7 +117,8 @@ public class AccountServices : IAccountServices
 
     public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync()
     {
-        var departments = await this.context.Departments.ToListAsync();
+        var departments =await this.context.Departments.Where(d => d.IsActive).ProjectTo<DepartmentDto>(mapper.ConfigurationProvider).ToListAsync();
+            //ProjectTo(typeof(DepartmentDto), mapper.ConfigurationProvider);
 
         return new RegisterViewModel()
         {
