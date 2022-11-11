@@ -96,8 +96,29 @@ public class AccountServices : IAccountServices
         return emailService.sendConfirmationEmail(user.Id.ToString(), token, user.Email);
     }
     
-    public async Task<IdentityResult> UpdateUserAsync(RegisterViewModel userModel)
+    public async Task<IdentityResult> UpdateUserAsync(EmployeeEditViewModel model)
     {
+        var user = await GetUserByIdAsync(model.Id.ToString());
+
+        if (user == null)
+        {
+            throw new ArgumentNullException("User with id doesn't exist.");
+        }
+
+        user.FirstName = model.FirstName;
+
+        user.UserName = model.UserName;
+
+        user.PhoneNumber = model.PhoneNumber;
+
+        user.MiddleName = model.MiddleName;
+
+        user.LastName = model.LastName;
+
+        user.PhoneNumber = model.PhoneNumber;
+
+        
+
         throw new NotImplementedException();
     }
 

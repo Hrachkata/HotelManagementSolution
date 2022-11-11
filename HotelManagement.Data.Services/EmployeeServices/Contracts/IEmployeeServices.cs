@@ -1,5 +1,6 @@
 ﻿using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
+using Microsoft.AspNetCore.Identity;
 using static HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels.EmployeeSortingClass;
 
 
@@ -21,4 +22,8 @@ public interface IEmployeeServices
     public Task<EmployeeDetailsModel> GetUserDetailsModel(string id);
     public Task<EmployeeEditViewModel>? GetUserEditViewModelByIdAsync(string id);
     public Task<bool> AddDepartmentToUser(int departmentId, string userId);
+
+    public Task<bool> RemoveDepartmentFromUser(int departmentId, string userId);
+
+    public IdentityResult EditUserFromEditViewModel(EmployeeEditViewModel editedModel);
 }

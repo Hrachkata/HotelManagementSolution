@@ -1,5 +1,6 @@
 ﻿using FluentEmail.Core.Models;
 using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,7 +19,7 @@ public interface IAccountServices
     SendResponse SendConfirmationEmail(ApplicationUser user, string token);
     SendResponse SendForgotPasswordEmailAsync(ApplicationUser user, string token);
     
-    Task<IdentityResult> UpdateUserAsync(RegisterViewModel userModel);
+    Task<IdentityResult> UpdateUserAsync(EmployeeEditViewModel userModel);
 
     Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
 

@@ -9,6 +9,8 @@ using HotelManagement.Data.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
 using static HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels.EmployeeSortingClass;
+using Microsoft.AspNetCore.Identity;
+
 namespace HotelManagement.Data.Services.EmployeeServices
 {
     public class EmployeeServices : IEmployeeServices
@@ -141,7 +143,7 @@ namespace HotelManagement.Data.Services.EmployeeServices
 
             if (!idValidation)
             {
-                throw new ArgumentException("Id is invalid.");
+                throw new ArgumentException("User id format is invalid or the id is invalid.");
             }
 
             var result = await context.Users.FindAsync(idToGuid);
@@ -160,6 +162,44 @@ namespace HotelManagement.Data.Services.EmployeeServices
             }
 
             return false;
+        }
+
+        public async Task<bool> RemoveDepartmentFromUser(int departmentId, string userId)
+        {
+            Guid idToGuid;
+
+            bool idValidation = Guid.TryParse(userId, out idToGuid);
+
+            if (!idValidation)
+            {
+                throw new ArgumentException("User id format is invalid or the id is invalid.");
+            }
+
+            var result = await context.Users.Include(u => u.EmployeeDepartment).FirstOrDefaultAsync();
+
+            var depToRemove = result.EmployeeDepartment.Where(ed => ed.DepartmentId == departmentId).FirstOrDefault();
+            
+            if (depToRemove == null)
+
+            {
+                throw new ArgumentException("Department id is invalid or user isn't present in the department.");
+            }
+
+            result.EmployeeDepartment.Remove(depToRemove);
+
+            var resultSaveChanges = await context.SaveChangesAsync();
+
+            if (resultSaveChanges > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public IdentityResult EditUserFromEditViewModel(EmployeeEditViewModel editedModel)
+        {
+            accountServices.UpdateUserAsync(editedModel);
         }
     }
 }

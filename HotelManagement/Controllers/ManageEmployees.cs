@@ -93,27 +93,55 @@ namespace HotelManagement.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult RemoveDepartment(EmployeeEditViewModel model)
+        public async Task<ActionResult> RemoveDepartment(EmployeeEditViewModel model)
         {
-            var departmentId = model.DepartmentOfEmployeeId;
+            bool result;
+            try
+            {
+                result = await employeeServices.RemoveDepartmentFromUser(model.DepartmentOfEmployeeId, model.Id.ToString());
+            }
+            catch (ArgumentException ex)
+            {
+                TempData["Error"] = ex.Message;
+                return Redirect($"Edit/{model.Id.ToString()}");
+            }
 
-            var userId = model.Id;
+            if (!result)
+            {
+                TempData["Error"] = "Department/User id invalid.";
 
-            return RedirectToAction("Details", model.Id);
+                return Redirect($"Edit/{model.Id.ToString()}");
+            }
+
+            return Redirect($"Edit/{model.Id.ToString()}");
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddDepartment(EmployeeEditViewModel model)
+        public async Task<ActionResult> AddDepartment(EmployeeEditViewModel model)
         {
-            var result = await employeeServices.AddDepartmentToUser(model.DepartmentEmployeeDoesntHaveId, model.Id.ToString());
+            bool result;
+
+            try
+            {
+                result = await employeeServices.AddDepartmentToUser(model.DepartmentEmployeeDoesntHaveId, model.Id.ToString());
+            }
+            catch (ArgumentException ex)
+            {
+                TempData["Error"] = ex.Message;
+
+                return Redirect($"Edit/{model.Id.ToString()}");
+            }
+            
 
             if (!result)
             {
-                return View(model);
+                TempData["Error"] = "Department/User id invalid.";
+
+                return Redirect($"Edit/{model.Id.ToString()}");
             }
 
-            return View("Details", new {id= model.Id.ToString() });
+            return Redirect($"Edit/{model.Id.ToString()}");
         }
     }
 }
