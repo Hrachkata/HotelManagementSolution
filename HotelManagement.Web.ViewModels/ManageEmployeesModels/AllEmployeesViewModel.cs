@@ -13,7 +13,7 @@ namespace HotelManagement.Web.ViewModels.ManageEmployeesModels
 {
     public class AllEmployeesViewModel
     {
-        public const int EmployeesPerPage = 5;
+        public const int EmployeesPerPage = 9;
 
         [DisplayName("Department name")]
         public string DepartmentName { get; set; }

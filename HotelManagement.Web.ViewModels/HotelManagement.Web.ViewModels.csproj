@@ -10,4 +10,8 @@
     <ProjectReference Include="..\HotelManagement.Data.Models\HotelManagement.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModelsForVisualization\" />
+  </ItemGroup>
+
 </Project>

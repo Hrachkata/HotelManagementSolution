@@ -11,6 +11,8 @@ namespace HotelManagement.Data.Models.Models
         public int RoomTypeId { get; set; }
         [ForeignKey(nameof(RoomTypeId))]
         public RoomType RoomType { get; set; }
+
+        public int RoomNumber { get; set; }
         public int Capacity { get; set; }
         public bool IsOccupied { get; set; }
         public bool IsCleaned { get; set; }

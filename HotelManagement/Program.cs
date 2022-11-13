@@ -1,11 +1,15 @@
 using HotelManagement.AutoMapper;
 using HotelManagement.Data;
+using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Seeding;
 using HotelManagement.Data.Services.EmployeeServices;
 using HotelManagement.Data.Services.EmployeeServices.Contracts;
+using HotelManagement.Data.Services.FloorServices;
+using HotelManagement.Data.Services.FloorServices.Contracts;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
+using HotelManagement.Data.Services.ViewServices;
 using HotelManagement.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -55,6 +59,8 @@ builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
+builder.Services.AddScoped<IFloorServices, FloorServices>();
+
 builder.Services.AddSingleton(configuration);
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
@@ -62,7 +68,18 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddSingleton<SeedUserData, SeedUserData>();
 
+builder.Services.AddSingleton<SeedDeparments, SeedDeparments>();
+
+builder.Services.AddSingleton<SeedFloors, SeedFloors>();
+
+builder.Services.AddSingleton<SeedRoomTypes, SeedRoomTypes>();
+
+builder.Services.AddSingleton<SeedRooms, SeedRooms>();
+
+
 builder.Services.AddTransient<SendGridEmail, SendGridEmail>();
+
+builder.Services.AddScoped<FloorVisualisationServices, FloorVisualisationServices>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

@@ -105,11 +105,31 @@ public class AccountServices : IAccountServices
             throw new ArgumentNullException("User with id doesn't exist.");
         }
 
-        user.FirstName = model.FirstName;
+        var checkEmail = await GetUserByEmailAsync(model.Email);
+
+        var checkUsername = await GetUserByUserNameAsync(model.UserName);
+
+        if (model.UserName != user.UserName)
+        {
+            if (checkUsername != null)
+            {
+                throw new InvalidOperationException("Username not free, there's already a user with this username.");
+            }
+        }
+
+        if (model.Email != user.Email)
+        {
+            if (checkEmail != null)
+            {
+                throw new InvalidOperationException("Email not free, there's already a user with this email.");
+            }
+        }
+
+        
 
         user.UserName = model.UserName;
 
-        user.PhoneNumber = model.PhoneNumber;
+        user.FirstName = model.FirstName;
 
         user.MiddleName = model.MiddleName;
 
@@ -117,9 +137,21 @@ public class AccountServices : IAccountServices
 
         user.PhoneNumber = model.PhoneNumber;
 
-        
+        user.RFID = model.RFID;
 
-        throw new NotImplementedException();
+        user.EGN = model.EGN;
+
+        user.IsActive = model.IsActive;
+
+        user.Salary = model.Salary;
+
+        user.Email = model.Email;
+
+        user.EditedOn = DateTime.Now;
+
+        var result =await userManager.UpdateAsync(user);
+
+        return result;
     }
 
     public async Task<IdentityResult> ConfirmEmailAsync(string uid, string token)
@@ -176,6 +208,39 @@ public class AccountServices : IAccountServices
     {
         var result = mapper.Map<EditViewModel>(user);
 
+        return result;
+    }
+
+    public async Task<IdentityResult> DisableUser(string userId)
+    {
+        var user = await GetUserByIdAsync(userId);
+
+        if (user == null || user.Email==null)
+        {
+            throw new ArgumentNullException("User with id doesn't exist or there's a problem");
+        }
+
+        user.IsActive = false;
+
+        var result = await userManager.UpdateAsync(user);
+
+
+        return result;
+    }
+
+    public async Task<IdentityResult> EnableUser(string userId)
+    {
+        var user = await GetUserByIdAsync(userId);
+
+        if (user == null || user.Email == null)
+        {
+            throw new ArgumentNullException("User with id doesn't exist or there's a problem");
+        }
+
+        user.IsActive = true;
+
+        var result = await userManager.UpdateAsync(user);
+        
         return result;
     }
 }

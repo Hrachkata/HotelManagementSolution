@@ -9,8 +9,6 @@
             <h6>RFID: <b>@Model.RFID</b></h6>
             <h6>Department: <b>@Model.DepartmentName</b></h6>
             <h6>
-    @*            Price Per Month:
-                <b>@String.Format("{0:f2}", Model.PricePerMonth) BGN</b>*@
             </h6>
             <h6>(@(Model.IsActive ? "Active" : "Disabled"))</h6>
             <br />
@@ -20,8 +18,19 @@
             {
                 <a asp-controller="ManageEmployees" asp-action="Edit" asp-route-id="@Model.UserId"
                    class="btn btn-warning">Edit</a>
-                <a asp-controller="ManageEmployees" asp-action="Delete" asp-route-id="@Model.UserId"
-                   class="btn btn-danger">Delete</a>
+
+                if (@Model.IsActive)
+                {
+
+                    <a asp-controller="ManageEmployees" asp-action="Disable" asp-route-id="@Model.UserId"
+                       class="btn btn-danger">Disable</a>
+                }
+                else
+                {
+                    <a asp-controller="ManageEmployees" asp-action="Enable" asp-route-id="@Model.UserId"
+                    class="btn btn-info">Enable</a>
+                }
+                
                 <p></p>
                 @*@if (!Model.IsRented)
                 {

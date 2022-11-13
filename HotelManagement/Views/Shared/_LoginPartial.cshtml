@@ -3,18 +3,11 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
 <ul class="navbar-nav ">
     @if (SignInManager.IsSignedIn(User))
 {
-    @*<li class="nav-item">
-            <a style="font-size:30px"  class="nav-link text-dark" asp-controller="ManageAccount" asp-action="Settings" title="Manage">Hello </a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline " asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark" style="font-size:30px">Logout</button>
-        </form>
-    </li>
-*@
+  
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,7 +31,7 @@ else
 {
    
     <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login" style="font-size:30px">Login</a>
+            <a class="nav-link text-white" asp-controller="Account" asp-action="Login" style="font-size:30px">Login</a>
     </li>
 }
 </ul>

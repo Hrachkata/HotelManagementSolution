@@ -31,7 +31,8 @@ namespace HotelManagement.Data.Services.EmployeeServices
             this.accountServices = _accountServices;
         }
              
-        public async Task<EmployeeQueryServiceModel> All(EmployeeSorting sorting = EmployeeSorting.Newest,
+        public async Task<EmployeeQueryServiceModel> All(
+            EmployeeSorting sorting = EmployeeSorting.Newest,
             string department = "",
             bool active = true,
             string searchTerm = "",
@@ -124,6 +125,11 @@ namespace HotelManagement.Data.Services.EmployeeServices
                 .ThenInclude(ed => ed.Department)
                 .Where(u => u.Id == idToGuid).FirstOrDefaultAsync();
 
+            if (user == null)
+            {
+                throw new ArgumentNullException("User doesn't exist or id is invalid.");
+            }
+
             var employeeDepartments = user.EmployeeDepartment.Select(d => d.DepartmentId).ToList();
 
             var departmentsEmployeeNotPresentIn = await context.Departments.Where(d => !employeeDepartments.Contains(d.Id)).ProjectTo<DepartmentDto>(mapper.ConfigurationProvider).ToListAsync();
@@ -147,6 +153,18 @@ namespace HotelManagement.Data.Services.EmployeeServices
             }
 
             var result = await context.Users.FindAsync(idToGuid);
+
+            if (result == null)
+            {
+                throw new ArgumentNullException("User doesn't exist or id is invalid.");
+            }
+
+            var dep = await context.Departments.FindAsync(departmentId);
+
+            if (dep == null)
+            {
+                throw new ArgumentNullException("Department doesn't exist or id is invalid.");
+            }
 
             result.EmployeeDepartment.Add(new EmployeeDepartment
             {
@@ -197,9 +215,23 @@ namespace HotelManagement.Data.Services.EmployeeServices
             return false;
         }
 
-        public IdentityResult EditUserFromEditViewModel(EmployeeEditViewModel editedModel)
+        public async Task<IdentityResult> EditUserFromEditViewModel(EmployeeEditViewModel editedModel)
         {
-            accountServices.UpdateUserAsync(editedModel);
+            return await accountServices.UpdateUserAsync(editedModel);
+        }
+
+        public async Task<IdentityResult> DisableUser(string userId)
+        {
+            var result = await accountServices.DisableUser(userId);
+
+            return result;
+        }
+
+        public async Task<IdentityResult> EnableUser(string userId)
+        {
+            var result = await accountServices.EnableUser(userId);
+
+            return result;
         }
     }
 }

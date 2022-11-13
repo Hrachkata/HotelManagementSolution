@@ -108,7 +108,7 @@ namespace HotelManagement.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
             }
 
             var doesUserExist = await accountServices.GetUserByUserNameAsync(model.UserName);
@@ -117,7 +117,7 @@ namespace HotelManagement.Controllers
             if (doesUserExist != null || doesEmailExist != null)
             {
                 ModelState.AddModelError("", "User already exists.");
-                return View(model);
+                return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
             }
             
             var resultUser = await accountServices.CreateUserAsync(model);
@@ -129,10 +129,10 @@ namespace HotelManagement.Controllers
                     ModelState.AddModelError("", error.Description);    
                 }
 
-                return View(model);
+                return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
             }
 
-            return View(model);
+            return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
         }
 
         [HttpGet]

@@ -1,0 +1,50 @@
+﻿@model HotelManagement.Web.ViewModels.FloorModels.ServiceModels.SingleRoomServiceModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        @*<img class="card-img-top" src="@Model.ImageUrl" alt="House Image">*@
+        <div class="card-body text-center">
+            <h4>@Model.RoomNumber </h4>
+            <h6>RFID: <b>@Model.RoomNumber</b></h6>
+            <h6>
+            </h6>
+            <h6>(@(Model.IsActive ? "Active" : "Disabled"))</h6>
+            <br />
+            @*<a asp-controller="ManageEmployees" asp-action="Details" asp-route-id="@Model.UserId"
+               class="btn btn-success">Details</a>
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="ManageEmployees" asp-action="Edit" asp-route-id="@Model.UserId"
+               class="btn btn-warning">Edit</a>
+
+                if (@Model.IsActive)
+                {
+
+                    <a asp-controller="ManageEmployees" asp-action="Disable" asp-route-id="@Model.UserId"
+               class="btn btn-danger">Disable</a>
+                }
+                else
+                {
+                    <a asp-controller="ManageEmployees" asp-action="Enable" asp-route-id="@Model.UserId"
+               class="btn btn-info">Enable</a>
+                }
+
+                <p></p>*@
+                @*@if (!Model.IsRented)
+            {
+            <form class="input-group-sm" asp-controller="Houses"
+            asp-action="Rent" asp-route-id="@Model.Id" method="post">
+            <input class="btn btn-primary" type="submit" value="Rent" />
+            </form>
+            }
+            else
+            {
+            <form asp-controller="Houses" asp-action="Leave"
+            asp-route-id="@Model.Id" method="post">
+            <input class="btn btn-primary" type="submit" value="Leave" />
+            </form>
+            }*@
+            }
+        </div>
+    </div>
+</div>

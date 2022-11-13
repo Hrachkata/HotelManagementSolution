@@ -1,7 +1,9 @@
-﻿@model AllEmployeesViewModel
+﻿@using HotelManagement.Web.ViewModels.FloorModels
+@using HotelManagement.Data.Models.Models
+@model HotelManagement.Web.ViewModels.FloorModels.AllRoomsViewModel
 
 @{
-    ViewBag.Title = "All Employees";
+    ViewBag.Title = "All Rooms on floor";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -11,12 +13,12 @@
     <div class="row">
         <div class="form-group col-md-2 d-flex justify-content-between">
             <div class="form-group">
-                <label asp-for="DepartmentName"></label>
-                <select asp-for="DepartmentName" class="form-control">
+                <label asp-for="RoomType"></label>
+                <select asp-for="RoomType" class="form-control">
                     <option value="">All</option>
-                    @foreach (var department in Model.Departments)
+                    @foreach (var type in Model.RoomTypes)
                     {
-                        <option value="@department">@department</option>
+                        <option value="@type">@type</option>
                     }
                    
                 </select>
@@ -36,13 +38,11 @@
 
         <div class="form-group col-md-2">
             <div class="form-group">
-                <label asp-for="EmployeeSorting"></label>
-                <select asp-for="EmployeeSorting" class="form-control">
+                <label asp-for="RoomSorting"></label>
+                <select asp-for="RoomSorting" class="form-control">
                     <option value="0">Newest</option>
                     <option value="1">Oldest</option>
-                    <option value="2">By First Name</option>
-                    <option value="3">By Last Name</option>
-                    <option value="4">By Department</option>
+                    <option value="2">By room number</option>
                 </select>
             </div>
         </div>
@@ -63,8 +63,8 @@
         previousPage = 0;
     }
 
-    var maxPage = Math.Ceiling((double)Model.TotalEmployeesCount /
-        AllEmployeesViewModel.EmployeesPerPage) - 1;
+    var maxPage = Math.Ceiling((double)Model.TotalRoomsCount /
+        AllRoomsViewModel.RoomsPerPage) - 1;
 }
 
 <div class="row mb-5">
@@ -73,14 +73,13 @@
            asp-controller="ManageEmployees"
            asp-action="All"
            asp-route-currentPage="@previousPage"
-           asp-route-category="@Model.DepartmentName"
+           asp-route-category="@Model.RoomType"
            asp-route-searchTerm="@Model.SearchTerm"
-           asp-route-sorting="@((int)Model.EmployeeSorting)"><<</a>
+           asp-route-sorting="@((int)Model.RoomSorting)"><<</a>
     </div>
 
     @{
-        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
-        !Model.Departments.Any();
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Rooms.Any();
     }
 
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
@@ -89,20 +88,20 @@
            asp-controller="ManageEmployees"
            asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)"
-           asp-route-category="@Model.DepartmentName"
+           asp-route-category="@Model.RoomType"
            asp-route-searchTerm="@Model.SearchTerm"
-           asp-route-sorting="@((int)Model.EmployeeSorting)">>></a>
+           asp-route-sorting="@((int)Model.RoomSorting)">>></a>
     </div>
 </div>
 
-@if (!Model.Employees.Any())
+@if (!Model.Rooms.Any())
 {
-    <h2 class="text-center">No employees found by the given criteria!</h2>
+    <h2 class="text-center">No rooms found by the given criteria!</h2>
 }
 
 <div class="row">
-    @foreach (var house in Model.Employees)
+    @foreach (var house in Model.Rooms)
     {
-        <partial name="_EmployeePartial" model="@house" />
+        <partial name="_RoomPartial" model="@house" />
     }
 </div>

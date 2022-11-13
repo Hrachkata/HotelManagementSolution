@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <Folder Include="EmployeeServices\Contracts\" />
+    <Folder Include="FloorServices\Contracts\" />
+    <Folder Include="ViewServices\" />
   </ItemGroup>
 
 </Project>

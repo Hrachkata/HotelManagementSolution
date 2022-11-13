@@ -32,4 +32,8 @@ public interface IAccountServices
     Task<EditViewModel> GetEditViewModelByUserNameAsync(string userName);
 
     EditViewModel ProjectApplicationUserToEditViewModel(ApplicationUser user);
+
+    Task<IdentityResult> DisableUser(string userId);
+
+    Task<IdentityResult> EnableUser(string userId);
 }

@@ -25,5 +25,9 @@ public interface IEmployeeServices
 
     public Task<bool> RemoveDepartmentFromUser(int departmentId, string userId);
 
-    public IdentityResult EditUserFromEditViewModel(EmployeeEditViewModel editedModel);
+    public Task<IdentityResult> EditUserFromEditViewModel(EmployeeEditViewModel editedModel);
+
+    public Task<IdentityResult> DisableUser(string userId);
+
+    public Task<IdentityResult> EnableUser(string userId);
 }

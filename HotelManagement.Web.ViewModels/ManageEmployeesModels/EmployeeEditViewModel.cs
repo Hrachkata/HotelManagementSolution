@@ -12,13 +12,11 @@ namespace HotelManagement.Web.ViewModels.ManageEmployeesModels
         public DateTimeOffset LockoutEnd { get; set; }
         public string PhoneNumber{ get; set; }
         public string RFID { get; set; }
-        public ICollection<DepartmentDto> DepartmentsOfEmployee { get; set; }
+        public ICollection<DepartmentDto> DepartmentsOfEmployee { get; set; } = new List<DepartmentDto>();
         public int DepartmentOfEmployeeId { get; set; }
 
-        public ICollection<DepartmentDto> DepartmentsEmployeeDoesntHave { get; set; }
+        public ICollection<DepartmentDto> DepartmentsEmployeeDoesntHave { get; set; } = new List<DepartmentDto>();
         public int DepartmentEmployeeDoesntHaveId { get; set; }
-        
-        public bool EmailConfirmed { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
