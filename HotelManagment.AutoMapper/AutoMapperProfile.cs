@@ -63,7 +63,11 @@ public class AutoMapperProfile : Profile
 
 
         CreateMap<Room, SingleRoomServiceModel>().ForMember(d => d.RoomNumber,
-            o => o.MapFrom(s => s.RoomNumber));
+            o => o.MapFrom(s => s.RoomNumber))
+            .ForMember(d => d.RoomId,
+                o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.RoomType,
+                o => o.MapFrom(s => s.RoomType.Type));
 
     }
 }

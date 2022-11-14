@@ -14,10 +14,13 @@ namespace HotelManagement.Web.ViewModels.FloorModels
         [DisplayName("Search by Room Number")]
         public string SearchTerm { get; set; }
 
-        [DisplayName("Show free rooms")]
+        [DisplayName("Active")]
         public bool Active { get; set; } = true;
         public int CurrentPage { get; set; }
         public IEnumerable<string> RoomTypes { get; set; }
+
+        [DisplayName("Free, clean, in service")]
+        public bool IsAvailable { get; set; } = true;
 
         [DisplayName("Sort Rooms by")]
         public RoomSortingClass.RoomSorting RoomSorting { get; set; }

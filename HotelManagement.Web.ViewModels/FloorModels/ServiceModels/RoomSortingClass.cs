@@ -7,6 +7,6 @@ public class RoomSortingClass
         Newest = 0,
         Oldest = 1,
         ByRoomNumber = 2,
+        ByRoomNumberDescending = 3
     }
-
 }

@@ -10,6 +10,7 @@ public interface IFloorServices
         string type = "",
         bool active = true,
         string searchTerm = "",
+        bool isAvailable = true,
         int currentPage = 1,
         int roomsPerPage = 1);
 

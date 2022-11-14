@@ -20,13 +20,16 @@ namespace HotelManagement.Controllers
         // GET: FloorController
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> All([FromQuery] AllRoomsViewModel query)
+        public async Task<IActionResult> All([FromQuery] AllRoomsViewModel query, int id)
         {
+            Console.WriteLine(id);
+
             var queryResult = await this.floorServices
                 .All(query.RoomSorting,
                     query.RoomType,
                     query.Active,
                     query.SearchTerm,
+                    query.IsAvailable,
                     query.CurrentPage,
                     AllRoomsViewModel.RoomsPerPage);
 
@@ -35,6 +38,8 @@ namespace HotelManagement.Controllers
             query.Rooms = queryResult.Rooms.ToList();
 
             query.RoomTypes = await floorServices.GetRoomTypes();
+
+            
 
             return View(query);
         }

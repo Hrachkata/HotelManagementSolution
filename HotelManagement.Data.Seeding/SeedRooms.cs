@@ -18,6 +18,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 3,
                 FloorId = 1,
                 RoomTypeId = 1,
                 CreatedOn = DateTime.Today
@@ -29,6 +30,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 4,
                 FloorId = 1,
                 RoomTypeId = 2,
                 CreatedOn = DateTime.Today
@@ -40,6 +42,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 4,
                 FloorId = 1,
                 RoomTypeId = 2,
                 CreatedOn = DateTime.Today
@@ -51,6 +54,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 4,
                 FloorId = 1,
                 RoomTypeId = 1,
                 CreatedOn = DateTime.Today
@@ -65,6 +69,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 2,
                 FloorId = 2,
                 RoomTypeId = 1,
                 CreatedOn = DateTime.Today
@@ -76,6 +81,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 1,
                 FloorId = 2,
                 RoomTypeId = 2,
                 CreatedOn = DateTime.Today
@@ -87,6 +93,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 4,
                 FloorId = 2,
                 RoomTypeId = 2,
                 CreatedOn = DateTime.Today
@@ -98,6 +105,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 1,
                 FloorId = 2,
                 RoomTypeId = 1,
                 CreatedOn = DateTime.Today
@@ -112,6 +120,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 2,
                 FloorId = 3,
                 RoomTypeId = 3,
                 CreatedOn = DateTime.Today
@@ -123,6 +132,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 1,
                 FloorId = 3,
                 RoomTypeId = 2,
                 CreatedOn = DateTime.Today
@@ -134,6 +144,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 4,
                 FloorId = 3,
                 RoomTypeId = 3,
                 CreatedOn = DateTime.Today
@@ -148,6 +159,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 2,
                 FloorId = 4,
                 RoomTypeId = 4,
                 CreatedOn = DateTime.Today
@@ -159,6 +171,7 @@ public class SeedRooms
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 2,
                 FloorId = 4,
                 RoomTypeId = 4,
                 CreatedOn = DateTime.Today

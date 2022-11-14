@@ -1,15 +1,54 @@
 ﻿@model HotelManagement.Web.ViewModels.FloorModels.ServiceModels.SingleRoomServiceModel
 
+<style>
+    .available
+    {
+        background-color: lightgreen;
+        border-radius: 10% / 50%;
+    }
+    .unavailable 
+    {
+        background-color: lightcoral;
+        border-radius: 15px;
+    
+    }
+        
+</style>
+
 <div class="col-md-4">
     <div class="card mb-3">
         @*<img class="card-img-top" src="@Model.ImageUrl" alt="House Image">*@
         <div class="card-body text-center">
             <h4>@Model.RoomNumber </h4>
-            <h6>RFID: <b>@Model.RoomNumber</b></h6>
-            <h6>
-            </h6>
-            <h6>(@(Model.IsActive ? "Active" : "Disabled"))</h6>
-            <br />
+            <h6>Room Type: <b>@Model.RoomType</b></h6>
+            <h5>
+                @if (@Model.IsCleaned)
+                {
+                    <b class="available">Cleaned</b>
+                }
+                else
+                {
+                    <b class="unavailable">Dirty</b>
+                }
+                @if (!@Model.IsOccupied)
+                {
+                    <b class="available">Free</b>
+                }
+                else
+                {
+                    <b class="unavailable">Occupied</b>
+                }
+                @if (!@Model.IsOutOfService)
+                {
+                    <b class="available">No problems</b>
+                }
+                else
+                {
+                    <b class="unavailable">Out of service</b>
+                }
+            </h5>
+
+           
             @*<a asp-controller="ManageEmployees" asp-action="Details" asp-route-id="@Model.UserId"
                class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
@@ -44,7 +83,7 @@
             <input class="btn btn-primary" type="submit" value="Leave" />
             </form>
             }*@
-            }
+            
         </div>
     </div>
 </div>
