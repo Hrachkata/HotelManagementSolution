@@ -19,9 +19,11 @@
     <div class="card mb-3">
         @*<img class="card-img-top" src="@Model.ImageUrl" alt="House Image">*@
         <div class="card-body text-center">
-            <h4>@Model.RoomNumber </h4>
-            <h6>Room Type: <b>@Model.RoomType</b></h6>
+            <h4><a asp-controller="Room" asp-action="Details" asp-route-id="@Model.RoomId">@Model.RoomNumber </a></h4>
+            <h6>Room Type: <b>@Model.RoomType</b> </h6>
+            <h6>Capacity: <b>@Model.Capacity</b> </h6>
             <h5>
+
                 @if (@Model.IsCleaned)
                 {
                     <b class="available">Cleaned</b>
@@ -48,41 +50,7 @@
                 }
             </h5>
 
-           
-            @*<a asp-controller="ManageEmployees" asp-action="Details" asp-route-id="@Model.UserId"
-               class="btn btn-success">Details</a>
-            @if (this.User.Identity.IsAuthenticated)
-            {
-                <a asp-controller="ManageEmployees" asp-action="Edit" asp-route-id="@Model.UserId"
-               class="btn btn-warning">Edit</a>
 
-                if (@Model.IsActive)
-                {
-
-                    <a asp-controller="ManageEmployees" asp-action="Disable" asp-route-id="@Model.UserId"
-               class="btn btn-danger">Disable</a>
-                }
-                else
-                {
-                    <a asp-controller="ManageEmployees" asp-action="Enable" asp-route-id="@Model.UserId"
-               class="btn btn-info">Enable</a>
-                }
-
-                <p></p>*@
-                @*@if (!Model.IsRented)
-            {
-            <form class="input-group-sm" asp-controller="Houses"
-            asp-action="Rent" asp-route-id="@Model.Id" method="post">
-            <input class="btn btn-primary" type="submit" value="Rent" />
-            </form>
-            }
-            else
-            {
-            <form asp-controller="Houses" asp-action="Leave"
-            asp-route-id="@Model.Id" method="post">
-            <input class="btn btn-primary" type="submit" value="Leave" />
-            </form>
-            }*@
             
         </div>
     </div>

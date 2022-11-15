@@ -31,19 +31,24 @@ public class FloorServices : IFloorServices
         string searchTerm = "",
         bool isAvailable = true,
         int currentPage = 1,
-        int roomsPerPage = 1)
+        int roomsPerPage = 1,
+        int floorId = 0)
     {
-        var roomQuery = this.context.Rooms
+
+
+       var roomQuery = this.context.Rooms
             .Include(r => r.RoomType)
             .Include(r => r.Floor)
             .Where(r =>
                 r.IsActive == active && 
                 r.IsCleaned == isAvailable &&
                 !r.IsOccupied == isAvailable && 
-                !r.IsOutOfService == isAvailable
-                ).AsQueryable();
+                !r.IsOutOfService == isAvailable 
+            ).AsQueryable();
 
-        var searchToLower = searchTerm?.ToLower() ?? string.Empty;
+       
+
+           var searchToLower = searchTerm?.ToLower() ?? string.Empty;
 
         if (!string.IsNullOrEmpty(type))
         {
@@ -54,6 +59,11 @@ public class FloorServices : IFloorServices
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
             roomQuery = roomQuery.Where( r=> r.RoomNumber.ToString().Contains(searchToLower));
+        }
+
+        if (floorId != 0)
+        {
+            roomQuery = roomQuery.Where(r => r.FloorId == floorId);
         }
 
         roomQuery = sorting switch

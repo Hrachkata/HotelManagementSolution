@@ -31,7 +31,8 @@ namespace HotelManagement.Controllers
                     query.SearchTerm,
                     query.IsAvailable,
                     query.CurrentPage,
-                    AllRoomsViewModel.RoomsPerPage);
+                    AllRoomsViewModel.RoomsPerPage,
+                    id);
 
             query.TotalRoomsCount = queryResult.TotalRoomsCount;
 

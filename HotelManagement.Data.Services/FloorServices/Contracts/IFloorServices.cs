@@ -12,7 +12,8 @@ public interface IFloorServices
         string searchTerm = "",
         bool isAvailable = true,
         int currentPage = 1,
-        int roomsPerPage = 1);
+        int roomsPerPage = 1,
+        int floorId = 0);
 
 
     Task<IEnumerable<string>> GetRoomTypes();

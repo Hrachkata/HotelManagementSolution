@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using HotelManagement.Data.Models.UserModels
+﻿
 @using HotelManagement.Data.Services.ViewServices
 
 @inject FloorVisualisationServices floorService
@@ -13,6 +12,7 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
             
+            <li><a class="dropdown-item" asp-controller="Floor" asp-action="All" asp-route-id="0">All floors</a></li>
             @foreach (var floor in await floorService.GetFloorItems())
             {
                 <li><a class="dropdown-item" asp-controller="Floor" asp-action="All" asp-route-id="@floor.Id">Floor @floor.FloorNumber (Free @floor.FreeRooms)</a></li>

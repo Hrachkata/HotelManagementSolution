@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="ModelsForVisualization\" />
+    <Folder Include="RoomModels\" />
   </ItemGroup>
 
 </Project>

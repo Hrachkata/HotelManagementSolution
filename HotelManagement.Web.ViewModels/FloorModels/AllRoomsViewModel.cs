@@ -6,7 +6,7 @@ namespace HotelManagement.Web.ViewModels.FloorModels
 {
     public class AllRoomsViewModel
     {
-        public const int RoomsPerPage = 9;
+        public const int RoomsPerPage = 12;
 
         [DisplayName("Room type")]
         public string RoomType { get; set; }
