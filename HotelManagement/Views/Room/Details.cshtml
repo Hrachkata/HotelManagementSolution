@@ -1,7 +1,7 @@
-﻿@model EmployeeDetailsModel
+﻿@model RoomDetailsViewModel
 
 @{
-    ViewBag.Title = "Employee details";
+    ViewBag.Title = "Room details";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -12,13 +12,13 @@
         <div class="col-4">
         </div>
         <div class="card col-8 border-0" style="font-size:20px;">
-            <p style="font-size:40px;">Username: <b><u>@Model.UserName</u></b></p>
-            <p>Name: <b>@Model.FirstName @Model.MiddleName @Model.LastName </b></p>
-            <p>Departments: <b>@(String.Join(" ; ", Model.Departments))</b></p>
-            <p>Salary: <b>@Model.Salary</b></p>
-            <p>RFID: <b>@Model.RFID</b></p>
-            <p>Email: <b>@Model.Email</b></p>
-            <p>Created on: <b>@Model.CreatedOn</b></p>
+            <p style="font-size:40px;">Room Number: <b><u>@Model.RoomNumber</u></b></p>
+            <p style="font-size:40px;">Reservations count: <b><u>@Model.NumberOfReservations</u></b></p>
+            <p >Capacity: <b><u>@Model.Capacity</u></b></p>
+            <p>Type: @Model.RoomType</p>
+            <p>Price per person: @Model.PricePerPerson</p>
+            <p>Price on full capacity: @Model.PriceOnFullCapacity</p>
+
             @if (Model.EditedOn != null)
             {
                 <p>Edited on: <b>@Model.EditedOn</b></p>
@@ -29,21 +29,16 @@
                 <p>Deleted on: <b>@Model.DeletedOn</b></p>
             }
 
-            <p>Birth date: <b>@($"{Model.BirthDate:d}")</b></p>
-            <p><i>(@(Model.IsActive ? "Active" : "Disabled"))</i></p>
+          <p><i>(@(Model.IsActive ? "Active" : "Disabled"))</i></p>
+            <p><i>(@(Model.IsOccupied ? "Occupied" : "Free"))</i></p>
+            <p><i>(@(Model.IsCleaned ? "Cleaned" : "Dirty"))</i></p>
+            <p><i>(@(Model.IsOutOfService ? "Out of Service" : "In service"))</i></p>
 
-            <p style="font-size:40px;">
-                Email confirmed: @if (Model.EmailConfirmed)
-                {
-                    <b style="background-color:green;">Yes</b>
-                }
-                else
-                {
-                    <b style="background-color:red;">No</b>
-                }
-            </p>
-            <p></p>
+          <p>Created on: @Model.CreatedOn</p>
 
+
+           <p></p>
+@*
             <div class="form-inline">
                 @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("HUMAN RESOURCES"))
                 {
@@ -54,7 +49,7 @@
                    asp-route-id="@Model.Id">Delete</a>
 
                 }
-            </div>
+            </div>*@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Currently viewing as: @User.Identity?.Name</h5>

@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HotelManagement.Data.Services.RoomServices.Contracts;
+using HotelManagement.Data.Services.RoomServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +62,8 @@ builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
 builder.Services.AddScoped<IFloorServices, FloorServices>();
+
+builder.Services.AddScoped<IRoomServices, RoomServices>();
 
 builder.Services.AddSingleton(configuration);
 

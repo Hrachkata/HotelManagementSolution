@@ -1,14 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HotelManagement.Data.Services.RoomServices.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.Controllers
 {
     public class RoomController : Controller
     {
-        // GET: RoomController/Details/5
-        public ActionResult Details(int id)
+        private readonly IRoomServices roomServices;
+
+        public RoomController(
+            IRoomServices _roomServices
+            )
         {
-            return View();
+            roomServices = _roomServices;
+        }
+
+        // GET: RoomController/Details/5
+        public async Task<ActionResult> Details(int id)
+        {
+            var result = await roomServices.GetRoomDetailsModel(id);
+
+            return View(result);
         }
 
         // GET: RoomController/Create
