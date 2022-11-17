@@ -32,18 +32,16 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white px-4" asp-area="" asp-controller="ManageEmployees" asp-action="All">Manage Employees</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white px-4" asp-area="" asp-controller="Account" asp-action="Register">Add Employee</a>
-                            </li>
+                            <partial name="_EmployeesPartial" />
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-white px-4" asp-area="" asp-controller="FrontDesk" asp-action="Privacy">  Front Desk  </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white px-4" asp-area="" asp-controller="Reservations" asp-action="Privacy">  Reservations  </a>
                             </li>
+
+                            
 
                             <partial name="_FloorsPartial" />
                         }

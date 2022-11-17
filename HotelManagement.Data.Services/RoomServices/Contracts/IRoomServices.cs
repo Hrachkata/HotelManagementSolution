@@ -9,9 +9,11 @@ namespace HotelManagement.Data.Services.RoomServices.Contracts
 {
     public interface IRoomServices
     {
-        public Task<RoomDetailsViewModel> GetRoomDetailsModel(int id);
+        public Task<RoomDetailsViewModel> GetRoomDetailsModelAsync(int id);
 
-   
+        public Task<RoomEditViewModel> GetRoomEditViewModelAsync(int id);
+
+        public void EditRoomWithRegisterViewModel(RoomEditViewModel model);
 
     }
 }

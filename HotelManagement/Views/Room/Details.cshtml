@@ -54,7 +54,15 @@
                     <h5 class="card-title">Currently viewing as: @User.Identity?.Name</h5>
                 </div>
             </div>
-            
+            <p></p>
+            <div>
+                <a asp-controller="Room" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-success col-2">Edit</a>
+                <a asp-controller="Room" asp-action="Details" asp-route-id="@Model.Id"
+                   class="btn btn-warning col-2">Out of service</a>
+                <a asp-controller="Room" asp-action="Details" asp-route-id="@Model.Id"
+                   class="btn btn-danger col-2">Disable</a>
+            </div>
 
         </div>
     </div>

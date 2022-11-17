@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Data.Services.RoomServices.Contracts;
+using HotelManagement.Web.ViewModels.RoomModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,15 +17,30 @@ namespace HotelManagement.Controllers
         }
 
         // GET: RoomController/Details/5
+        [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var result = await roomServices.GetRoomDetailsModel(id);
+            var result = new RoomDetailsViewModel();
+
+            try
+            {
+                result = await roomServices.GetRoomDetailsModelAsync(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            
 
             return View(result);
         }
 
         // GET: RoomController/Create
-        public ActionResult Create()
+       public ActionResult Create()
         {
             return View();
         }
@@ -44,17 +60,42 @@ namespace HotelManagement.Controllers
             }
         }
 
+
         // GET: RoomController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+
+            var model = new RoomEditViewModel();
+
+            try
+            {
+                model = await roomServices.GetRoomEditViewModelAsync(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+                   
+
+            return View(model);
         }
 
         // POST: RoomController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(RoomEditViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                //TODO
+            }
+
+
             try
             {
                 return RedirectToAction(nameof(Index));

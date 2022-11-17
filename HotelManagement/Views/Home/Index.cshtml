@@ -4,4 +4,12 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Hotel Management</h1>
+
+    @if (TempData["ErrorType"] != null || TempData["ErrorMessage"] != null)
+    {
+        <h1>Error type: @TempData["ErrorType"]</h1>
+
+        <h1>Error message: @TempData["ErrorMessage"]</h1>
+
+    }
 </div>

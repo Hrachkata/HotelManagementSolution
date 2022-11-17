@@ -7,6 +7,7 @@ using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ModelsForVisualization;
 using HotelManagement.Web.ViewModels.RoomModels;
+using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
 
 namespace HotelManagement.AutoMapper;
 
@@ -82,6 +83,15 @@ public class AutoMapperProfile : Profile
             o => o.MapFrom(s => s.RoomType.PricePerPerson * s.Capacity))
             .ForMember(d => d.RoomTypeId,
             o => o.MapFrom(s => s.RoomTypeId));
+
+        CreateMap<RoomType, RoomTypeDto>();
+        CreateMap<Floor, FloorDto>();
+
+        CreateMap<Room, RoomEditViewModel>()
+             .ForMember(d => d.currentRoomTypeId,
+                o => o.MapFrom(s => s.RoomTypeId))
+             .ForMember(d => d.currentFloorId,
+                o => o.MapFrom(s => s.FloorId));
 
 
     }
