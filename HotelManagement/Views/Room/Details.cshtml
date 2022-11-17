@@ -28,11 +28,10 @@
             {
                 <p>Deleted on: <b>@Model.DeletedOn</b></p>
             }
-
-          <p><i>(@(Model.IsActive ? "Active" : "Disabled"))</i></p>
-            <p><i>(@(Model.IsOccupied ? "Occupied" : "Free"))</i></p>
-            <p><i>(@(Model.IsCleaned ? "Cleaned" : "Dirty"))</i></p>
-            <p><i>(@(Model.IsOutOfService ? "Out of Service" : "In service"))</i></p>
+            <p><b>Active: @(Model.IsActive ? "Active" : "Disabled")</b></p>
+            <p><b>Occupation: @(Model.IsOccupied ? "Occupied" : "Free")</b></p>
+            <p><b>Cleaned: @(Model.IsCleaned ? "Cleaned" : "Dirty")</b></p>
+            <p><b>Service: @(Model.IsOutOfService ? "Out of Service" : "In service")</b></p>
 
           <p>Created on: @Model.CreatedOn</p>
 
@@ -55,6 +54,8 @@
                     <h5 class="card-title">Currently viewing as: @User.Identity?.Name</h5>
                 </div>
             </div>
+            
+
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.RoomServices
 {
@@ -26,7 +27,7 @@ namespace HotelManagement.Data.Services.RoomServices
         }
         public async Task<RoomDetailsViewModel> GetRoomDetailsModel(int id)
         {
-            var model = await context.Rooms.FindAsync(id);
+            var model = await context.Rooms.Include(r => r.RoomType).Where(r => r.Id == id).FirstOrDefaultAsync();
 
             return mapper.Map<RoomDetailsViewModel>(model);
         }

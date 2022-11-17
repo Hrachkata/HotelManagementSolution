@@ -40,13 +40,13 @@ public class FloorServices : IFloorServices
             .Include(r => r.RoomType)
             .Include(r => r.Floor)
             .Where(r =>
-                r.IsActive == active && 
-                r.IsCleaned == isAvailable &&
-                !r.IsOccupied == isAvailable && 
-                !r.IsOutOfService == isAvailable 
+                r.IsActive == active && r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false
             ).AsQueryable();
 
-       
+       if (!isAvailable)
+       {
+           roomQuery = roomQuery.Where(r => r.IsCleaned == false || r.IsOccupied == true || r.IsOutOfService == true);
+       }
 
            var searchToLower = searchTerm?.ToLower() ?? string.Empty;
 
