@@ -13,7 +13,7 @@ namespace HotelManagement.Data.Services.RoomServices.Contracts
 
         public Task<RoomEditViewModel> GetRoomEditViewModelAsync(int id);
 
-        public void EditRoomWithRegisterViewModel(RoomEditViewModel model);
+        public Task<int> EditRoomWithRegisterViewModel(RoomEditViewModel model);
 
     }
 }

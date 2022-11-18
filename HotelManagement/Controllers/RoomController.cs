@@ -88,22 +88,25 @@ namespace HotelManagement.Controllers
         // POST: RoomController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoomEditViewModel model)
+        public async Task<ActionResult> Edit(RoomEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                //TODO
+                ModelState.AddModelError("", "Invalid submit form.");
             }
 
+            int result;
 
             try
             {
-                return RedirectToAction(nameof(Index));
+                result = await roomServices.EditRoomWithRegisterViewModel(model);
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ModelState.AddModelError("", e.Message);
             }
+
+            return View(model);
         }
 
         // GET: RoomController/Delete/5

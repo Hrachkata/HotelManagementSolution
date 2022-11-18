@@ -29,7 +29,7 @@ namespace HotelManagement.Data.Services.RoomServices
             mapper = _mapper;
         }
 
-        public async void EditRoomWithRegisterViewModel(RoomEditViewModel model)
+        public async Task<int> EditRoomWithRegisterViewModel(RoomEditViewModel model)
         {
            
 
@@ -47,9 +47,20 @@ namespace HotelManagement.Data.Services.RoomServices
             room.FloorId = model.FloorId;
 
             room.RoomTypeId = model.RoomTypeDtoId;
-                     
-            await context.SaveChangesAsync();
-                   
+
+            int isChanged = 0;
+
+            try
+            {
+                 isChanged = await context.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+            return isChanged;
         }
 
         public async Task<RoomDetailsViewModel> GetRoomDetailsModelAsync(int id)
@@ -86,5 +97,8 @@ namespace HotelManagement.Data.Services.RoomServices
             return result;
 
         }
+
+
+
     }
 }
