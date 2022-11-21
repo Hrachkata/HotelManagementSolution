@@ -93,6 +93,21 @@ namespace HotelManagement.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Invalid submit form.");
+                
+                try
+                {
+                    model = await roomServices.GetRoomEditViewModelAsync(model.Id);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    TempData["ErrorType"] = ex.GetType().Name;
+
+                    TempData["ErrorMessage"] = ex.Message;
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(model);
             }
 
             int result;
@@ -105,29 +120,196 @@ namespace HotelManagement.Controllers
             {
                 ModelState.AddModelError("", e.Message);
             }
-
-            return View(model);
+            
+            return RedirectToAction("Details", "Room", new {id = model.Id.ToString()});
         }
 
-        // GET: RoomController/Delete/5
-        public ActionResult Delete(int id)
+
+        // POST: RoomController/Delete/5
+        [HttpGet]
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            bool result;
+            try
+            {
+                result = await roomServices.DeleteRoomById(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (OperationCanceledException ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction(result ? "Details" : "Edit", "Room", new { id = id });
         }
 
         // POST: RoomController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpGet]
+        public async Task<ActionResult> Enable(int id)
         {
+            bool result;
             try
             {
-                return RedirectToAction(nameof(Index));
+                result = await roomServices.EnableRoomById(id);
             }
-            catch
+            catch (ArgumentNullException ex)
             {
-                return View();
+
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
             }
+            catch (Exception ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction(result ? "Details" : "Edit", "Room", new { id = id });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> IsCleaned(int id)
+        {
+            bool result;
+            try
+            {
+                result = await roomServices.IsCleanedAsync(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction(result ? "Details" : "Edit", "Room", new { id = id });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> IsDirty(int id)
+        {
+            bool result;
+            try
+            {
+                result = await roomServices.IsDirtyAsync(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction(result ? "Details" : "Edit", "Room", new { id = id });
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> OutOfService(int id)
+        {
+            bool result;
+
+            try
+            {
+                result = await roomServices.RoomOutOfServiceByIdAsync(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction(result ? "Details" : "Edit", "Room", new { id = id });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> InService(int id)
+        {
+            bool result;
+
+            try
+            {
+                result = await roomServices.RoomInServiceByIdAsync(id);
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorType"] = ex.GetType().Name;
+
+                TempData["ErrorMessage"] = ex.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction(result ? "Details" : "Edit", "Room", new { id = id });
         }
     }
 }

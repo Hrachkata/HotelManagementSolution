@@ -19,10 +19,7 @@
             <p>RFID: <b>@Model.RFID</b></p>
             <p>Email: <b>@Model.Email</b></p>
             <p>Created on: <b>@Model.CreatedOn</b></p>
-            @if (Model.EditedOn != null)
-            {
-                <p>Edited on: <b>@Model.EditedOn</b></p>
-            }
+            
 
             @if (Model.DeletedOn != null && Model.IsActive == false)
             {
@@ -56,7 +53,15 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Currently viewing as: @User.Identity?.Name</h5>
+                </div>
+               
             </div>
+             
+            <div>
+                @if (Model.EditedOn != null)
+                {
+                    <p>Edited on: <b>@($"{Model.EditedOn:d}")</b></p>
+                }
             </div>
         </div>
     </div>

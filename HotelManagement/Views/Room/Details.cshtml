@@ -19,36 +19,61 @@
             <p>Price per person: @Model.PricePerPerson</p>
             <p>Price on full capacity: @Model.PriceOnFullCapacity</p>
 
-            @if (Model.EditedOn != null)
-            {
-                <p>Edited on: <b>@Model.EditedOn</b></p>
-            }
 
             @if (Model.DeletedOn != null && Model.IsActive == false)
             {
                 <p>Deleted on: <b>@Model.DeletedOn</b></p>
             }
-            <p><b>Active: @(Model.IsActive ? "Active" : "Disabled")</b></p>
+            <p><b>Active: @(Model.IsActive ? "Active" : "Disabled")</b>
+                @if (@Model.IsActive)
+                {
+                    
+                    <a asp-controller="Room" method="get" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Disable</a>
+                }
+                else
+                {
+                    <a asp-controller="Room" asp-action="Enable" asp-route-id="@Model.Id"
+                       class="btn btn-info">Enable</a>
+                }
+            </p>
+
             <p><b>Occupation: @(Model.IsOccupied ? "Occupied" : "Free")</b></p>
-            <p><b>Cleaned: @(Model.IsCleaned ? "Cleaned" : "Dirty")</b></p>
-            <p><b>Service: @(Model.IsOutOfService ? "Out of Service" : "In service")</b></p>
+
+            <p><b>Cleaned: @(Model.IsCleaned ? "Cleaned" : "Dirty")</b>
+                @if (!@Model.IsCleaned)
+                {
+
+                    <a asp-controller="Room" method="get" asp-action="IsCleaned" asp-route-id="@Model.Id"
+                       class="btn btn-success">Cleaned</a>
+                }
+                else
+                {
+                    <a asp-controller="Room" asp-action="IsDirty" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Dirty</a>
+                }
+                </p>
+            
+
+            <p><b>Service: @(Model.IsOutOfService ? "Out of Service" : "In service")</b>
+                @if (@Model.IsOutOfService)
+                {
+
+                    <a asp-controller="Room" method="get" asp-action="InService" asp-route-id="@Model.Id"
+                   class="btn btn-success">In Service</a>
+                }
+                else
+                {
+                    <a asp-controller="Room" asp-action="OutOfService" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Out of Service</a>
+                }
+            </p>
 
           <p>Created on: @Model.CreatedOn</p>
 
 
            <p></p>
-@*
-            <div class="form-inline">
-                @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("HUMAN RESOURCES"))
-                {
-                    <a class="btn btn-warning" asp-controller="ManageEmployees" asp-action="Edit"
-                   asp-route-id="@Model.Id">Edit</a>
 
-                    <a class="ml-2 btn btn-danger" asp-controller="ManageEmployees" asp-action="Disable"
-                   asp-route-id="@Model.Id">Delete</a>
-
-                }
-            </div>*@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Currently viewing as: @User.Identity?.Name</h5>
@@ -57,12 +82,17 @@
             <p></p>
             <div>
                 <a asp-controller="Room" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-success col-2">Edit</a>
-                <a asp-controller="Room" asp-action="Details" asp-route-id="@Model.Id"
-                   class="btn btn-warning col-2">Out of service</a>
-                <a asp-controller="Room" asp-action="Details" asp-route-id="@Model.Id"
-                   class="btn btn-danger col-2">Disable</a>
+                   class="btn btn-success col-5">Edit</a>
+                
+                
             </div>
+            <div>
+                @if (Model.EditedOn != null)
+                {
+                    <p>Edited on: <b>@($"{Model.EditedOn:d}")</b></p>
+                }
+            </div>
+            
 
         </div>
     </div>

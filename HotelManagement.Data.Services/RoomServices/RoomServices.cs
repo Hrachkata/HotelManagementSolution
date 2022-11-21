@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper.Execution;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
@@ -48,6 +49,8 @@ namespace HotelManagement.Data.Services.RoomServices
 
             room.RoomTypeId = model.RoomTypeDtoId;
 
+            room.EditedOn = DateTime.Today;
+
             int isChanged = 0;
 
             try
@@ -60,7 +63,152 @@ namespace HotelManagement.Data.Services.RoomServices
                 throw new Exception(e.Message);
             }
 
+
+
             return isChanged;
+        }
+
+        public async Task<bool> DeleteRoomById(int id)
+        {
+            var model = await context.Rooms.FindAsync(id);
+
+
+            if (model == null)
+            {
+                throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
+            }
+
+            if (model.Reservations.Any())
+            {
+                throw new OperationCanceledException("There are reservations registered with this room.");
+            }
+
+            model.IsActive = false;
+
+            var isOk = await context.SaveChangesAsync();
+
+            if (isOk > 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> RoomOutOfServiceByIdAsync(int id)
+        {
+            var model = await context.Rooms.FindAsync(id);
+
+
+            if (model == null)
+            {
+                throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
+            }
+
+            model.IsOutOfService = true;
+
+            var isOk = await context.SaveChangesAsync();
+
+            if (isOk > 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> IsCleanedAsync(int id)
+        {
+            var model = await context.Rooms.FindAsync(id);
+
+
+            if (model == null)
+            {
+                throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
+            }
+
+            model.IsCleaned = true;
+
+            var isOk = await context.SaveChangesAsync();
+
+            if (isOk > 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> IsDirtyAsync(int id)
+        {
+            var model = await context.Rooms.FindAsync(id);
+
+
+            if (model == null)
+            {
+                throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
+            }
+
+            model.IsCleaned = false;
+
+            var isOk = await context.SaveChangesAsync();
+
+            if (isOk > 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> RoomInServiceByIdAsync(int id)
+        {
+            var model = await context.Rooms.FindAsync(id);
+
+
+            if (model == null)
+            {
+                throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
+            }
+
+            model.IsOutOfService = false;
+
+            var isOk = await context.SaveChangesAsync();
+
+            if (isOk > 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> EnableRoomById(int id)
+        {
+            var model = await context.Rooms.FindAsync(id);
+
+
+            if (model == null)
+            {
+                throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
+            }
+
+            model.IsActive = true;
+
+            var isOk = await context.SaveChangesAsync();
+
+            if (isOk > 0)
+            {
+                return true;
+            }
+
+            return false;
+
         }
 
         public async Task<RoomDetailsViewModel> GetRoomDetailsModelAsync(int id)

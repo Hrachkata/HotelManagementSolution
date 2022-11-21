@@ -1,0 +1,174 @@
+﻿@model ReservationsViewModel
+
+@{
+    ViewBag.Title = "Walk in reservation";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<script>
+    function setArrivalDate(){
+        var date = new Date();
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+
+        var today = year + "-" + month + "-" + day;
+        document.getElementById("arrivalDate").value = today;
+    
+    }
+
+
+    function myFunction() {
+        // Declare variables
+        var e = document.getElementById("roomType");
+        var value = e.value;
+        var roomType = e.options[e.selectedIndex].text.toUpperCase();
+        
+
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("test");
+        li = ul.getElementsByTagName('option');
+        
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(roomType) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+
+<body onload="setArrivalDate()">
+<div id="booking" class="section">
+    <div class="section-center">
+        <div class="container">
+            <div class="row">
+                <div class="booking-form">
+                    <form method="post">
+                        <div class="row no-margin">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-label">Check In</span>
+                                    <input asp-for="@Model.ArrivalDate" type="date" value="@DateTime.Today.Date.ToShortDateString()" class="form-control" required autocomplete="firstName" aria-required="true" id="arrivalDate" />
+                                    <label asp-for="@Model.ArrivalDate"></label>
+                                    <span asp-validation-for="@Model.ArrivalDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-label">Check Out</span>
+                                    <input class="form-control" type="date" required value="@DateTime.Today.Day+1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-margin">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-label">Adults (18+)</span>
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-label">Children (0-17)</span>
+                                    <select class="form-control">
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="myFunction()">Test function</button>
+
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+                        <ul id="myUL">
+                            <li><a href="#">Adele</a></li>
+                            <li><a href="#">Agnes</a></li>
+
+                            <li><a href="#">Billy</a></li>
+                            <li><a href="#">Bob</a></li>
+
+                            <li><a href="#">Calvin</a></li>
+                            <li><a href="#">Christina</a></li>
+                            <li><a href="#">Cindy</a></li>
+                        </ul>
+
+                        <div class="form-group">
+                            <span class="form-label">Room Size</span>
+                            <select class="form-control" required>
+                                <option value="" selected hidden>Select room capacity</option>
+                                @for (int i = 1; i <= Model.AllRooms.Max(r => r.Capacity); i++)
+                                {
+                                    <option value="i">@i</option>
+                                }
+                            </select>
+                            <span class="select-arrow"></span>
+                        </div>
+
+                            <div class="form-group">
+                            <label asp-for="@Model.RoomTypeId" class="form-label">Select room type</label>
+                            <select asp-for="@Model.RoomTypeId" class="form-control" id="roomType" onchange="myFunction()">
+                    
+                                @foreach (var rt in Model.RoomTypes)
+                                {
+                                    <option value="@rt.Id">@rt.Type</option>
+                                }
+                            </select>
+                            <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label asp-for="@Model.Room" class="form-label">Select room</label>
+                            <select asp-for="@Model.Room" class="form-control" id="test">
+
+                                @foreach (var room in Model.AllRooms.Where(r => r.IsActive && r.IsCleaned==true ))
+                                {
+                                    <option value="@room"><b>@room.RoomNumber </b><i>(@room.Capacity) </i> <i>(@room.RoomType)</i></option>
+                                }
+
+                            </select>
+                            <span asp-validation-for="Room" class="text-danger"></span>
+                 
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <span class="form-label">Email</span>
+                            <input class="form-control" type="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <span class="form-label">Phone</span>
+                            <input class="form-control" type="tel" placeholder="Enter your phone number">
+                        </div>
+                            <button id="reservationSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Book reservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

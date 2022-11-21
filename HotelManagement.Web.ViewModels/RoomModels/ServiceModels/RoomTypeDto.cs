@@ -8,9 +8,10 @@ namespace HotelManagement.Web.ViewModels.RoomModels.ServiceModels
 {
     public class RoomTypeDto
     {
-        public int Id{ get; set; }    
+        public int Id{ get; set; }
 
         public string Type { get; set; }
+        public decimal PricePerPerson { get; set; }
 
     }
 }

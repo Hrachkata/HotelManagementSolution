@@ -7,6 +7,7 @@ using HotelManagement.Data.Services.EmployeeServices;
 using HotelManagement.Data.Services.EmployeeServices.Contracts;
 using HotelManagement.Data.Services.FloorServices;
 using HotelManagement.Data.Services.FloorServices.Contracts;
+using HotelManagement.Data.Services.FrontDeskServices;
 using HotelManagement.Data.Services.UserServices;
 using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Data.Services.ViewServices;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelManagement.Data.Services.RoomServices.Contracts;
 using HotelManagement.Data.Services.RoomServices;
+using HotelManagement.Data.Services.FrontDeskServices.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +66,9 @@ builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 builder.Services.AddScoped<IFloorServices, FloorServices>();
 
 builder.Services.AddScoped<IRoomServices, RoomServices>();
+
+builder.Services.AddScoped<IFrontDeskServices, FrontDeskServices>(); 
+
 
 builder.Services.AddSingleton(configuration);
 
