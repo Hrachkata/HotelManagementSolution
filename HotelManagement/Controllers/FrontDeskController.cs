@@ -1,5 +1,8 @@
-﻿using HotelManagement.Data.Services.FrontDeskServices.Contracts;
+﻿using HotelManagement.Data.Services.FloorServices;
+using HotelManagement.Data.Services.FrontDeskServices.Contracts;
+using HotelManagement.Web.ViewModels.FloorModels;
 using HotelManagement.Web.ViewModels.ReservationsModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,9 +42,31 @@ namespace HotelManagement.Controllers
         }
 
         // GET: FrontDeskController/Create
-        public ActionResult Create()
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> BookGuest([FromQuery] AllRoomsViewModel query, int id)
         {
-            return View();
+            Console.WriteLine(id);
+
+            var queryResult = await this.floorServices
+                .All(query.RoomSorting,
+                    query.RoomType,
+                    query.Active,
+                    query.SearchTerm,
+                    query.IsAvailable,
+                    query.CurrentPage,
+                    AllRoomsViewModel.RoomsPerPage,
+            id);
+
+            query.TotalRoomsCount = queryResult.TotalRoomsCount;
+
+            query.Rooms = queryResult.Rooms.ToList();
+
+            query.RoomTypes = await floorServices.GetRoomTypes();
+
+
+
+            return View(query);
         }
 
         // POST: FrontDeskController/Create

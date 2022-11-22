@@ -7,11 +7,13 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Data.Seeding;
 using HotelManagement.Data.Services.FrontDeskServices.Contracts;
+using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ReservationsModels;
 using HotelManagement.Web.ViewModels.RoomModels;
 using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using static HotelManagement.Web.ViewModels.FloorModels.ServiceModels.RoomSortingClass;
 
 namespace HotelManagement.Data.Services.FrontDeskServices
 {
@@ -42,6 +44,78 @@ namespace HotelManagement.Data.Services.FrontDeskServices
             };
 
             return result;
+        }
+
+        public async Task<RoomQueryServiceModel> All(
+       RoomSorting sorting = RoomSorting.Newest,
+       string type = "",
+       bool active = true,
+       string searchTerm = "",
+       bool isAvailable = true,
+       int currentPage = 1,
+       int roomsPerPage = 1,
+       int floorId = 0)
+        {
+
+
+            var roomQuery = this.context.Rooms
+                 .Include(r => r.RoomType)
+                 .Include(r => r.Floor)
+                 .Where(r =>
+                     r.IsActive == active
+                 ).AsQueryable();
+
+            if (isAvailable)
+            //{
+            //    roomQuery = roomQuery.Where(r => r.IsCleaned == false || r.IsOccupied == true || r.IsOutOfService == true);
+            //}
+            //else
+            {
+                roomQuery = roomQuery.Where(r => r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false);
+            }
+
+            var searchToLower = searchTerm?.ToLower() ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                roomQuery = this.context.Rooms.Where(r => r.RoomType.Type == type);
+
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                roomQuery = roomQuery.Where(r => r.RoomNumber.ToString().Contains(searchToLower));
+            }
+
+            if (floorId != 0)
+            {
+                roomQuery = roomQuery.Where(r => r.FloorId == floorId);
+            }
+
+            roomQuery = sorting switch
+            {
+                RoomSorting.Newest =>
+                    roomQuery.OrderByDescending(r => r.CreatedOn),
+                RoomSorting.Oldest =>
+                    roomQuery.OrderBy(r => r.CreatedOn),
+                RoomSorting.ByRoomNumber =>
+                    roomQuery.OrderBy(r => r.RoomNumber),
+                RoomSorting.ByRoomNumberDescending =>
+                    roomQuery.OrderByDescending(r => r.RoomNumber)
+            };
+
+            var rooms = await roomQuery.Skip((currentPage) * roomsPerPage)
+                .Take(roomsPerPage)
+                .ProjectTo<SingleRoomServiceModel>(mapper.ConfigurationProvider).ToListAsync();
+
+
+            var totalRooms = roomQuery.Count();
+
+            return new RoomQueryServiceModel()
+            {
+                Rooms = rooms,
+                TotalRoomsCount = totalRooms
+            };
         }
     }
 }
