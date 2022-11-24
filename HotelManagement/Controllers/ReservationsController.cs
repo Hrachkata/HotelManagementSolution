@@ -18,10 +18,11 @@ namespace HotelManagement.Controllers
         }
 
         // GET: ReservationsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Create([FromQuery])
+        //{
+        //    return View();
+        //}
 
         // POST: ReservationsController/Create
         [HttpPost]

@@ -59,12 +59,47 @@ public class SeedRooms
                 RoomTypeId = 1,
                 CreatedOn = DateTime.Today
             },
-
+            new Room()
+            {
+                Id = 5,
+                RoomNumber = 105,
+                IsCleaned = true,
+                IsOccupied = true,
+                IsOutOfService = false,
+                Capacity = 3,
+                FloorId = 1,
+                RoomTypeId = 1,
+                CreatedOn = DateTime.Today
+            },
+            new Room()
+            {
+                Id = 6,
+                RoomNumber = 106,
+                IsCleaned = false,
+                IsOccupied = false,
+                IsOutOfService = true,
+                Capacity = 3,
+                FloorId = 1,
+                RoomTypeId = 1,
+                CreatedOn = DateTime.Today
+            },
+            new Room()
+            {
+                Id = 7,
+                RoomNumber = 107,
+                IsCleaned = false,
+                IsOccupied = false,
+                IsOutOfService = true,
+                Capacity = 3,
+                FloorId = 1,
+                RoomTypeId = 1,
+                CreatedOn = DateTime.Today
+            },
             //Floor 2
 
             new Room()
             {
-                Id = 5,
+                Id = 8,
                 RoomNumber = 201,
                 IsCleaned = true,
                 IsOccupied = false,
@@ -76,7 +111,7 @@ public class SeedRooms
             },
             new Room()
             {
-                Id = 6,
+                Id = 9,
                 RoomNumber = 202,
                 IsCleaned = true,
                 IsOccupied = false,
@@ -88,7 +123,7 @@ public class SeedRooms
             },
             new Room()
             {
-                Id = 7,
+                Id = 10,
                 RoomNumber = 203,
                 IsCleaned = true,
                 IsOccupied = false,
@@ -100,11 +135,35 @@ public class SeedRooms
             },
             new Room()
             {
-                Id = 8,
+                Id = 11,
                 RoomNumber = 204,
                 IsCleaned = true,
                 IsOccupied = false,
                 IsOutOfService = false,
+                Capacity = 1,
+                FloorId = 2,
+                RoomTypeId = 1,
+                CreatedOn = DateTime.Today
+            },
+            new Room()
+            {
+                Id = 12,
+                RoomNumber = 205,
+                IsCleaned = false,
+                IsOccupied = false,
+                IsOutOfService = false,
+                Capacity = 1,
+                FloorId = 2,
+                RoomTypeId = 1,
+                CreatedOn = DateTime.Today
+            },
+            new Room()
+            {
+                Id = 13,
+                RoomNumber = 205,
+                IsCleaned = true,
+                IsOccupied = false,
+                IsOutOfService = true,
                 Capacity = 1,
                 FloorId = 2,
                 RoomTypeId = 1,
@@ -115,7 +174,7 @@ public class SeedRooms
 
             new Room()
             {
-                Id = 9,
+                Id = 14,
                 RoomNumber = 301,
                 IsCleaned = true,
                 IsOccupied = false,
@@ -127,7 +186,7 @@ public class SeedRooms
             },
             new Room()
             {
-                Id = 10,
+                Id = 15,
                 RoomNumber = 302,
                 IsCleaned = true,
                 IsOccupied = false,
@@ -139,9 +198,21 @@ public class SeedRooms
             },
             new Room()
             {
-                Id = 11,
+                Id = 16,
                 RoomNumber = 303,
                 IsCleaned = true,
+                IsOccupied = false,
+                IsOutOfService = false,
+                Capacity = 4,
+                FloorId = 3,
+                RoomTypeId = 3,
+                CreatedOn = DateTime.Today
+            },
+            new Room()
+            {
+                Id = 17,
+                RoomNumber = 303,
+                IsCleaned = false,
                 IsOccupied = false,
                 IsOutOfService = false,
                 Capacity = 4,
@@ -154,7 +225,7 @@ public class SeedRooms
 
             new Room()
             {
-                Id = 12,
+                Id = 18,
                 RoomNumber = 401,
                 IsCleaned = true,
                 IsOccupied = false,
@@ -166,7 +237,7 @@ public class SeedRooms
             },
             new Room()
             {
-                Id = 13,
+                Id = 19,
                 RoomNumber = 402,
                 IsCleaned = true,
                 IsOccupied = false,

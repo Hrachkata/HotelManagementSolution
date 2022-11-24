@@ -1,0 +1,46 @@
+﻿@using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels
+@model SingleFrontDeskRoomModel
+
+<style>
+    .available
+    {
+        background-color: lightgreen;
+        border-radius: 10% / 50%;
+    }
+    .unavailable 
+    {
+        background-color: lightcoral;
+        border-radius: 15px;
+    
+    }
+        
+</style>
+
+
+@if (Model.IsCleaned == true && Model.IsOccupied == false && Model.IsOutOfService == false)
+    {
+        <tr class="table-success">
+        <th scope="row">@Model.RoomNumber</th>
+        <td>@Model.Capacity</td>
+        <td>@Model.IsOccupied</td>
+        <td>@Model.IsCleaned</td>
+        <td>@Model.IsOutOfService</td>
+        <td><button>Reserve</button></td>
+        </tr>
+    }
+else
+    {
+    <tr class="table-danger">
+        <th scope="row">@Model.RoomNumber</th>
+        <td>@Model.Capacity</td>
+        <td>@Model.IsOccupied</td>
+        <td>@Model.IsCleaned</td>
+        <td>@Model.IsOutOfService</td>
+        <td><button>Reserve</button></td>
+        </tr>   
+    }
+
+
+
+
+

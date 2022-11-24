@@ -1,16 +1,9 @@
 ﻿using AutoMapper;
 using HotelManagement.Data.Services.RoomServices.Contracts;
 using HotelManagement.Web.ViewModels.RoomModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper.Execution;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
-using HotelManagement.Data.Models.Models;
 
 namespace HotelManagement.Data.Services.RoomServices
 {
@@ -245,6 +238,8 @@ namespace HotelManagement.Data.Services.RoomServices
             return result;
 
         }
+
+
 
 
 

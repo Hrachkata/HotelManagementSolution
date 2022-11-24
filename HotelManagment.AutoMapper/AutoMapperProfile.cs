@@ -8,6 +8,7 @@ using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ModelsForVisualization;
 using HotelManagement.Web.ViewModels.RoomModels;
 using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
+using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 
 namespace HotelManagement.AutoMapper;
 
@@ -94,5 +95,6 @@ public class AutoMapperProfile : Profile
                 o => o.MapFrom(s => s.FloorId));
 
 
+        CreateMap<Room, SingleFrontDeskRoomModel>();
     }
 }

@@ -1,6 +1,8 @@
 ﻿using HotelManagement.Data.Services.FloorServices;
+using HotelManagement.Data.Services.FloorServices.Contracts;
 using HotelManagement.Data.Services.FrontDeskServices.Contracts;
 using HotelManagement.Web.ViewModels.FloorModels;
+using HotelManagement.Web.ViewModels.FrontDeskModels;
 using HotelManagement.Web.ViewModels.ReservationsModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,9 +14,13 @@ namespace HotelManagement.Controllers
     {
         private readonly IFrontDeskServices frontDeskServices;
 
-        public FrontDeskController(IFrontDeskServices _frontDeskServices)
+        private readonly IFloorServices floorServices;
+
+        public FrontDeskController(IFrontDeskServices _frontDeskServices, IFloorServices _floorServices)
         {
-            frontDeskServices = _frontDeskServices;
+            this.frontDeskServices = _frontDeskServices;
+
+            this.floorServices = _floorServices;
         }
 
         // GET: FrontDeskController
@@ -44,16 +50,15 @@ namespace HotelManagement.Controllers
         // GET: FrontDeskController/Create
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> BookGuest([FromQuery] AllRoomsViewModel query, int id)
+        public async Task<IActionResult> FreeRooms([FromQuery] Web.ViewModels.FrontDeskModels.FreeRoomQueryServiceModel query, int id)
         {
             Console.WriteLine(id);
 
-            var queryResult = await this.floorServices
+            var queryResult = await this.frontDeskServices
                 .All(query.RoomSorting,
                     query.RoomType,
                     query.Active,
                     query.SearchTerm,
-                    query.IsAvailable,
                     query.CurrentPage,
                     AllRoomsViewModel.RoomsPerPage,
             id);
