@@ -81,6 +81,8 @@ namespace HotelManagement.Controllers
         {
             var k = model;
 
+
+
             return RedirectToAction("FreeRooms");
 
         }

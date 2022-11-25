@@ -29,12 +29,16 @@
         <td>@Model.IsOutOfService</td>
         <td >@Model.PricePerPerson</td>
         <form method="get">
-            <input hidden="true" asp-for="@Model.PricePerPerson" class="form-control" autocomplete="RFID" aria-required="true" />
-            <input hidden="true" asp-for="@Model.Capacity" class="form-control" autocomplete="RFID" aria-required="true" />
-            <input hidden="true" asp-for="@Model.ArrivalDate" class="form-control" autocomplete="RFID" aria-required="true" />
+            <input hidden="true" asp-for="@Model.PricePerPerson" class="form-control"  aria-required="true" />
+            <input hidden="true" asp-for="@Model.Capacity" class="form-control"  aria-required="true" />
+            <input hidden="true" asp-for="@Model.RoomNumber" class="form-control"  aria-required="true" />
+            <input hidden="true" asp-for="@Model.RoomId" class="form-control" aria-required="true" />
+            <input hidden="true" asp-for="@Model.RoomType" class="form-control" aria-required="true" />
+            <input hidden="true" asp-for="@Model.ArrivalDate" class="form-control" aria-required="true" />
+            <input hidden="true" asp-for="@Model.DepartureDate" class="form-control" aria-required="true" />
 
 
-        
+
         <td><button asp-action="Reserve" asp-controller="FrontDesk">Reserve</button></td>
         </form>
         </tr>

@@ -135,12 +135,16 @@
             <th scope="col">Cleaned</th>
             <th scope="col">Out of service</th>
             <th scope="col">Price per person</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Departure</th>
             <th scope="col">Reserve</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var room in Model.Rooms)
         {
+            room.ArrivalDate = Model.ArrivalDate;
+            room.DepartureDate = Model.DepartureDate;
             <partial name="_FreeRoomPartial" model="@room" />
         }
 
