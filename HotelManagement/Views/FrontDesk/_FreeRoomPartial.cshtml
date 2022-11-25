@@ -1,5 +1,5 @@
 ﻿@using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels
-@model SingleFrontDeskRoomModel
+@model SingleFreeRoomModel
 
 <style>
     .available
@@ -21,11 +21,22 @@
     {
         <tr class="table-success">
         <th scope="row">@Model.RoomNumber</th>
-        <td>@Model.Capacity</td>
+        <td >@Model.Capacity</td>
+        
+        <td>@Model.RoomType</td>
         <td>@Model.IsOccupied</td>
         <td>@Model.IsCleaned</td>
         <td>@Model.IsOutOfService</td>
-        <td><button>Reserve</button></td>
+        <td >@Model.PricePerPerson</td>
+        <form method="get">
+            <input hidden="true" asp-for="@Model.PricePerPerson" class="form-control" autocomplete="RFID" aria-required="true" />
+            <input hidden="true" asp-for="@Model.Capacity" class="form-control" autocomplete="RFID" aria-required="true" />
+            <input hidden="true" asp-for="@Model.ArrivalDate" class="form-control" autocomplete="RFID" aria-required="true" />
+
+
+        
+        <td><button asp-action="Reserve" asp-controller="FrontDesk">Reserve</button></td>
+        </form>
         </tr>
     }
 else
@@ -33,10 +44,12 @@ else
     <tr class="table-danger">
         <th scope="row">@Model.RoomNumber</th>
         <td>@Model.Capacity</td>
+        <td>@Model.RoomType</td>
         <td>@Model.IsOccupied</td>
         <td>@Model.IsCleaned</td>
         <td>@Model.IsOutOfService</td>
-        <td><button>Reserve</button></td>
+        <td>@Model.PricePerPerson</td>
+        <td><button disabled>Reserve</button></td>
         </tr>   
     }
 

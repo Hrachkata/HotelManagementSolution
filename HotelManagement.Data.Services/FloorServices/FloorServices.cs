@@ -43,14 +43,10 @@ public class FloorServices : IFloorServices
                 r.IsActive == active
             ).AsQueryable();
 
-       if (isAvailable)
-       //{
-       //    roomQuery = roomQuery.Where(r => r.IsCleaned == false || r.IsOccupied == true || r.IsOutOfService == true);
-       //}
-       //else
-       {
+        if (isAvailable)
+        {
            roomQuery = roomQuery.Where(r => r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false);
-       }
+        }
 
         var searchToLower = searchTerm?.ToLower() ?? string.Empty;
 

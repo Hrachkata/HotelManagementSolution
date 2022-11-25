@@ -95,6 +95,9 @@ public class AutoMapperProfile : Profile
                 o => o.MapFrom(s => s.FloorId));
 
 
-        CreateMap<Room, SingleFrontDeskRoomModel>();
+        CreateMap<Room, SingleFreeRoomModel>().ForMember(d => d.RoomType,
+                o => o.MapFrom(s => s.RoomType.Type))
+            .ForMember(d => d.PricePerPerson,
+                o => o.MapFrom(s => s.RoomType.PricePerPerson));
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 
-public class SingleFrontDeskRoomModel
+public class SingleFreeRoomModel
 {
     public int RoomId { get; set; }
     public string RoomType { get; set; }
@@ -12,5 +12,10 @@ public class SingleFrontDeskRoomModel
     public bool IsOccupied { get; set; }
     public bool IsCleaned { get; set; }
     public bool IsOutOfService { get; set; }
+    public decimal PricePerPerson { get; set; }
     public ICollection<Reservation> Reservations { get; set; } = new HashSet<Reservation>();
+
+    public DateTime? ArrivalDate { get; set; }
+
+    public DateTime? DepartureDate { get; set; }
 }

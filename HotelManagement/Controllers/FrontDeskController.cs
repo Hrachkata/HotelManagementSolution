@@ -3,6 +3,7 @@ using HotelManagement.Data.Services.FloorServices.Contracts;
 using HotelManagement.Data.Services.FrontDeskServices.Contracts;
 using HotelManagement.Web.ViewModels.FloorModels;
 using HotelManagement.Web.ViewModels.FrontDeskModels;
+using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ReservationsModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -50,43 +51,38 @@ namespace HotelManagement.Controllers
         // GET: FrontDeskController/Create
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> FreeRooms([FromQuery] Web.ViewModels.FrontDeskModels.FreeRoomQueryServiceModel query, int id)
+        public async Task<IActionResult> FreeRooms([FromQuery] AllFreeRoomsViewModel query, int id)
         {
             Console.WriteLine(id);
 
             var queryResult = await this.frontDeskServices
-                .All(query.RoomSorting,
+                .All(query.ArrivalDate, 
+                    query.DepartureDate,
+                    query.RoomSorting,
                     query.RoomType,
-                    query.Active,
+                    query.Available,
                     query.SearchTerm,
                     query.CurrentPage,
-                    AllRoomsViewModel.RoomsPerPage,
-            id);
+                    AllFreeRoomsViewModel.RoomsPerPage,
+                    id);
 
             query.TotalRoomsCount = queryResult.TotalRoomsCount;
 
             query.Rooms = queryResult.Rooms.ToList();
-
+            
             query.RoomTypes = await floorServices.GetRoomTypes();
-
-
 
             return View(query);
         }
 
         // POST: FrontDeskController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [HttpGet]
+        public ActionResult Reserve(SingleFreeRoomModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var k = model;
+
+            return RedirectToAction("FreeRooms");
+
         }
 
         // GET: FrontDeskController/Edit/5

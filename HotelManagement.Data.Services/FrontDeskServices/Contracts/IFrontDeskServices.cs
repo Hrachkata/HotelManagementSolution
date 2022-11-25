@@ -8,5 +8,11 @@ public interface IFrontDeskServices
 {
     public Task<ReservationsViewModel> GenerateReservationViewModelAsync();
 
-    public Task<FreeRoomQueryServiceModel> All(RoomSorting sorting = RoomSorting.Newest, string type = "", bool active = true, string searchTerm = "", int currentPage = 1, int roomsPerPage = 1, int floorId = 0);
+    public Task<FreeRoomQueryServiceModel> All(DateTime? arrivalDate, DateTime? departureDate, RoomSorting sorting = RoomSorting.Newest, 
+        string type = "", 
+        bool active = true, 
+        string searchTerm = "", 
+        int currentPage = 1, 
+        int roomsPerPage = 1, 
+        int floorId = 0);
 }

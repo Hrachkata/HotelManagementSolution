@@ -1,6 +1,6 @@
 ﻿@using HotelManagement.Web.ViewModels.FloorModels
 @using HotelManagement.Data.Models.Models
-@model HotelManagement.Web.ViewModels.FrontDeskModels.FreeRoomQueryServiceModel
+@model HotelManagement.Web.ViewModels.FrontDeskModels.AllFreeRoomsViewModel
 
 @{
     ViewBag.Title = "Free rooms";
@@ -12,7 +12,7 @@
 <form method="get">
     <div class="row">
         <div class="form-group col-md-1 d-flex justify-content-between">
-            <div class="form-group">
+            <div >
                 <label asp-for="RoomType"></label>
                 <select asp-for="RoomType" class="form-control">
                     <option value="">All</option>
@@ -24,10 +24,29 @@
                 </select>
             </div>
         </div>
-        
-  
+        <div class="form-group col-md-1">
+            <label asp-for="Available"></label>
+            <div class="form-group">
+                <input asp-for="Available" type="checkbox"  class="btn-check form-check" id="btn-check-2-outlined">
+                <label class="btn btn-outline-warning" for="btn-check-2-outlined">Is active</label><br>
+            </div>
+            
+        </div>
+        <div class="form-group col-md-2 justify-content-between">
+            <label asp-for="@Model.ArrivalDate">Arrival Date</label>
+            <input asp-for="@Model.ArrivalDate" type="date" id="arrival" class="form-control" autocomplete="arrivalDate" aria-required="true"
+            value=@DateTime.Now aria-valuemax="@DateTime.Now.ToString("YYYY-MM-DD")">
 
-        <div class="form-group col-md-3">
+        </div>   
+        
+        <div class="form-group col-md-2 justify-content-between">
+            <label asp-for="@Model.DepartureDate">Departure Date</label>
+            <input asp-for="@Model.DepartureDate" type="date" id="departure" class="form-control" autocomplete="departureDate" aria-required="true"
+            value=@DateTime.Now aria-valuemax="@DateTime.Now.ToString("YYYY-MM-DD")">
+            
+        </div>
+
+        <div class="form-group col-md-2">
             <label asp-for="SearchTerm"></label>
             <input asp-for="SearchTerm" class="form-control" placeholder="...">
         </div>
@@ -44,7 +63,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-1 justify-content-between">
             <div class="form-group mt-4 p-2">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
@@ -67,10 +86,13 @@
 <div class="row mb-5">
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
         <a class="btn btn-primary @(Model.CurrentPage == 0 ? "disabled" : string.Empty)"
-           asp-controller="Floor"
-           asp-action="All"
+           asp-controller="FrontDesk"
+           asp-action="FreeRooms"
            asp-route-currentPage="@previousPage"
            asp-route-category="@Model.RoomType"
+           asp-route-category="@Model.ArrivalDate"
+           asp-route-category="@Model.DepartureDate"
+           asp-route-Available="@Model.Available"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.RoomSorting)"><<</a>
     </div>
@@ -82,10 +104,13 @@
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-primary 
            @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
-           asp-controller="Floor"
-           asp-action="All"
+           asp-controller="FrontDesk"
+           asp-action="FreeRooms"
            asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-category="@Model.RoomType"
+           asp-route-category="@Model.ArrivalDate"
+           asp-route-category="@Model.DepartureDate"
+           asp-route-Available="@Model.Available"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.RoomSorting)">>></a>
     </div>
@@ -105,9 +130,12 @@
         <tr>
             <th scope="col">Room №</th>
             <th scope="col">Capacity</th>
+            <th scope="col">Room type</th>
             <th scope="col">Occupied</th>
             <th scope="col">Cleaned</th>
             <th scope="col">Out of service</th>
+            <th scope="col">Price per person</th>
+            <th scope="col">Reserve</th>
         </tr>
     </thead>
     <tbody>

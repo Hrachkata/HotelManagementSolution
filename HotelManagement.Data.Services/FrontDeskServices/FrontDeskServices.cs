@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Seeding;
 using HotelManagement.Data.Services.FrontDeskServices.Contracts;
 using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
@@ -49,9 +50,11 @@ namespace HotelManagement.Data.Services.FrontDeskServices
         }
 
        public async Task<FreeRoomQueryServiceModel> All(
+       DateTime? arrivalDate, 
+       DateTime? departureDate,
        RoomSorting sorting = RoomSorting.Newest,
        string type = "",
-       bool active = true,
+       bool isAvailable = true,
        string searchTerm = "",
        int currentPage = 1,
        int roomsPerPage = 1,
@@ -61,18 +64,23 @@ namespace HotelManagement.Data.Services.FrontDeskServices
 
             var roomQuery = this.context.Rooms
                  .Include(r => r.RoomType)
-                 .Include(r => r.Floor)
+                 .Include(r => r.Reservations)
                  .Where(r =>
-                     r.IsActive == active
+                     r.IsActive == true
                  ).AsQueryable();
+            
+           await SetRoomOccupation(roomQuery);
 
+            if (isAvailable)
+            {
+               roomQuery = roomQuery.Where(r => r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false );
+            }
 
             var searchToLower = searchTerm?.ToLower() ?? string.Empty;
 
             if (!string.IsNullOrEmpty(type))
             {
                 roomQuery = this.context.Rooms.Where(r => r.RoomType.Type == type);
-
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -99,7 +107,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
 
             var rooms = await roomQuery.Skip((currentPage) * roomsPerPage)
                 .Take(roomsPerPage)
-                .ProjectTo<SingleFrontDeskRoomModel>(mapper.ConfigurationProvider).ToListAsync();
+                .ProjectTo<SingleFreeRoomModel>(mapper.ConfigurationProvider).ToListAsync();
 
 
             var totalRooms = roomQuery.Count();
@@ -109,6 +117,24 @@ namespace HotelManagement.Data.Services.FrontDeskServices
                 Rooms = rooms,
                 TotalRoomsCount = totalRooms
             };
+        }
+
+
+       public async Task<int> SetRoomOccupation(IQueryable<Room>? roomQuery)
+       {
+           foreach (var room in roomQuery)
+           {
+               if (room.Reservations.Any(r => r.ArrivalDate == DateTime.Today || (r.ArrivalDate <= DateTime.Today && r.DepartureDate >= DateTime.Today)))
+               {
+                   room.IsOccupied = true;
+               }
+               else if (room.Reservations.Any(r => r.DepartureDate == DateTime.Today))
+               {
+                   room.IsOccupied = false;
+               }
+           }
+
+           return await context.SaveChangesAsync();
         }
     }
 }
