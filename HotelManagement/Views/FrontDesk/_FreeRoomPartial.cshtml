@@ -1,4 +1,4 @@
-﻿@using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels
+﻿
 @model SingleFreeRoomModel
 
 <style>
@@ -18,7 +18,8 @@
 
 
 @if (Model.IsCleaned == true && Model.IsOccupied == false && Model.IsOutOfService == false)
-    {
+{
+    
         <tr class="table-success">
         <th scope="row">@Model.RoomNumber</th>
         <td >@Model.Capacity</td>
@@ -28,18 +29,17 @@
         <td>@Model.IsCleaned</td>
         <td>@Model.IsOutOfService</td>
         <td >@Model.PricePerPerson</td>
+        <td >@Model.ArrivalDate.Value.ToString("d")</td>
+        <td>@Model.DepartureDate.Value.ToString("d")</td>
         <form method="get">
-            <input hidden="true" asp-for="@Model.PricePerPerson" class="form-control"  aria-required="true" />
-            <input hidden="true" asp-for="@Model.Capacity" class="form-control"  aria-required="true" />
-            <input hidden="true" asp-for="@Model.RoomNumber" class="form-control"  aria-required="true" />
-            <input hidden="true" asp-for="@Model.RoomId" class="form-control" aria-required="true" />
-            <input hidden="true" asp-for="@Model.RoomType" class="form-control" aria-required="true" />
-            <input hidden="true" asp-for="@Model.ArrivalDate" class="form-control" aria-required="true" />
-            <input hidden="true" asp-for="@Model.DepartureDate" class="form-control" aria-required="true" />
-
-
-
-        <td><button asp-action="Reserve" asp-controller="FrontDesk">Reserve</button></td>
+            <input hidden="true" asp-for="@Model.PricePerPerson" value="@Model.PricePerPerson" class="form-control"  aria-required="true" />
+            <input hidden="true" asp-for="@Model.Capacity" value="@Model.Capacity"  class="form-control" aria-required="true" />
+            <input hidden="true" asp-for="@Model.RoomNumber" value="@Model.RoomNumber" class="form-control" aria-required="true" />
+            <input hidden="true" asp-for="@Model.RoomId" value="@Model.RoomId" class="form-control" aria-required="true" />
+            <input hidden="true" asp-for="@Model.RoomType" value="@Model.RoomType" class="form-control" aria-required="true" />
+            <input hidden="true" type="text" asp-for="@Model.ArrivalDate" value=@Model.ArrivalDate.Value.ToString("yyyy-MM-dd") class="form-control" id="arrival" aria-required="true" />
+            <input hidden="true" type="text" asp-for="@Model.DepartureDate" value=@Model.DepartureDate.Value.ToString("yyyy-MM-dd") id="departure" class="form-control" aria-required="true" />
+        <td><button asp-action="Reserve" type="submit" asp-controller="Booking">Reserve</button></td>
         </form>
         </tr>
     }

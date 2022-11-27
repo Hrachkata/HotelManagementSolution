@@ -52,7 +52,7 @@ public class FloorServices : IFloorServices
 
         if (!string.IsNullOrEmpty(type))
         {
-            roomQuery = this.context.Rooms.Where(r => r.RoomType.Type == type);
+            roomQuery = roomQuery.Where(r => r.RoomType.Type == type);
 
         }
 

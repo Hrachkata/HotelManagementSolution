@@ -1,3 +1,4 @@
+using HotelManagement;
 using HotelManagement.AutoMapper;
 using HotelManagement.Data;
 using HotelManagement.Data.Models.Models;
@@ -47,48 +48,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddControllersWithViews();
-
-//My services and configurations
-
-builder.Services.AddScoped<IAccountServices, AccountServices>();
-
-//this is for email sending
-IConfigurationRoot configuration = new ConfigurationBuilder()
-            .AddUserSecrets<Program>()
-            .AddUserSecrets<SendGridEmail>()
-            .Build();
-
-builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-
-builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
-
-builder.Services.AddScoped<IFloorServices, FloorServices>();
-
-builder.Services.AddScoped<IRoomServices, RoomServices>();
-
-builder.Services.AddScoped<IFrontDeskServices, FrontDeskServices>(); 
 
 
-builder.Services.AddSingleton(configuration);
+var test = new BuilderConfiguration();
 
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
-
-
-builder.Services.AddSingleton<SeedUserData, SeedUserData>();
-
-builder.Services.AddSingleton<SeedDeparments, SeedDeparments>();
-
-builder.Services.AddSingleton<SeedFloors, SeedFloors>();
-
-builder.Services.AddSingleton<SeedRoomTypes, SeedRoomTypes>();
-
-builder.Services.AddSingleton<SeedRooms, SeedRooms>();
-
-
-builder.Services.AddTransient<SendGridEmail, SendGridEmail>();
-
-builder.Services.AddScoped<FloorVisualisationServices, FloorVisualisationServices>();
+test.AddServicesToBuidler(builder);
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

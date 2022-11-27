@@ -60,8 +60,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
        int roomsPerPage = 1,
        int floorId = 0)
         {
-
-
+       
             var roomQuery = this.context.Rooms
                  .Include(r => r.RoomType)
                  .Include(r => r.Reservations)
@@ -71,16 +70,16 @@ namespace HotelManagement.Data.Services.FrontDeskServices
             
            await SetRoomOccupation(roomQuery);
 
-            if (isAvailable)
-            {
-               roomQuery = roomQuery.Where(r => r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false );
-            }
+           if (isAvailable)
+           {
+               roomQuery = roomQuery.Where(r => r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false);
+           }
 
             var searchToLower = searchTerm?.ToLower() ?? string.Empty;
 
             if (!string.IsNullOrEmpty(type))
             {
-                roomQuery = this.context.Rooms.Where(r => r.RoomType.Type == type);
+                roomQuery = roomQuery.Where(r => r.RoomType.Type == type);
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -92,6 +91,8 @@ namespace HotelManagement.Data.Services.FrontDeskServices
             {
                 roomQuery = roomQuery.Where(r => r.FloorId == floorId);
             }
+
+            
 
             roomQuery = sorting switch
             {
@@ -105,16 +106,24 @@ namespace HotelManagement.Data.Services.FrontDeskServices
                     roomQuery.OrderByDescending(r => r.RoomNumber)
             };
 
+            
+       
+
             var rooms = await roomQuery.Skip((currentPage) * roomsPerPage)
                 .Take(roomsPerPage)
                 .ProjectTo<SingleFreeRoomModel>(mapper.ConfigurationProvider).ToListAsync();
 
+            //TODO VERY IMPORTANT
+
+
+            var test = rooms.Where(r =>
+                r.Reservations.Any(res => !IsReservationPossible(res.ArrivalDate, res.DepartureDate.Value, arrivalDate.Value, departureDate.Value)));
 
             var totalRooms = roomQuery.Count();
 
             return new FreeRoomQueryServiceModel()
             {
-                Rooms = rooms,
+                Rooms = test,
                 TotalRoomsCount = totalRooms
             };
         }
@@ -136,5 +145,17 @@ namespace HotelManagement.Data.Services.FrontDeskServices
 
            return await context.SaveChangesAsync();
         }
+
+       public bool IsReservationPossible(DateTime arrivalDate, DateTime departureDate, DateTime queryArrivalDate, DateTime queryDepartureDate)
+       {
+           if ((arrivalDate == queryArrivalDate && departureDate == queryArrivalDate)
+               /*|| (departureDate <= queryDepartureDate && departureDate >= queryDepartureDate)*/)
+           {
+               return false;
+           }
+
+           return true;
+       }
+
     }
 }

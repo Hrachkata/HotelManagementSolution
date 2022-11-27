@@ -2,6 +2,7 @@
 using AutoMapper;
 using HotelManagement.Web.ViewModels.UserModels;
 using HotelManagement.Data.Models.Models;
+using HotelManagement.Web.ViewModels.BookingModels;
 using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
@@ -98,6 +99,11 @@ public class AutoMapperProfile : Profile
         CreateMap<Room, SingleFreeRoomModel>().ForMember(d => d.RoomType,
                 o => o.MapFrom(s => s.RoomType.Type))
             .ForMember(d => d.PricePerPerson,
-                o => o.MapFrom(s => s.RoomType.PricePerPerson));
+                o => o.MapFrom(s => s.RoomType.PricePerPerson))
+            .ForMember(d => d.RoomId,
+                o => o.MapFrom(s => s.Id));
+
+        CreateMap<SingleFreeRoomModel, BookingModel>();
+
     }
 }

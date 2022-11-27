@@ -27,13 +27,15 @@ public class SendGridEmail
             .Tag(tag)
             .Body(body);
 
-        var SendGridApiKey = config["SendGridApiKey"];
+        var SendGridApiKey = "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";
 
         SendGridSender sendGridSender = new SendGridSender(SendGridApiKey);
 
         SendResponse response = sendGridSender.Send(fluentEmail);
 
         return response;
+
+        //TODO logging
 
         if (response.Successful)
         {

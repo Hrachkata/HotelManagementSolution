@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BookingServices\Contracts\" />
     <Folder Include="EmployeeServices\Contracts\" />
     <Folder Include="FloorServices\Contracts\" />
     <Folder Include="ViewServices\" />

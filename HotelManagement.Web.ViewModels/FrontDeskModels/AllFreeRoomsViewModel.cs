@@ -20,7 +20,6 @@ namespace HotelManagement.Web.ViewModels.FrontDeskModels
         public IEnumerable<string> RoomTypes { get; set; }
 
         public DateTime? ArrivalDate { get; set; }
-
         public DateTime? DepartureDate { get; set; }
 
         [DisplayName("Sort Rooms by")]
