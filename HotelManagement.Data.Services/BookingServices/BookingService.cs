@@ -21,30 +21,29 @@ public class BookingService : IBookingService
     }
     public BookingModel projectRoomModelToBookingModel(SingleFreeRoomModel model)
     {
+
         return mapper.Map<BookingModel>(model);
+        
     }
 
     public async Task<bool> reserveRoom(BookingModel model)
     {
-        await context.Reservations.AddAsync(new Reservation()
-        {
-            Address = model.Address,
-            ArrivalDate = model.ArrivalDate.Value,
-            DepartureDate = model.DepartureDate.Value,
-            CreatedOn = DateTime.Now,
-            GuestEmail = model.GuestEmail,
-            GuestFirstName = model.GuestFirstName,
-            GuestLastName = model.GuestLastName,
-            GuestNationality = model.GuestNationality,
-            NumberOfChildren = model.NumberOfChildren,
-            NumberOfGuests = model.NumberOfGuests,
-            GuestPhoneNumber = model.GuestPhoneNumber,
-            RoomId = model.RoomId
-        });
+        var test = await Nanoid.Nanoid.GenerateAsync("0123456789ABCDEFGHJKLMNOPQRSTUVWXYZ", 7);
 
+        var reservation = mapper.Map<Reservation>(model);
+
+        reservation.Id = test;
+
+        reservation.CheckedIn = false;
+
+        await context.Reservations.AddAsync(reservation);
+        
         var result = await context.SaveChangesAsync();
 
-        Console.WriteLine(result);
+        if (result!=1)
+        {
+            return false;
+        }
 
         return true;
     }

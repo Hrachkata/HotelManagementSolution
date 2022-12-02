@@ -1,4 +1,6 @@
-﻿using HotelManagement.Data.Services.BookingServices.Contracts;
+﻿using System.Data;
+using HotelManagement.Data.Services.BookingServices.Contracts;
+using HotelManagement.Models;
 using HotelManagement.Web.ViewModels.BookingModels;
 using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +12,7 @@ namespace HotelManagement.Controllers
     {
         private readonly IBookingService bookingService;
 
+        private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public BookingController(IBookingService _bookingService)
         {
             bookingService = _bookingService;
@@ -40,10 +43,54 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            var result = await bookingService.reserveRoom(model);
+            bool result;
 
-            return RedirectToAction("Index", "Home");
+
+           
+            try
+            {
+                result = await bookingService.reserveRoom(model);
+
+                if (result == false)
+                {
+                    throw new DBConcurrencyException("No rows modified, data is invalid.");
+                }
+            }
+            catch(DBConcurrencyException ex)
+            {
+                if (envir == "Development")
+                {
+                    throw ex;
+                }
+                var error = new ErrorViewModel()
+                {
+                    ErrorMessage = ex.Message,
+                };
+
+                return View("Error", error);
+            }
+            catch (Exception ex)
+            {
+                if (envir == "Development")
+                {
+                    throw ex;
+                }
+                var error = new ErrorViewModel()
+                {
+                    ErrorMessage = "Critical error occurred try again later, if error persists contact your system administrator."
+                };
+                
+                return View("Error", error);
+            }
+
+            
+
+            return RedirectToAction("FreeRooms", "FrontDesk", new{arrivalDate = model.ArrivalDate.Value.ToString("yyyy-MM-dd"), departureDate = model.DepartureDate.Value.ToString("yyyy-MM-dd") });
 
         }
+
+    
+
+        
     }
 }

@@ -3,13 +3,14 @@ using AutoMapper;
 using HotelManagement.Web.ViewModels.UserModels;
 using HotelManagement.Data.Models.Models;
 using HotelManagement.Web.ViewModels.BookingModels;
+using HotelManagement.Web.ViewModels.FloorModelForVisualization;
 using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
-using HotelManagement.Web.ViewModels.ModelsForVisualization;
 using HotelManagement.Web.ViewModels.RoomModels;
 using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
 using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
+using HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 
 namespace HotelManagement.AutoMapper;
 
@@ -104,6 +105,25 @@ public class AutoMapperProfile : Profile
                 o => o.MapFrom(s => s.Id));
 
         CreateMap<SingleFreeRoomModel, BookingModel>();
+
+        CreateMap<BookingModel, Reservation>()
+            .ForMember(d => d.ArrivalDate,
+                o => o.MapFrom(s => s.ArrivalDate.Value))
+            .ForMember(d => d.DepartureDate,
+                o => o.MapFrom(s => s.DepartureDate.Value))
+            .ForMember(d => d.CreatedOn,
+                o => o.MapFrom(s => DateTime.Now))
+            .ForMember(d => d.totalPrice,
+                o => o.MapFrom(
+                    s => s.PricePerPerson * s.NumberOfGuests - (0.1M * s.PricePerPerson * (s.NumberOfChildren.HasValue ? s.NumberOfChildren.Value : 0))));
+
+
+
+        CreateMap<Reservation, SingleReservationViewModel>()
+            .ForMember(d => d.RoomNumber,
+                o => o.MapFrom(s => s.Room.RoomNumber))
+            .ForMember(d => d.IsOccupied,
+                o => o.MapFrom(s => s.Room.IsOccupied));
 
     }
 }

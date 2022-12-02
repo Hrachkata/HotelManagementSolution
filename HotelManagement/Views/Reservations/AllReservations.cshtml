@@ -1,0 +1,129 @@
+﻿@using HotelManagement.Web.ViewModels.FloorModels
+@model AllReservationsModel
+
+@{
+    ViewBag.Title = "Reservations";
+}
+
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<h4><div asp-validation-summary="ModelOnly" class="text-danger"></div></h4>
+<hr />
+
+<form method="get">
+    <div class="row">
+        
+
+        <div class="form-group col-md-2 justify-content-between">
+            <label asp-for="@Model.ArrivalDateFrom">Arrival from:</label>
+            <input asp-for="@Model.ArrivalDateFrom" type="date" id="arrival" class="form-control" autocomplete="arrivalDate" aria-required="true"/>
+        </div>
+        
+
+
+        <div class="form-group col-md-2">
+
+            <label asp-for="@Model.ArrivalDateTo">Arrival to:</label>
+            <input asp-for="@Model.ArrivalDateTo" type="date" id="departure" class="form-control" autocomplete="departureDate" aria-required="true" />
+        </div>
+
+
+        <div class="form-group col-md-2">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="...">
+        </div>
+
+        <div class="form-group col-md-2">
+            <div class="form-group">
+                <label asp-for="ReservationSorting"></label>
+                <select asp-for="ReservationSorting" class="form-control">
+                    <option value="0">Newest</option>
+                    <option value="1">Oldest</option>
+                    <option value="2">By arrival date</option>
+                    <option value="3">By arrival date descending</option>
+                    <option value="4">By departure date</option>
+                    <option value="5">By departure date descending</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-1 justify-content-between">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@{
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 0;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalReservationsCount /
+        AllRoomsViewModel.RoomsPerPage) - 1;
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 0 ? "disabled" : string.Empty)"
+           asp-controller="Reservations"
+           asp-action="AllReservations"
+           asp-route-currentPage="@previousPage"
+           asp-route-category="@Model.RoomType"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.ReservationSorting)"><<</a>
+    </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Reservations.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary
+           @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Reservations"
+           asp-action="AllReservations"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-category="@Model.RoomType"
+           asp-route-searchTerm="@Model.SearchTerm">>></a>
+    </div>
+</div>
+
+@if (!Model.Reservations.Any())
+{
+    <h2 class="text-center">No rooms found by the given criteria!</h2>
+}
+<ul class="list-group row">
+</ul>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Room №</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Guest first name</th>
+            <th scope="col">Guest last name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Reservation id</th>
+            <th scope="col">Details</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var res in Model.Reservations)
+        {
+            <partial name="_ReservationPartial" model="@res" />
+
+            
+        }
+
+    </tbody>
+</table>
+

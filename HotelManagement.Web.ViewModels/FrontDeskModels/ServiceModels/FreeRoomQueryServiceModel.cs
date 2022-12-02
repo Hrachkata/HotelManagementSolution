@@ -1,5 +1,4 @@
-﻿using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
-using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
+﻿namespace HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 
 public class FreeRoomQueryServiceModel
 {

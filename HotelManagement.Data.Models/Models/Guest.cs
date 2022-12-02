@@ -1,6 +1,8 @@
-﻿namespace HotelManagement.Data.Models.Models;
+﻿using HotelManagement.Data.Common.CommonModels;
 
-public class Guest
+namespace HotelManagement.Data.Models.Models;
+
+public class Guest : BaseModel<Guid>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

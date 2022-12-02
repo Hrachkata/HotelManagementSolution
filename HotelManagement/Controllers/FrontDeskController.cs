@@ -24,12 +24,7 @@ namespace HotelManagement.Controllers
             this.floorServices = _floorServices;
         }
 
-     
-        // GET: FrontDeskController/Details/5
-        public ActionResult Reservations()
-        {
-            return View();
-        }
+
 
         // GET: FrontDeskController/Create
         [HttpGet]
@@ -63,7 +58,7 @@ namespace HotelManagement.Controllers
 
             query.RoomTypes = await floorServices.GetRoomTypes();
             
-            if (query.ArrivalDate >= query.DepartureDate)
+            if (query.ArrivalDate >= query.DepartureDate || query.DepartureDate.HasValue == false)
             {
                 ModelState.AddModelError("", "Departure date cannot be before arrival date.");
 
@@ -72,6 +67,7 @@ namespace HotelManagement.Controllers
 
                 return View(query);
             }
+
 
             foreach (var room in query.Rooms)
             {
@@ -84,9 +80,6 @@ namespace HotelManagement.Controllers
 
             return View(query);
         }
-
-       
-       
 
         
     }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HotelManagement.Web.ViewModels.ModelsForVisualization;
+using HotelManagement.Web.ViewModels.FloorModelForVisualization;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.ViewServices;

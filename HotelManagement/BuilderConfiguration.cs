@@ -8,6 +8,8 @@ using HotelManagement.Data.Services.FloorServices.Contracts;
 using HotelManagement.Data.Services.FloorServices;
 using HotelManagement.Data.Services.FrontDeskServices.Contracts;
 using HotelManagement.Data.Services.FrontDeskServices;
+using HotelManagement.Data.Services.ReservationServices;
+using HotelManagement.Data.Services.ReservationServices.Contracts;
 using HotelManagement.Data.Services.RoomServices.Contracts;
 using HotelManagement.Data.Services.RoomServices;
 using HotelManagement.Data.Services.UserServices;
@@ -45,6 +47,8 @@ public class BuilderConfiguration
         builder.Services.AddScoped<IFrontDeskServices, FrontDeskServices>();
 
         builder.Services.AddScoped<IBookingService, BookingService>();
+
+        builder.Services.AddScoped<IReservationServices, ReservationServices>();
 
         builder.Services.AddSingleton(configuration);
 

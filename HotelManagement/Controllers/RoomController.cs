@@ -34,31 +34,13 @@ namespace HotelManagement.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            
+
 
             return View(result);
         }
 
-        // GET: RoomController/Create
-       public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: RoomController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+      
+    
 
 
         // GET: RoomController/Edit/5
@@ -80,7 +62,7 @@ namespace HotelManagement.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-                   
+
 
             return View(model);
         }
@@ -93,7 +75,7 @@ namespace HotelManagement.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Invalid submit form.");
-                
+
                 try
                 {
                     model = await roomServices.GetRoomEditViewModelAsync(model.Id);
@@ -116,12 +98,12 @@ namespace HotelManagement.Controllers
             {
                 result = await roomServices.EditRoomWithRegisterViewModel(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ModelState.AddModelError("", e.Message);
             }
-            
-            return RedirectToAction("Details", "Room", new {id = model.Id.ToString()});
+
+            return RedirectToAction("Details", "Room", new { id = model.Id.ToString() });
         }
 
 

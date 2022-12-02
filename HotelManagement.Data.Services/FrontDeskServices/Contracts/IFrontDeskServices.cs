@@ -1,12 +1,11 @@
-﻿using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
-using HotelManagement.Web.ViewModels.ReservationsModels;
+﻿using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 using static HotelManagement.Web.ViewModels.FloorModels.ServiceModels.RoomSortingClass;
 
 namespace HotelManagement.Data.Services.FrontDeskServices.Contracts;
 
 public interface IFrontDeskServices
 {
-    public Task<ReservationsViewModel> GenerateReservationViewModelAsync();
+
 
     public Task<FreeRoomQueryServiceModel> All(DateTime? arrivalDate, DateTime? departureDate, RoomSorting sorting = RoomSorting.Newest, 
         string type = "", 

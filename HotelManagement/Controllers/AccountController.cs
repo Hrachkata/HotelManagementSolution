@@ -14,11 +14,14 @@ using Newtonsoft.Json.Linq;
 
 namespace HotelManagement.Controllers
 {
+    
     public class AccountController : Controller
     {
         public SignInManager<ApplicationUser> signInManager { get; set; }
         public UserManager<ApplicationUser> userManager { get; set; }
         public IAccountServices accountServices { get; set; }
+
+        private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public AccountController(
             SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
@@ -41,8 +44,7 @@ namespace HotelManagement.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var model = new LoginViewModel();
-
-
+            
             return View(model);
 
         }

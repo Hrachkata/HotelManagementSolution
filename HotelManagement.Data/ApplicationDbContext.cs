@@ -73,7 +73,7 @@ namespace HotelManagement.Data
                 .WithMany(d => d.RoleDepartment)
                 .HasForeignKey(rd => rd.DepartmentId);
 
-
+            
 
             UserSeeder.SeedRoles(builder);
 

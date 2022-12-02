@@ -12,7 +12,7 @@ namespace HotelManagement.Web.ViewModels.ReservationsModels
 {
     public class ReservationsViewModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string GuestFirstName { get; set; }
@@ -21,9 +21,7 @@ namespace HotelManagement.Web.ViewModels.ReservationsModels
         public string GuestLastName { get; set; }
 
         public string? GuestPhoneNumber { get; set; }
-
-        public int RoomTypeId { get; set; }
-        public ICollection<RoomTypeDto> RoomTypes { get; set; }
+        
 
         [EmailAddress]
         [Required]
@@ -35,12 +33,15 @@ namespace HotelManagement.Web.ViewModels.ReservationsModels
         [Required]
         public int NumberOfChildren { get; set; }
         
+        public decimal Price { get; set; }
+
         [Required]
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
-        public RoomDetailsViewModel Room { get; set; }
 
-        public ICollection<RoomDetailsViewModel> AllRooms { get; set; }
+        public int RoomId { get; set; }
+        public int RoomType { get; set; }
 
+       
     }
 }

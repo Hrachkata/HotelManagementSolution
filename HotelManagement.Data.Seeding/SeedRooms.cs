@@ -64,7 +64,7 @@ public class SeedRooms
                 Id = 5,
                 RoomNumber = 105,
                 IsCleaned = true,
-                IsOccupied = true,
+                IsOccupied = false,
                 IsOutOfService = false,
                 Capacity = 3,
                 FloorId = 1,

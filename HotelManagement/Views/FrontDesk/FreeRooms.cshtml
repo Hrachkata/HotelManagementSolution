@@ -34,10 +34,6 @@
             </div>
             
         </div>
-        
-        @{
-            string dateValue = DateTime.Now.ToString("YYYY-MM-DD");
-        }
 
         <div class="form-group col-md-2 justify-content-between">
             <label asp-for="@Model.ArrivalDate">Arrival Date</label>
@@ -135,21 +131,23 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Room №</th>
-        <th scope="col">Capacity</th>
-        <th scope="col">Room type</th>
-        <th scope="col">Occupied</th>
-        <th scope="col">Cleaned</th>
-        <th scope="col">Out of service</th>
-        <th scope="col">Price per person</th>
-        <th scope="col">Arrival</th>
-        <th scope="col">Departure</th>
-        <th scope="col">Reserve</th>
+            <th scope="col">Room №</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">Room type</th>
+            <th scope="col">Occupied</th>
+            <th scope="col">Cleaned</th>
+            <th scope="col">Out of service</th>
+            <th scope="col">Price per person</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Reserve</th>
+            <th scope="col" >Check Reservations</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var room in Model.Rooms)
     {
+       
         room.ArrivalDate = Model.ArrivalDate;
         room.DepartureDate = Model.DepartureDate;
         <partial name="_FreeRoomPartial" model="@room" />
@@ -158,3 +156,4 @@
     </tbody>
 </table>
 
+        

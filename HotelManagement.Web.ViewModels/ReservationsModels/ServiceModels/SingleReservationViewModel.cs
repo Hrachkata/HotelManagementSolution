@@ -1,16 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using HotelManagement.Data.Common.CommonModels;
-using HotelManagement.Data.Models.UserModels;
 
-namespace HotelManagement.Data.Models.Models;
+namespace HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 
-/// <summary>
-/// This is the Reservation model, it has a one-many connection with rooms.
-/// </summary>
-
-public class Reservation : BaseModel<string>
+public class SingleReservationViewModel
 {
+    public string Id { get; set; }
+
     [Required]
     public string GuestFirstName { get; set; }
 
@@ -36,13 +31,15 @@ public class Reservation : BaseModel<string>
     public int NumberOfGuests { get; set; }
     public int? NumberOfChildren { get; set; }
 
+    public bool? CheckedIn { get; set; }
+
     [Required]
     public DateTime ArrivalDate { get; set; }
     public DateTime DepartureDate { get; set; }
-
-    public bool? CheckedIn { get; set; }
     public bool? LateDeparture { get; set; }
     public int RoomId { get; set; }
-    [ForeignKey(nameof(RoomId))]
-    public Room Room { get; set; }
+    public int RoomNumber { get; set; }
+
+    public bool IsOccupied { get; set; }
+
 }

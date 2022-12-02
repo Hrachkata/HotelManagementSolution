@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Data.Models.Models;
-using HotelManagement.Data.Seeding;
 using HotelManagement.Data.Services.FrontDeskServices.Contracts;
-using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
-using HotelManagement.Web.ViewModels.FrontDeskModels;
 using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
-using HotelManagement.Web.ViewModels.ReservationsModels;
-using HotelManagement.Web.ViewModels.RoomModels;
-using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using static HotelManagement.Web.ViewModels.FloorModels.ServiceModels.RoomSortingClass;
 
 namespace HotelManagement.Data.Services.FrontDeskServices
@@ -34,20 +22,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
 
             mapper = _mapper;
         }
-        public async Task<ReservationsViewModel> GenerateReservationViewModelAsync()
-        {
-            var roomTypes = await context.RoomTypes.ProjectTo<RoomTypeDto>(mapper.ConfigurationProvider).ToListAsync();
-
-            var rooms = await context.Rooms.ProjectTo<RoomDetailsViewModel>(mapper.ConfigurationProvider).ToListAsync();
-
-            var result = new ReservationsViewModel()
-            {
-                RoomTypes = roomTypes,
-                AllRooms = rooms
-            };
-
-            return result;
-        }
+        
 
        public async Task<FreeRoomQueryServiceModel> All(
        DateTime? arrivalDate, 
@@ -72,7 +47,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
 
            if (isAvailable)
            {
-               roomQuery = roomQuery.Where(r => r.IsCleaned == true && r.IsOccupied == false && r.IsOutOfService == false);
+               roomQuery = roomQuery.Where(r => r.IsOutOfService == false);
            }
 
             var searchToLower = searchTerm?.ToLower() ?? string.Empty;
@@ -109,22 +84,40 @@ namespace HotelManagement.Data.Services.FrontDeskServices
             
        
 
-            var rooms = await roomQuery.Skip((currentPage) * roomsPerPage)
-                .Take(roomsPerPage)
-                .ProjectTo<SingleFreeRoomModel>(mapper.ConfigurationProvider).ToListAsync();
+            var rooms = await roomQuery.ProjectTo<SingleFreeRoomModel>(mapper.ConfigurationProvider).ToListAsync();
 
             //TODO VERY IMPORTANT
 
+            var resultRooms = new List<SingleFreeRoomModel>();
+            
+            foreach (var room in rooms)
+            {
+                if (room.Reservations.Count == 0 )
+                {
+                    resultRooms.Add(room);
 
-            var test = rooms.Where(r =>
-                r.Reservations.Any(res => !IsReservationPossible(res.ArrivalDate, res.DepartureDate.Value, arrivalDate.Value, departureDate.Value)));
+                    continue;
+                }
+
+                if (room.Reservations.Any(r => (r.ArrivalDate >= arrivalDate && r.ArrivalDate <= departureDate) || (r.DepartureDate >= arrivalDate && r.DepartureDate <= departureDate)))
+                {
+                    continue;
+                }
+
+                resultRooms.Add(room);
+            }
+
+
+            var roomsPaged = resultRooms.Skip((currentPage) * roomsPerPage)
+                .Take(roomsPerPage);
+
 
             var totalRooms = roomQuery.Count();
 
             return new FreeRoomQueryServiceModel()
             {
-                Rooms = test,
-                TotalRoomsCount = totalRooms
+                Rooms = roomsPaged,
+                TotalRoomsCount = resultRooms.Count
             };
         }
 
@@ -132,30 +125,21 @@ namespace HotelManagement.Data.Services.FrontDeskServices
        public async Task<int> SetRoomOccupation(IQueryable<Room>? roomQuery)
        {
            foreach (var room in roomQuery)
-           {
-               if (room.Reservations.Any(r => r.ArrivalDate == DateTime.Today || (r.ArrivalDate <= DateTime.Today && r.DepartureDate >= DateTime.Today)))
-               {
-                   room.IsOccupied = true;
-               }
-               else if (room.Reservations.Any(r => r.DepartureDate == DateTime.Today))
-               {
-                   room.IsOccupied = false;
-               }
-           }
+            {
+                if (room.Reservations.Any(r => r.ArrivalDate == DateTime.Today || (r.ArrivalDate <= DateTime.Today && r.DepartureDate >= DateTime.Today)))
+                {
+                    room.IsOccupied = true;
+                }
+                else
+                {
+                    room.IsOccupied = false;
+                }
+                
+            }
 
-           return await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
 
-       public bool IsReservationPossible(DateTime arrivalDate, DateTime departureDate, DateTime queryArrivalDate, DateTime queryDepartureDate)
-       {
-           if ((arrivalDate == queryArrivalDate && departureDate == queryArrivalDate)
-               /*|| (departureDate <= queryDepartureDate && departureDate >= queryDepartureDate)*/)
-           {
-               return false;
-           }
-
-           return true;
-       }
-
+      
     }
 }

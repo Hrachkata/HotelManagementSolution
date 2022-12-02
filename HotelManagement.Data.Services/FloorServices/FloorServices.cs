@@ -1,5 +1,4 @@
-﻿using System.Data;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Data.Services.FloorServices.Contracts;
 using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
