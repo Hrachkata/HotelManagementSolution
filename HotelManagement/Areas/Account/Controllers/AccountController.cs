@@ -15,14 +15,14 @@ using Newtonsoft.Json.Linq;
 namespace HotelManagement.Controllers
 {
     
-    public class AccountController1 : Controller
+    public class AccountController : Controller
     {
         public SignInManager<ApplicationUser> signInManager { get; set; }
         public UserManager<ApplicationUser> userManager { get; set; }
         public IAccountServices accountServices { get; set; }
 
         private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        public AccountController1(
+        public AccountController(
             SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
             IAccountServices _accountServices)

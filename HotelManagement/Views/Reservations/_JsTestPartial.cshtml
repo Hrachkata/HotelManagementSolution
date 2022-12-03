@@ -1,27 +1,32 @@
 ﻿@model HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels.SingleReservationViewModel
   
 
-<script type="text/javascript">
-    function resDetails(e) {
-        console.log(e.target.parentElement.parentElement)
+<script type="text/javascript" id="@Model.Id">
+
+    function @(Model.Id)resDetails (e)
+    {
         e.preventDefault();
+        
+        let html = '<div style="font-size: 22px;">Arrival date: @Model.ArrivalDate.ToString("d") <br/> Departure date: @Model.DepartureDate.ToString("d") <br/>' +
+            '<br />Guest name: @Model.GuestFirstName @Model.GuestLastName  (@Model.GuestNationality)<br />' +
+            '<br />Number of guests: @Model.NumberOfGuests / Children: @Model.NumberOfChildren<br />' +
+            '<br />Contact info<br />' +
+            '<br />Phone number: @Model.GuestPhoneNumber<br />' +
+            '<br />Email: @Model.GuestEmail<br />' +
+            '<br />Address: @Model.Address<br /></div>' +
+            '<br /><b  style="font-size: 29px;">Price: @Model.totalPrice</b><br />'
+        
+
         Swal.fire({
             title: 'Room #: @Model.RoomNumber',
-            html: '<div style="font-size: 22px;">Arrival date: @Model.ArrivalDate.ToString("d") <br/> Departure date: @Model.DepartureDate.ToString("d") <br/>' +
-                '<br />Guest name: @Model.GuestFirstName @Model.GuestLastName  (@Model.GuestNationality)<br />' +
-                '<br />Number of guests: @Model.NumberOfGuests / Children: @Model.NumberOfChildren<br />' +
-                '<br />Contact info<br />' +
-                '<br />Phone number: @Model.GuestPhoneNumber<br />' +
-                '<br />Email: @Model.GuestEmail<br />' +
-                '<br />Address: @Model.Address<br /></div>' +
-                '<br /><b  style="font-size: 29px;">Price: @Model.totalPrice</b><br />',
+            html: html,
             icon: 'question'
 
         }
         )
     }
 
-    function resCheckIn(e) {
+    function @(Model.Id)resCheckIn (e) {
         e.preventDefault();
         Swal.fire({
             title: 'ID: @Model.Id',
@@ -44,7 +49,7 @@
         })
     }
 
-    function resCheckOut(e) {
+    function @(Model.Id)resCheckOut (e) {
         e.preventDefault();
         Swal.fire({
             title: 'ID: @Model.Id',
@@ -65,6 +70,7 @@
             }
         })
     }
+
 </script>
 
                 

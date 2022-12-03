@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Services.ReservationServices.Contracts;
 using HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 using Microsoft.EntityFrameworkCore;
@@ -131,6 +132,8 @@ namespace HotelManagement.Data.Services.ReservationServices
                 throw new ArgumentNullException("Reservation id is invalid or reservation doesnt exist.");
             }
 
+            reservation.IsActive = false;
+
             reservation.CheckedIn = false;
 
             room.IsCleaned = false;
@@ -146,6 +149,30 @@ namespace HotelManagement.Data.Services.ReservationServices
             }
 
             return false;
+        }
+
+
+        public async Task<bool> PrintFolioPaid(string reservationId)
+        {
+            var reservation = await context.Reservations.FindAsync(reservationId);
+
+            if (reservation == null)
+            {
+                throw new ArgumentNullException("Reservation id is invalid or reservation doesnt exist.");
+            }
+
+            reservation.totalPrice = 0;
+
+            var result = await context.SaveChangesAsync();
+
+            if (result != 0)
+            {
+
+                return true;
+            }
+
+            return false;
+
         }
     }
 }

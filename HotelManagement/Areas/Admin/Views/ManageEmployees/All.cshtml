@@ -1,0 +1,109 @@
+﻿@using HotelManagement.Web.ViewModels.ManageEmployeesModels
+@model HotelManagement.Web.ViewModels.ManageEmployeesModels.AllEmployeesViewModel
+
+@{
+    ViewBag.Title = "All Employees";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-2 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="DepartmentName"></label>
+                <select asp-for="DepartmentName" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var department in Model.Departments)
+                    {
+                        <option value="@department">@department</option>
+                    }
+                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-2">
+                <label asp-for="Active"></label>
+            <div class="form-group">
+                <input asp-for="Active" type="checkbox" class="btn-check form-check" id="btn-check-2-outlined">
+                <label class="btn btn-outline-danger" for="btn-check-2-outlined">Checked</label><br>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="...">
+        </div>
+
+        <div class="form-group col-md-2">
+            <div class="form-group">
+                <label asp-for="EmployeeSorting"></label>
+                <select asp-for="EmployeeSorting" class="form-control">
+                    <option value="0">Newest</option>
+                    <option value="1">Oldest</option>
+                    <option value="2">By First Name</option>
+                    <option value="3">By Last Name</option>
+                    <option value="4">By Department</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@{
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 0;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalEmployeesCount /
+        AllEmployeesViewModel.EmployeesPerPage) - 1;
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 0 ? "disabled" : string.Empty)"
+           asp-controller="ManageEmployees"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-category="@Model.DepartmentName"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.EmployeeSorting)"><<</a>
+    </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+        !Model.Departments.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary 
+           @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="ManageEmployees"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-category="@Model.DepartmentName"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.EmployeeSorting)">>></a>
+    </div>
+</div>
+
+@if (!Model.Employees.Any())
+{
+    <h2 class="text-center">No employees found by the given criteria!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.Employees)
+    {
+        <partial name="_EmployeePartial" model="@house" />
+    }
+</div>

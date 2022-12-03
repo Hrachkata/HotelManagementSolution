@@ -82,7 +82,8 @@ namespace HotelManagement.Controllers
                 }
             }
 
-            return View("ReservationDetails");
+            ViewData["Status"] = "Check in";
+            return View("ReservationDetails", model);
         }
 
 
@@ -125,8 +126,9 @@ namespace HotelManagement.Controllers
                     ModelState.AddModelError("", "Critical error occurred, please try again later.");
                 }
             }
-            
-            return View("ReservationDetails");
+
+            ViewData["Status"] = "Check out";
+            return View("ReservationDetails", model);
         }
 
 
@@ -137,5 +139,49 @@ namespace HotelManagement.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> PrintFolio(SingleReservationViewModel model)
+        {
+            bool result;
+
+            try
+            {
+                result = await this.reservationServices.PrintFolioPaid(model.Id);
+
+                if (result == false)
+                {
+                    throw new DBConcurrencyException("No changes made.");
+                }
+            }
+            catch (ArgumentNullException e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            catch (DBConcurrencyException e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            catch (Exception e)
+            {
+                if (envir == "Development")
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Critical error occurred, please try again later.");
+                }
+            }
+
+            ViewBag.PaymentSuccess = "true";
+
+            return RedirectToAction("ReservationDetails", model);
+        }
     }
 }

@@ -10,14 +10,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.Controllers
 {
+    [Area("Admin")]
     [Authorize]
-    public class ManageEmployeesController1 : Controller
+    public class ManageEmployeesController : Controller
     {
         public IEmployeeServices employeeServices { get; set; }
 
         private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public IAccountServices accountServices { get; set; }
-        public ManageEmployeesController1(
+        public ManageEmployeesController(
             IEmployeeServices _employeeServices,
             IAccountServices _accountServices)
         {

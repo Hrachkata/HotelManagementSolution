@@ -1,0 +1,18 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Resend confirmation email";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form id="account" method="post">
+    <h2 class="center">To reset press button</h2>
+
+        <input asp-for="@Model" type="hidden" name="destination" value=@Model/>
+
+    <div>
+        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
+    </div>
+
+</form>

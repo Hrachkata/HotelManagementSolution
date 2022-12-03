@@ -16,7 +16,6 @@
     }
 </style>
 
-
 <tr >
     
     <th scope="row">@Model.RoomNumber</th>
@@ -32,33 +31,34 @@
         </form>
 *@
     <form method="get">
-        <td><button onclick="resDetails(event)">Reservation details</button></td>
+    <td><button class="btn btn-info" onclick="@(Model.Id)resDetails(event)">Reservation details</button></td>
     </form>
 
     <form method="post">
         <input hidden="true" asp-for="RoomId" value="@Model.RoomId">
         <input hidden="true" asp-for="Id" value="@Model.Id">
         <input hidden="true" asp-for="RoomNumber" value="@Model.RoomNumber">
+        <input hidden="true" asp-for="totalPrice" value="@Model.totalPrice"/>
         @if (@Model.CheckedIn == true && @Model.DepartureDate == DateTime.Today)
         {
-            <td><button asp-action="CheckOut" id="checkOut" onclick="resCheckOut(event)" asp-controller="Reservations">Check out</button></td>
+        <td><button asp-action="CheckOut" class="btn btn-success" id="checkOut" onclick="@(Model.Id)resCheckOut (event)" asp-controller="Reservations">Check out</button></td>
         }
         else if (@Model.CheckedIn == true)
         {
-            <td><button asp-action="CheckOut" id="checkOut" onclick="resCheckOut(event)" asp-controller="Reservations">Early check out</button></td>
+        <td><button asp-action="CheckOut" class="btn btn-warning" id="checkOut" onclick="@(Model.Id)resCheckOut (event)" asp-controller="Reservations">Early check out</button></td>
         }
         else if (@Model.CheckedIn == false && @Model.DepartureDate == DateTime.Today)
         {
-            <td><button asp-action="CheckOut" asp-controller="Reservations">No show</button></td>
+            <td><button  class="btn btn-danger" asp-action="CheckOut" asp-controller="Reservations">No show</button></td>
 
         }
         else if (@Model.CheckedIn == false && @Model.ArrivalDate > DateTime.Today)
         {
-            <td><button asp-action="CheckIn" id="checkIn" onclick="resCheckIn(event)" asp-controller="Reservations">Early check in</button></td>
+        <td><button asp-action="CheckIn" class="btn btn-warning" id="checkIn" onclick="@(Model.Id)resCheckIn (event)" asp-controller="Reservations">Early check in</button></td>
         }
         else
         {
-            <td><button asp-action="CheckIn" id="checkIn" onclick="resCheckIn(event)" asp-controller="Reservations">Check in</button></td>
+        <td><button asp-action="CheckIn" class="btn btn-success" id="checkIn" onclick="@(Model.Id)resCheckIn (event)" asp-controller="Reservations">Check in</button></td>
         }
     
 

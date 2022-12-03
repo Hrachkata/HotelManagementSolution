@@ -25,5 +25,12 @@
     <ProjectReference Include="..\HotelManagement.Core\HotelManagement.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Account\Data\" />
+    <Folder Include="Areas\Account\Models\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>
  

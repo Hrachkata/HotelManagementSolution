@@ -86,8 +86,6 @@ namespace HotelManagement.Data.Services.FrontDeskServices
 
             var rooms = await roomQuery.ProjectTo<SingleFreeRoomModel>(mapper.ConfigurationProvider).ToListAsync();
 
-            //TODO VERY IMPORTANT
-
             var resultRooms = new List<SingleFreeRoomModel>();
             
             foreach (var room in rooms)
@@ -99,7 +97,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
                     continue;
                 }
 
-                if (room.Reservations.Any(r => (r.ArrivalDate >= arrivalDate && r.ArrivalDate <= departureDate) || (r.DepartureDate >= arrivalDate && r.DepartureDate <= departureDate)))
+                if (room.Reservations.Any(r => ((r.ArrivalDate >= arrivalDate && r.ArrivalDate <= departureDate) || (r.DepartureDate >= arrivalDate && r.DepartureDate <= departureDate)) && r.IsActive == true))
                 {
                     continue;
                 }
@@ -111,8 +109,6 @@ namespace HotelManagement.Data.Services.FrontDeskServices
             var roomsPaged = resultRooms.Skip((currentPage) * roomsPerPage)
                 .Take(roomsPerPage);
 
-
-            var totalRooms = roomQuery.Count();
 
             return new FreeRoomQueryServiceModel()
             {
@@ -126,7 +122,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
        {
            foreach (var room in roomQuery)
             {
-                if (room.Reservations.Any(r => r.ArrivalDate == DateTime.Today || (r.ArrivalDate <= DateTime.Today && r.DepartureDate >= DateTime.Today)))
+                if (room.Reservations.Any(r => r.CheckedIn == true && r.IsActive == true))
                 {
                     room.IsOccupied = true;
                 }

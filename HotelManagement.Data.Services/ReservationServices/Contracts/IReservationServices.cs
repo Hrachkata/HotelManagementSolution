@@ -13,4 +13,6 @@ public interface IReservationServices
     public Task<bool> CheckIn(string reservationId, int roomId);
 
     public Task<bool> CheckOut(string reservationId, int roomId);
+
+    public Task<bool> PrintFolioPaid(string reservationId);
 }
