@@ -35,20 +35,7 @@ public class SendGridEmail
 
         return response;
 
-        //TODO logging
 
-        if (response.Successful)
-        {
-            Console.WriteLine("The email was sent successfully");
-        }
-        else
-        {
-            Console.WriteLine("The email could not be sent. Check the errors: ");
-            foreach (string error in response.ErrorMessages)
-            {
-                Console.WriteLine(error);
-            }
-        }
     }
 
     public SendResponse sendConfirmationEmail(string userId, string token, string email)
@@ -61,7 +48,7 @@ public class SendGridEmail
         };
         var result = "Click link to verify your account:\n";
 
-        result += UriHelper.BuildAbsolute("https", new HostString("localhost", 7132), pathBase: "/Account/ConfirmEmail",
+        result += UriHelper.BuildAbsolute("https", new HostString("localhost", 7132), pathBase: "/Account/Account/ConfirmEmail",
             PathString.Empty, QueryString.Create(values), FragmentString.Empty);
 
 
@@ -78,7 +65,7 @@ public class SendGridEmail
         };
         var result = "Click link to reset your password:\n";
 
-        result += UriHelper.BuildAbsolute("https", new HostString("localhost", 7132), pathBase: "/Account/ResetPassword",
+        result += UriHelper.BuildAbsolute("https", new HostString("localhost", 7132), pathBase: "/Account/Account/ResetPassword",
             PathString.Empty, QueryString.Create(values), FragmentString.Empty);
 
         Console.WriteLine(result);

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HotelManagement.Views.Account
+namespace HotelManagement.Areas.Account.Views.Account
 {
     public class LoginModel : PageModel
     {

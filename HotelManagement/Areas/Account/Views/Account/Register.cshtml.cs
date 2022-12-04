@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace HotelManagement.Views.Account
+namespace HotelManagement.Areas.Account.Views.Account
 {
     public class RegisterModel : PageModel
     {

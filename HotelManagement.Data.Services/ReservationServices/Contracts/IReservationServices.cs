@@ -14,5 +14,6 @@ public interface IReservationServices
 
     public Task<bool> CheckOut(string reservationId, int roomId);
 
+    public Task<bool> CancelReservation(string reservationId);
     public Task<bool> PrintFolioPaid(string reservationId);
 }

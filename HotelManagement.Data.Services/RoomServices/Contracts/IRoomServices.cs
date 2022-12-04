@@ -8,7 +8,7 @@ namespace HotelManagement.Data.Services.RoomServices.Contracts
 
         public Task<RoomEditViewModel> GetRoomEditViewModelAsync(int id);
 
-        public Task<int> EditRoomWithRegisterViewModel(RoomEditViewModel model);
+        public Task<int> EditRoomWithEditViewModel(RoomEditViewModel model);
 
         public Task<bool> DeleteRoomById(int id);
 

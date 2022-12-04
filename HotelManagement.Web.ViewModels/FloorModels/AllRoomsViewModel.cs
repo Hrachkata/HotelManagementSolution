@@ -20,7 +20,7 @@ namespace HotelManagement.Web.ViewModels.FloorModels
         public IEnumerable<string> RoomTypes { get; set; }
 
         [DisplayName("Free, clean, in service")]
-        public bool IsAvailable { get; set; } = true;
+        public bool IsAvailable { get; set; } = false;
 
         [DisplayName("Sort Rooms by")]
         public RoomSortingClass.RoomSorting RoomSorting { get; set; }

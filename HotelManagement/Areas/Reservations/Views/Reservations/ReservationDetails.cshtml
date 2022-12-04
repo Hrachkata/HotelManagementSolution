@@ -1,0 +1,36 @@
+﻿@model HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels.SingleReservationViewModel
+
+@{
+    ViewBag.Title = "Reservation details";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<h3><div asp-validation-summary="ModelOnly" class="text-danger"></div></h3>
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="card col-8 border-0" style="font-size: 20px;">
+            <h1>@ViewData["Status"]</h1>
+            <h2>Total: @Model.totalPrice</h2>
+            <h2>Room number: @Model.RoomNumber</h2>
+            <h2>Reservation: @Model.Id</h2>
+            @if (@Model.totalPrice != 0 || ViewBag.PaymentSuccess == "true")
+            {
+                <form method="post"> 
+                    <input hidden="true" asp-for="RoomId" value="@Model.RoomId">
+                    <input hidden="true" asp-for="Id" value="@Model.Id">
+                    <input hidden="true" asp-for="RoomNumber" value="@Model.RoomNumber">
+                    <input hidden="true" asp-for="totalPrice" value="@Model.totalPrice"/>
+                    <button type="submit" asp-action="PrintFolio" asp-controller="Reservations"> Print fiscal folio</button>
+                </form>
+            }
+           
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

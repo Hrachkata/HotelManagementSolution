@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using HotelManagement.Data.Models.UserModels;
+﻿using HotelManagement.Data.Services.AccountServices.Contracts;
 using HotelManagement.Data.Services.EmployeeServices.Contracts;
-using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Models;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace HotelManagement.Controllers
+namespace HotelManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
     public class ManageEmployeesController : Controller
     {
         public IEmployeeServices employeeServices { get; set; }
-
-        private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public IAccountServices accountServices { get; set; }
         public ManageEmployeesController(
             IEmployeeServices _employeeServices,
@@ -59,15 +56,14 @@ namespace HotelManagement.Controllers
             {
                  user =  await employeeServices.GetUserDetailsModel(id);
             }
-            catch (Exception ex)
+            catch (ArgumentNullException ex)
             {
+                TempData["status"] = 404;
 
-                ModelState.AddModelError("", ex.Message);
-
-                return View(user);
+                throw;
             }
 
-            
+
 
             return View(user);
         }
@@ -82,18 +78,19 @@ namespace HotelManagement.Controllers
             {
                 user = await employeeServices.GetUserEditViewModelByIdAsync(id);
             }
-            catch (Exception ex)
+            catch (ArgumentNullException ex)
             {
-                if (envir == "Development")
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
+                TempData["status"] = 404;
 
-                ModelState.AddModelError("", "Something went wrong try again later.");
-
-                return View(user);
+                throw;
             }
-            
+            catch (ArgumentException ex)
+            {
+                TempData["status"] = 404;
+
+                throw;
+            }
+
             if (String.IsNullOrWhiteSpace(user.UserName))
             {
                 ModelState.AddModelError("", $"User with id {id} doesnt exist.");
@@ -107,14 +104,33 @@ namespace HotelManagement.Controllers
         public async Task<IActionResult> Edit(EmployeeEditViewModel employee)
         {
             IdentityResult result;
+
             try
             {
                 result = await employeeServices.EditUserFromEditViewModel(employee);
+
+                if (result.Errors.Count() > 0)
+                {
+                    throw new DbUpdateException();
+                }
             }
-            catch (Exception e)
+            catch (ArgumentNullException e)
             {
-                ModelState.AddModelError("", e.Message);
-                return View(await employeeServices.GetUserEditViewModelByIdAsync(employee.Id.ToString()));
+                TempData["status"] = 404;
+
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                TempData["status"] = 400;
+
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                TempData["status"] = 400;
+
+                throw;
             }
             
 
@@ -139,19 +155,20 @@ namespace HotelManagement.Controllers
             try
             {
                 result = await employeeServices.RemoveDepartmentFromUser(model.DepartmentOfEmployeeId, model.Id.ToString());
+
+                if (!result)
+                {
+                    throw new ArgumentNullException();
+                }
             }
             catch (ArgumentException ex)
             {
-                TempData["Error"] = ex.Message;
-                return Redirect($"Edit/{model.Id.ToString()}");
+                TempData["status"] = 404;
+
+                throw;
             }
 
-            if (!result)
-            {
-                TempData["Error"] = "Department/User id invalid.";
-
-                return Redirect($"Edit/{model.Id.ToString()}");
-            }
+            
 
             return Redirect($"Edit/{model.Id.ToString()}");
         }
@@ -165,20 +182,16 @@ namespace HotelManagement.Controllers
             try
             {
                 result = await employeeServices.AddDepartmentToUser(model.DepartmentEmployeeDoesntHaveId, model.Id.ToString());
+                if (!result)
+                {
+                    throw new ArgumentNullException();
+                }
             }
             catch (ArgumentException ex)
             {
-                TempData["Error"] = ex.Message;
+                TempData["status"] = 404;
 
-                return Redirect($"Edit/{model.Id.ToString()}");
-            }
-            
-
-            if (!result)
-            {
-                TempData["Error"] = "Department/User id invalid.";
-
-                return Redirect($"Edit/{model.Id.ToString()}");
+                throw;
             }
 
             return Redirect($"Edit/{model.Id.ToString()}");
@@ -194,35 +207,25 @@ namespace HotelManagement.Controllers
             try
             {
                 result = await employeeServices.DisableUser(id);
+                if (result.Errors.Count() > 0)
+                {
+                    throw new DbUpdateException();
+                }
             }
-            catch (Exception e)
-            { 
-                errorModel.RequestId = id;
-                errorModel.ErrorMessage = e.Message;
-                
+            catch (DbUpdateException e)
+            {
+                TempData["status"] = 400;
 
-                return View("Error", errorModel);
-
+                throw;
             }
-
-          
-
+            
             if (result.Succeeded)
             {
                 return RedirectToAction("Details", "ManageEmployees", new {id = id});
                 
             }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-
-            errorModel.RequestId = id;
-            errorModel.ErrorMessage = String.Join("\n", result.Errors.Select(e => e.Description));
-
-
-            return View("Error", errorModel);
+            
+            return RedirectToAction("Edit", new {id = id});
         }
 
         [HttpGet]
@@ -235,18 +238,17 @@ namespace HotelManagement.Controllers
             try
             {
                 result = await employeeServices.EnableUser(id);
+                if (result.Errors.Count() > 0)
+                {
+                    throw new DbUpdateException();
+                }
             }
-            catch (Exception e)
+            catch (DbUpdateException e)
             {
-                errorModel.RequestId = id;
-                errorModel.ErrorMessage = e.Message;
+                TempData["status"] = 400;
 
-
-                return View("Error", errorModel);
-
+                throw;
             }
-
-
 
             if (result.Succeeded)
             {
@@ -254,16 +256,7 @@ namespace HotelManagement.Controllers
 
             }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-
-            errorModel.RequestId = id;
-            errorModel.ErrorMessage = String.Join("\n", result.Errors.Select(e => e.Description));
-
-
-            return View("Error", errorModel);
+            return RedirectToAction("Edit", new { id = id });
         }
     }
 }

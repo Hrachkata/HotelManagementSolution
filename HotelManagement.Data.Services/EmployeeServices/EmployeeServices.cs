@@ -2,10 +2,10 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotelManagement.Data.Services.EmployeeServices.Contracts;
-using HotelManagement.Data.Services.UserServices.Contracts;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 using HotelManagement.Data.Models.Models;
+using HotelManagement.Data.Services.AccountServices.Contracts;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
 using static HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels.EmployeeSortingClass;
@@ -222,6 +222,8 @@ namespace HotelManagement.Data.Services.EmployeeServices
 
         public async Task<IdentityResult> DisableUser(string userId)
         {
+
+
             var result = await accountServices.DisableUser(userId);
 
             return result;

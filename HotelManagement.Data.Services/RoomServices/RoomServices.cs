@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Data;
+using AutoMapper;
 using HotelManagement.Data.Services.RoomServices.Contracts;
 using HotelManagement.Web.ViewModels.RoomModels;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace HotelManagement.Data.Services.RoomServices
             mapper = _mapper;
         }
 
-        public async Task<int> EditRoomWithRegisterViewModel(RoomEditViewModel model)
+        public async Task<int> EditRoomWithEditViewModel(RoomEditViewModel model)
         {
            
 
@@ -50,10 +51,15 @@ namespace HotelManagement.Data.Services.RoomServices
             {
                  isChanged = await context.SaveChangesAsync();
 
+                 if (isChanged == 0)
+                 {
+                     throw new DBConcurrencyException("No rows modified.");
+                 }
+
             }
-            catch (Exception e)
+            catch (DBConcurrencyException e)
             {
-                throw new Exception(e.Message);
+                throw new DBConcurrencyException(e.Message);
             }
 
 
@@ -85,7 +91,7 @@ namespace HotelManagement.Data.Services.RoomServices
                 return true;
             }
 
-            return false;
+            throw new DBConcurrencyException("No rows modified.");
 
         }
 
@@ -108,7 +114,7 @@ namespace HotelManagement.Data.Services.RoomServices
                 return true;
             }
 
-            return false;
+            throw new DBConcurrencyException("No rows modified.");
 
         }
 
@@ -131,8 +137,7 @@ namespace HotelManagement.Data.Services.RoomServices
                 return true;
             }
 
-            return false;
-
+            throw new DBConcurrencyException("No rows modified.");
         }
 
         public async Task<bool> IsDirtyAsync(int id)
@@ -154,7 +159,7 @@ namespace HotelManagement.Data.Services.RoomServices
                 return true;
             }
 
-            return false;
+            throw new DBConcurrencyException("No rows modified.");
 
         }
 
@@ -177,8 +182,7 @@ namespace HotelManagement.Data.Services.RoomServices
                 return true;
             }
 
-            return false;
-
+            throw new DBConcurrencyException("No rows modified.");
         }
 
         public async Task<bool> EnableRoomById(int id)
@@ -200,7 +204,7 @@ namespace HotelManagement.Data.Services.RoomServices
                 return true;
             }
 
-            return false;
+            throw new DBConcurrencyException("No rows modified.");
 
         }
 

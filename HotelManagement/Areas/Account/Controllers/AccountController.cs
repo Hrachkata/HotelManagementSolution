@@ -1,27 +1,18 @@
-﻿using System.Runtime.InteropServices;
-using AutoMapper;
-using HotelManagement.Data.Models.Models;
-using HotelManagement.Data.Models.UserModels;
-using HotelManagement.Data.Services.UserServices.Contracts;
-using HotelManagement.EmailService;
+﻿using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Data.Services.AccountServices.Contracts;
 using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
-using NuGet.Common;
-using Newtonsoft.Json.Linq;
 
-namespace HotelManagement.Controllers
+namespace HotelManagement.Areas.Account.Controllers
 {
-    
+    [Area("Account")]
     public class AccountController : Controller
     {
         public SignInManager<ApplicationUser> signInManager { get; set; }
         public UserManager<ApplicationUser> userManager { get; set; }
         public IAccountServices accountServices { get; set; }
-
-        private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public AccountController(
             SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
@@ -41,7 +32,7 @@ namespace HotelManagement.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             var model = new LoginViewModel();
             
@@ -100,7 +91,7 @@ namespace HotelManagement.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {area = ""});
 
         }
         
@@ -124,7 +115,7 @@ namespace HotelManagement.Controllers
             
             var resultUser = await accountServices.CreateUserAsync(model);
 
-            if (resultUser.Errors.Any() || !resultUser.Succeeded)//|| !roleResult.Succeeded)
+            if (resultUser.Errors.Any() || !resultUser.Succeeded)
             {
                 foreach (var error in resultUser.Errors)
                 {
@@ -199,7 +190,7 @@ namespace HotelManagement.Controllers
         {
             await signInManager.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         [HttpGet]
@@ -254,7 +245,7 @@ namespace HotelManagement.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Redirect("/Account/ResetPasswordConfirmation");
+                    return View("ResetPasswordConfirmation");
                 }
 
                 foreach (var error in result.Errors)
@@ -264,6 +255,13 @@ namespace HotelManagement.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
         }
 
     }

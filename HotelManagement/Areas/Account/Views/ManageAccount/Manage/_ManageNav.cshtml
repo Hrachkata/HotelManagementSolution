@@ -1,0 +1,103 @@
+﻿@model HotelManagement.Web.ViewModels.UserModels.EditViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HotelManagement.Data.Models.UserModels
+
+
+<style>
+    
+
+    .avatar {
+        width: 200px;
+        height: 200px;
+    }</style>
+
+
+<div class="container bootstrap snippets bootdey">
+    <h1 class="text-primary align-content-center">Edit Profile</h1>
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Upload a different photo...</h6>
+
+                <input type="file" class="form-control">
+            </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h3>Personal info</h3>
+            <form class="form-horizontal" role="form">
+
+                <div class="form-group">
+                    <label asp-for="@Model.FirstName"></label>
+                    <div class="col-lg-8">
+                        <input asp-for="@Model.FirstName" class="form-control" autocomplete="firstName" aria-required="true"/>
+                        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.MiddleName"></label>
+                    <div class="col-lg-8">
+                        <input asp-for="@Model.MiddleName" class="form-control" autocomplete="middleName" aria-required="true"/>
+                        <span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.LastName"></label>
+                    <div class="col-lg-8">
+                        <input asp-for="@Model.LastName" class="form-control" autocomplete="lastName" aria-required="true"/>
+                        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.PhoneNumber"></label>
+                    <div class="col-lg-8">
+                        <input asp-for="@Model.PhoneNumber" class="form-control" aria-required="true"/>
+                        <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.UserName"></label>
+                    <div class="col-lg-8">
+                        <input disabled class="form-control" value="@Model.UserName" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Email"></label>
+                    <div class="col-lg-8">
+                        <input disabled class="form-control" value="@Model.Email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.EGN"></label>
+                    <div class="col-lg-8">
+                        <input disabled class="form-control" value="@Model.EGN" />
+                    </div>
+                </div>
+                <div class="form-group" autocomplete="off">
+                    <label class="text-danger">Current password</label>
+                    <div class="col-lg-8" autocomplete="off">
+                        <input asp-for="@Model.OldPassword" class="form-control" aria-required="true" autocomplete="off"/>
+                        <span asp-validation-for="@Model.OldPassword" class="text-danger"></span>
+                    </div>
+                </div>
+                <p></p>
+                @if (@Model.EditedOn.Year > 2021)
+                {
+                    <p style="color:#808080">@Model.EditedOn</p>
+                }
+                <p></p>
+                <div>
+                    <button id="edit-submit" type="submit" class="w-150 btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>

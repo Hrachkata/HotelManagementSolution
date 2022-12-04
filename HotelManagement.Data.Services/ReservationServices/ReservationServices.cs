@@ -174,5 +174,28 @@ namespace HotelManagement.Data.Services.ReservationServices
             return false;
 
         }
+
+        public async Task<bool> CancelReservation(string reservationId)
+        {
+            var reservation = await context.Reservations.FindAsync(reservationId);
+
+            if (reservation == null)
+            {
+                throw new ArgumentNullException("Reservation id is invalid or reservation doesnt exist.");
+            }
+
+            reservation.IsActive = false;
+
+            var result = await context.SaveChangesAsync();
+
+            if (result != 0)
+            {
+
+                return true;
+            }
+
+            return false;
+
+        }
     }
 }
