@@ -1,53 +1,53 @@
-﻿using System.ComponentModel.DataAnnotations;
-using HotelManagement.Data.Models.Models;
-using HotelManagement.Data.Models.UserModels;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
+using static ModelValidationConstants.AccountConstants.AccountConstants;
 
-//using static Library.Constants.UserConstants;
 
-namespace HotelManagement.Web.ViewModels.UserModels
+namespace HotelManagement.Web.ViewModels.AccountModels
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : AccountBaseViewModel
     {
         public Guid Id { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
+        
+        [Required]
+        [Range(typeof(decimal), MinSalary, MaxSalary)]
         public decimal Salary { get; set; }
+
+        [Required]
+        [StringLength(MaxEGNLength, MinimumLength = MinEGNLength)]
         public string EGN { get; set; }
-        [Required]
-        //[StringLength(MaxUserNameLength, MinimumLength = MinUserNameLength)]
-        public string UserName { get; set; } = null!;
 
         [Required]
-        [EmailAddress]
-        //[StringLength (MaxEmailLength, MinimumLength = MinEmailLength)]
-        public string Email { get; set; } = null!;
-
-        [Required]
-        //[StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
+        [StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; } = null!;
 
+        [Required]
         [Compare(nameof(Password))]
-        //[StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
+        [StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
+        [DisplayName("Confirm password")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
 
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-
-        public bool RememberMe { get; set; } = false;
-
+        
+        [Required]
+        [StringLength(MaxPhoneLength, MinimumLength = MinPhoneLength)]
+        [DisplayName("Phone number")]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        [StringLength(MaxRFIDLength, MinimumLength = MinRFIDLength)]
         public string RFID { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
         public ICollection<DepartmentDto>? Departments { get; set; } = new HashSet<DepartmentDto>();
 
+        [Required]
         public int DepartmentId { get; set; }
     }
 }

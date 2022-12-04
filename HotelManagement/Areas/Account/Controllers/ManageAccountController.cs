@@ -1,10 +1,10 @@
 ﻿using HotelManagement.Data.Models.UserModels;
-using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using HotelManagement.Data.Services.AccountServices.Contracts;
+using HotelManagement.Web.ViewModels.AccountModels;
 
 namespace HotelManagement.Areas.Account.Controllers
 {

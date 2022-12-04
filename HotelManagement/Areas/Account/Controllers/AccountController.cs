@@ -1,6 +1,6 @@
 ﻿using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Services.AccountServices.Contracts;
-using HotelManagement.Web.ViewModels.UserModels;
+using HotelManagement.Web.ViewModels.AccountModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -97,6 +97,7 @@ namespace HotelManagement.Areas.Account.Controllers
         
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -125,7 +126,7 @@ namespace HotelManagement.Areas.Account.Controllers
                 return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
             }
 
-            return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
+            return Redirect("/Admin");
         }
 
         [HttpGet]
@@ -154,6 +155,7 @@ namespace HotelManagement.Areas.Account.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailViewModel model)
         {
 
@@ -202,6 +204,7 @@ namespace HotelManagement.Areas.Account.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -237,6 +240,7 @@ namespace HotelManagement.Areas.Account.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
         {
             if (ModelState.IsValid)

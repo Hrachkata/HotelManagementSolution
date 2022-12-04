@@ -14,21 +14,18 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     {
+        options.Password.RequiredLength = 8;
+        
+        options.SignIn.RequireConfirmedEmail = true;
+
         options.Password.RequireNonAlphanumeric = false;
 
-        options.Password.RequireDigit = false;
-
         options.Password.RequireUppercase = false;
-
-        options.Password.RequiredLength = 1;
-
-        options.SignIn.RequireConfirmedAccount = false;
-
-        options.SignIn.RequireConfirmedEmail = false;
     })
     .AddRoles<ApplicationUserRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 
 var config = new ProgramConfiguration();
@@ -40,6 +37,7 @@ builder.Services.ConfigureApplicationCookie(options => { options.LoginPath = "/U
 //SampleData.Initialize(builder.Services);
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

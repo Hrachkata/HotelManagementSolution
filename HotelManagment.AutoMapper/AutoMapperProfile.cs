@@ -1,7 +1,8 @@
 ﻿using HotelManagement.Data.Models.UserModels;
 using AutoMapper;
-using HotelManagement.Web.ViewModels.UserModels;
+using AutoMapper.Configuration;
 using HotelManagement.Data.Models.Models;
+using HotelManagement.Web.ViewModels.AccountModels;
 using HotelManagement.Web.ViewModels.BookingModels;
 using HotelManagement.Web.ViewModels.FloorModelForVisualization;
 using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
@@ -25,6 +26,12 @@ public class AutoMapperProfile : Profile
                 o => o.MapFrom(s => s.Name));
 
         CreateMap<RegisterViewModel, ApplicationUser>()
+            .ForMember(d => d.Id,
+                o => o.MapFrom(s => Guid.NewGuid()))
+            .ForMember(d => d.CreatedOn,
+                o => o.MapFrom(s => DateTime.Now))
+            .ForMember(d => d.SecurityStamp,
+                o => o.MapFrom(s => Guid.NewGuid()))
             .ForMember(d => d.EmployeeDepartment,
                 o => o.MapFrom(s => new List<EmployeeDepartment>()
                 {
@@ -33,13 +40,7 @@ public class AutoMapperProfile : Profile
                         DepartmentId = s.DepartmentId,
                         ApplicationUserId = s.Id
                     }
-                }))
-            .ForMember(d => d.CreatedOn,
-                o => o.MapFrom(s => DateTime.Now))
-            .ForMember(d => d.SecurityStamp,
-                o => o.MapFrom(s => Guid.NewGuid()))
-            .ForMember(d => d.Id, 
-                o => o.MapFrom(s => Guid.NewGuid()));
+                }));
 
         CreateMap<ApplicationUser, SingleEmployeeServiceModel>().ForMember(d => d.DepartmentName,
             o => o.MapFrom(s 
@@ -126,4 +127,6 @@ public class AutoMapperProfile : Profile
                 o => o.MapFrom(s => s.Room.IsOccupied));
 
     }
+
+    
 }

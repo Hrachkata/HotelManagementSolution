@@ -1,7 +1,7 @@
 ﻿using FluentEmail.Core.Models;
 using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Web.ViewModels.AccountModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
-using HotelManagement.Web.ViewModels.UserModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace HotelManagement.Data.Services.AccountServices.Contracts;

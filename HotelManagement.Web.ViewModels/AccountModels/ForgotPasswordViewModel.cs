@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
-namespace HotelManagement.Web.ViewModels.UserModels;
+using static ModelValidationConstants.AccountConstants.AccountConstants;
+namespace HotelManagement.Web.ViewModels.AccountModels;
 
 public class ForgotPasswordViewModel
 {
 
+
+    [StringLength(MaxEmailLength, MinimumLength = MinEmailLength)]
     [Required, EmailAddress, Display(Name = "Registered Email Address")]
     public string Email { get; set; }
 

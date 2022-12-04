@@ -1,37 +1,29 @@
-﻿using System.ComponentModel;
+﻿
 using System.ComponentModel.DataAnnotations;
-using HotelManagement.Data.Models.Models;
-using HotelManagement.Data.Models.UserModels;
+using static ModelValidationConstants.AccountConstants.AccountConstants;
 
-namespace HotelManagement.Web.ViewModels.UserModels;
+namespace HotelManagement.Web.ViewModels.AccountModels;
 
-public class EditViewModel
+public class EditViewModel : AccountBaseViewModel
 {
     public Guid Id { get; set; }
 
-    [DisplayName("First Name")]
     [Required]
-    public string FirstName { get; set; }
-
-    [DisplayName("Middle Name")]
-    [Required]
-    public string MiddleName { get; set; }
-
-    [DisplayName("Last Name")]
-    [Required]
-    public string LastName { get; set; }
-    
-    [Required]
+    [StringLength(MaxPhoneLength, MinimumLength = MinPhoneLength)]
     public string PhoneNumber { get; set; }
     
+    [StringLength(MaxUserNameLength, MinimumLength = MinUserNameLength)]
     public string? UserName { get; set; }
-    
+
+    [StringLength(MaxEmailLength, MinimumLength = MinEmailLength)]
     public string? Email { get; set; }
 
+
+    [StringLength(MaxEGNLength, MinimumLength = MinEGNLength)]
     public string? EGN { get; set; }
 
     [Required]
-    //[StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
+    [StringLength(MaxPasswordLength, MinimumLength = MinPasswordLength)]
     [DataType(DataType.Password)]
     public string OldPassword { get; set; }
     

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HotelManagement.Web.ViewModels.UserModels;
+namespace HotelManagement.Web.ViewModels.AccountModels;
 
 public class ResetPasswordModel
 {

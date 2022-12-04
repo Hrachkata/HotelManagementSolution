@@ -42,6 +42,8 @@ namespace HotelManagement.Data
         public DbSet<RoleName> RoleName { get; set; }
         public DbSet<Room> Rooms{ get; set; }
 
+        //public DbSet<Guest> Guests { get; set; }
+
         public DbSet<RoomType> RoomTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -73,7 +75,10 @@ namespace HotelManagement.Data
                 .WithMany(d => d.RoleDepartment)
                 .HasForeignKey(rd => rd.DepartmentId);
 
-            
+            //builder.Entity<Guest>().HasIndex(u => u.PhoneNumber).IsUnique();
+
+            builder.Entity<ApplicationUser>().HasIndex(u => u.UserName).IsUnique();
+            builder.Entity<ApplicationUser>().HasIndex(u => u.RFID).IsUnique();
 
             UserSeeder.SeedRoles(builder);
 
