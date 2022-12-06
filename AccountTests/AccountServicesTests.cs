@@ -1,65 +1,79 @@
+using AutoMapper;
 using HotelManagement.Data;
+using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Data.Seeding;
+using HotelManagement.Data.Services.AccountServices;
+using HotelManagement.EmailService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
-namespace AccountTests
+namespace HotelManagement.Data.Services.Tests
 {
-    public class Tests
+    public class AccountServicesTests
     {
+
         private ApplicationDbContext context;
+
+        private List<ApplicationUser> users;
+
+        private readonly IMapper mapper;
+
+        private readonly SendGridEmail emailService;
+
+        private readonly UserManager<ApplicationUser> userManager;
+
+        private AccountServices.AccountServices accountServices;
 
         [SetUp]
         public void Setup()
         {
+            users = new SeedUserData().SeedUsers(Guid.NewGuid()).ToList();
 
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .EnableDetailedErrors()
                 .UseInMemoryDatabase(databaseName: "HotelManagementInMemoryDb")
-                .Options;
+            .Options;
 
-            //this.context = new ApplicationDbContext(options);
+            this.context = new ApplicationDbContext(options);
+            this.context.AddRange(users);
+            this.context.SaveChanges();
 
-            //[SetUp]
-            //public void TestInitialize()
-            //{
-            //    this.decisions = new List<CreditDecision>()
-            //    {
-            //        new CreditDecision(){Id = 1, Score = 100, Decision = "Declined"},
-            //        new CreditDecision(){Id = 2, Score = 600, Decision = "Maybe" },
-            //        new CreditDecision(){ Id = 3, Score = 800, Decision = "Absolutely" }
-            //    };
-
-            //    var options = new DbContextOptionsBuilder<AppDbContext>()
-            //        .UseInMemoryDatabase(databaseName: "CreditsInMemoryDb") // Give a Unique name to the DB
-            //        .Options;
-            //    this.dbContext = new AppDbContext(options);
-            //    this.dbContext.AddRange(this.decisions);
-            //    this.dbContext.SaveChanges();
-            //}
-
-            //[Test]
-            //public void Test_GetAllCreditDecisions()
-            //{
-            //    var decisionId = 1;
-
-            //    ICreditDecisionService service =
-            //        new CreditDecisionService(this.dbContext); // Pass it to Service as dependency
-            //    var decision = service.GetById(decisionId);
-
-            //    var dbDecision = this.decisions
-            //        .ToList()
-            //        .Find(d => d.Id == decisionId);
-
-            //    Assert.True(decision != null);
-            //    Assert.True(decision.Score == dbDecision.Score);
-            //    Assert.True(decision.Decision == dbDecision.Decision);
-            //}
-
+            accountServices = new AccountServices.AccountServices(userManager, mapper, emailService, context);
         }
 
         [Test]
-        public void Test1()
+        public void AreTheCorrectNumberOfUsersAddedToDb()
         {
-            Assert.Pass();
+            Assert.AreEqual(2, this.context.Users.Count());
         }
+
+        [Test]
+        public void AreTheUsersAddedWithCorrectData()
+        {
+            var user1= this.context.Users.First();
+
+            var user2 = this.context.Users.Last();
+
+            Assert.AreEqual(user1.FirstName, users[0].FirstName);
+
+            Assert.AreEqual(user1.LastName, users[0].LastName);
+            Assert.AreEqual(user1.FirstName, users[0].FirstName);
+
+            Assert.AreEqual(user1.UserName, users[0].UserName);
+            Assert.AreEqual(user1.RFID, users[0].RFID);
+
+            Assert.AreEqual(user2.FirstName, users[1].FirstName);
+                                
+            Assert.AreEqual(user2.LastName, users[1].LastName);
+            Assert.AreEqual(user2.FirstName, users[1].FirstName);
+                                
+            Assert.AreEqual(user2.UserName, users[1].UserName);
+            Assert.AreEqual(user2.RFID, users[1].RFID);
+
+        }
+
+        
     }
 }

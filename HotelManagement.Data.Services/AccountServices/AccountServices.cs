@@ -154,11 +154,6 @@ public class AccountServices : IAccountServices
         return result;
     }
 
-    public async Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync()
     {
         var departments =await this.context.Departments.Where(d => d.IsActive).ProjectTo<DepartmentDto>(mapper.ConfigurationProvider).ToListAsync();
@@ -233,5 +228,10 @@ public class AccountServices : IAccountServices
         var result = await userManager.UpdateAsync(user);
         
         return result;
+    }
+
+    public Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        throw new NotImplementedException();
     }
 }
