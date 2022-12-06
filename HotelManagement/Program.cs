@@ -32,7 +32,15 @@ var config = new ProgramConfiguration();
 
 config.AddServicesToBuidler(builder);
 
-builder.Services.ConfigureApplicationCookie(options => { options.LoginPath = "/User/Login"; });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+
+    //TODO UNAUTHORIZED VERY IMPORTANT B^)
+    //options.AccessDeniedPath = "//"
+    
+    options.LogoutPath = "/Account/Account/Logout";
+    options.LoginPath = "/Account/Account/Login";
+});
 
 //SampleData.Initialize(builder.Services);
 

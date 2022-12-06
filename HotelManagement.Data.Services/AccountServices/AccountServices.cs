@@ -15,25 +15,16 @@ namespace HotelManagement.Data.Services.AccountServices;
 public class AccountServices : IAccountServices
 {
     private readonly UserManager<ApplicationUser> userManager;
-    private readonly UserManager<ApplicationUser> signInManager;
-    private readonly RoleManager<ApplicationUserRole> roleManager;
-    private readonly IConfiguration configuration;
     private readonly IMapper mapper;
     private readonly SendGridEmail emailService;
     private readonly ApplicationDbContext context;
 
     public AccountServices(UserManager<ApplicationUser> _userManager,
-        UserManager<ApplicationUser> _signInManager,
-        RoleManager<ApplicationUserRole> _roleManager,
-        IConfiguration _configuration,
         IMapper _mapper,
         SendGridEmail _emailService,
         ApplicationDbContext _context)
     {
         this.userManager = _userManager;
-        this.signInManager = _signInManager;
-        this.roleManager = _roleManager;
-        this.configuration = _configuration;
         this.mapper = _mapper;
         this.emailService = _emailService;
         this.context = _context;

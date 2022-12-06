@@ -1,16 +1,14 @@
 ﻿using HotelManagement.Data.Models.Models;
 using HotelManagement.Data.Models.UserModels;
+using HotelManagement.Data.Seeding.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Seeding
 {
-    public class SeedUserData
+    public class SeedUserData : ISeedUserData
     {
-        private Guid adminGuid = Guid.NewGuid();
-
-        private Guid ownerGuid = Guid.NewGuid();
-        public void SeedUsers(ModelBuilder builder)
+        public ICollection<ApplicationUser> SeedUsers(Guid adminGuid)
         {
             
 
@@ -36,12 +34,43 @@ namespace HotelManagement.Data.Seeding
 
             user.PasswordHash = passwordHasher.HashPassword(user, "Admin123");
 
-            builder.Entity<ApplicationUser>().HasData(user);
+
+
+            ApplicationUser user2 = new ApplicationUser()
+            {
+                Id = Guid.NewGuid(),
+                UserName = "John",
+                MiddleName = "Doe",
+                LastName = "Johnathan",
+                EGN = "2934827162",
+                LockoutEnabled = true,
+                PhoneNumber = "08923471624",
+                CreatedOn = DateTime.Now,
+                NormalizedUserName = "JOHN",
+                FirstName = "Johnny",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Salary = 9000,
+                RFID = "324123539",
+                EmailConfirmed = true
+            };
+
+            user2.PasswordHash = passwordHasher.HashPassword(user, "JohnnyBoy123");
+
+
+            var models = new List<ApplicationUser>()
+            {
+                user,
+                user2
+            };
+
+
+            return models;
         }
 
-        public void SeedRoles(ModelBuilder builder)
+        public ICollection<ApplicationUserRole> SeedRoles(Guid ownerGuid)
         {
-            builder.Entity<ApplicationUserRole>().HasData(
+            var models = new List<ApplicationUserRole>()
+            {
                 new ApplicationUserRole()
                 {
                     Id = Guid.NewGuid(),
@@ -84,10 +113,13 @@ namespace HotelManagement.Data.Seeding
                     Name = "Front Desk",
                     NormalizedName = "FRONT DESK"
                 }
-        );
-    }
+            };
+
+            return models;
+        }
+    
                 
-        public void SeedRoleNameItems(ModelBuilder builder)
+        public ICollection<RoleName> SeedRoleNameItems()
         {
             var models = new List<RoleName> {
                 new RoleName
@@ -122,16 +154,18 @@ namespace HotelManagement.Data.Seeding
                 },
             };
 
-            builder.Entity<RoleName>().HasData(models);
+            return models;
         }
 
-       public void SeedUserRoles(ModelBuilder builder)
+        public ICollection<IdentityUserRole<Guid>> SeedUserRoles(Guid adminGuid, Guid ownerGuid)
         {
-                builder.Entity<IdentityUserRole<Guid>>().HasData(
-                    new IdentityUserRole<Guid>()
-                   { RoleId = ownerGuid, UserId = adminGuid }
-        );
+            return new List<IdentityUserRole<Guid>>()
+            {
+                new IdentityUserRole<Guid>()
+                    { RoleId = ownerGuid, UserId = adminGuid }
+            };
+        }
 
-       }
     }
+    
 }

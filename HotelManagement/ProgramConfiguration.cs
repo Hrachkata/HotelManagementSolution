@@ -1,5 +1,6 @@
 ﻿using HotelManagement.AutoMapper;
 using HotelManagement.Data.Seeding;
+using HotelManagement.Data.Seeding.Contracts;
 using HotelManagement.Data.Services.AccountServices;
 using HotelManagement.Data.Services.AccountServices.Contracts;
 using HotelManagement.Data.Services.BookingServices;
@@ -55,15 +56,8 @@ public class ProgramConfiguration
         builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 
-        builder.Services.AddSingleton<SeedUserData, SeedUserData>();
+        builder.Services.AddSingleton<ISeedUserData, SeedUserData>();
 
-        builder.Services.AddSingleton<SeedDeparments, SeedDeparments>();
-
-        builder.Services.AddSingleton<SeedFloors, SeedFloors>();
-
-        builder.Services.AddSingleton<SeedRoomTypes, SeedRoomTypes>();
-
-        builder.Services.AddSingleton<SeedRooms, SeedRooms>();
 
 
         builder.Services.AddTransient<SendGridEmail, SendGridEmail>();

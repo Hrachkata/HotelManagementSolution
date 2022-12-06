@@ -1,12 +1,13 @@
 ﻿using HotelManagement.Data.Models.Models;
+using HotelManagement.Data.Seeding.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Seeding;
 
-public class SeedDeparments
+public class SeedDepartments : ISeedDepartments
 {
 
-    public void SeedDepartments(ModelBuilder builder)
+    public ICollection<Department> SeedDepartmentModels() 
     {
         var models = new List<Department>()
                 {
@@ -44,10 +45,10 @@ public class SeedDeparments
                     }
                 };
 
-        builder.Entity<Department>().HasData(models);
+        return models;
     }
 
-    public void SeedDepartmentRoles(ModelBuilder builder)
+    public ICollection<RoleDepartment> SeedDepartmentRoles()
     {
         var models = new List<RoleDepartment>() {
 
@@ -95,6 +96,6 @@ public class SeedDeparments
 
             };
 
-        builder.Entity<RoleDepartment>().HasData(models);
+        return models;
     }
 }

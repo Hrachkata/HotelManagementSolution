@@ -1,11 +1,12 @@
 ﻿using HotelManagement.Data.Models.Models;
+using HotelManagement.Data.Seeding.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Seeding;
 
-public class SeedRooms
+public class SeedRooms : ISeedRooms
 {
-    public void SeedRoomsOnEveryFloor(ModelBuilder builder)
+    public ICollection<Room> SeedRoomsOnEveryFloor()
     {
         var models = new List<Room>()
         {
@@ -251,6 +252,6 @@ public class SeedRooms
         };
 
 
-        builder.Entity<Room>().HasData(models);
+        return models;
     }
 }

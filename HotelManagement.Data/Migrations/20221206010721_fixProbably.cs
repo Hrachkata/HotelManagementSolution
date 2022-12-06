@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelManagement.Data.Migrations
 {
-    public partial class InitalAfterUpdatesRemovedGuest : Migration
+    public partial class fixProbably : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,7 +33,7 @@ namespace HotelManagement.Data.Migrations
                     MiddleName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     EGN = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -119,7 +119,7 @@ namespace HotelManagement.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PricePerPerson = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PricePerPerson = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -330,7 +330,7 @@ namespace HotelManagement.Data.Migrations
                     GuestPhoneNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     GuestEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    totalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    totalPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
                     NumberOfGuests = table.Column<int>(type: "int", nullable: false),
                     NumberOfChildren = table.Column<int>(type: "int", nullable: true),
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -358,31 +358,35 @@ namespace HotelManagement.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("4729c0de-06d9-4f3b-88d9-7a642e295b16"), "ecefdf7d-98dd-4141-89ae-69cde11c7a4d", "Manager", "MANAGER" },
-                    { new Guid("53fb00eb-25fa-432b-a606-834d44ddd77d"), "9b8581eb-9df7-4bac-b113-56ceea5c0ff5", "Human Resources", "HUMAN RESOURCES" },
-                    { new Guid("57c91138-6787-42c4-8ec1-4d1b24f288f9"), "3b63a464-bd31-4f10-9f0f-0d9e3b1bd79b", "f&b", "F&B" },
-                    { new Guid("6ac92501-81d7-4352-af47-39d6f0cae200"), "de7f4fee-6720-4e2d-b7d6-ec75ad7fce8e", "Director", "DIRECTOR" },
-                    { new Guid("7700fc19-4f7e-49ce-b9de-c65125a267bf"), "5f0ec057-6b8f-4e60-a9c1-29402adb2e3b", "Owner", "OWNER" },
-                    { new Guid("cfe8ad68-27e9-493c-8a54-2cc4f99c2172"), "58438375-58b1-4acd-bd51-15243231c463", "Admin", "ADMIN" },
-                    { new Guid("d4197625-6e1f-4a86-986d-694a7389670f"), "8616597b-a13d-4b68-9cdf-faff53d8858d", "Front Desk", "FRONT DESK" }
+                    { new Guid("03009dfa-ea12-4e49-80e3-093326ef111d"), "880b7806-e0a5-44fd-a8ac-2607803492b1", "Owner", "OWNER" },
+                    { new Guid("70d8c4db-b82f-4ec8-a2c3-cb78276fbbe6"), "f28fc7da-ca75-4347-96da-d6c148812875", "Manager", "MANAGER" },
+                    { new Guid("74843ba4-d311-4647-88ac-0ce4a7c708ab"), "78af149f-784f-4cf5-88bf-27259c4d8230", "Front Desk", "FRONT DESK" },
+                    { new Guid("75f3fa42-0f75-448e-9ed3-7c08626e70eb"), "6b6d52d7-7638-4276-8679-1ad0c37872fc", "Admin", "ADMIN" },
+                    { new Guid("a5421f2b-768d-4224-a285-e69f9803e577"), "fb34b98d-fa65-4c1b-9bad-09dc19c5da9a", "Director", "DIRECTOR" },
+                    { new Guid("d327e5f2-d777-426a-a938-e553d3f253f8"), "a4976e11-0e11-4066-a7c5-37a4cf11fbcc", "f&b", "F&B" },
+                    { new Guid("fc35fd51-993c-4c51-b6c4-556552507f22"), "4643b655-6291-427b-a6d1-ad15f01cee02", "Human Resources", "HUMAN RESOURCES" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BirthDate", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "EGN", "EditedOn", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RFID", "Salary", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("63b55242-19bb-47fa-bc5e-fa6cd014bfa3"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "5c0a76f6-5e22-4b80-a547-a6aa9003b7e6", new DateTime(2022, 12, 5, 0, 18, 45, 177, DateTimeKind.Local).AddTicks(2897), null, "123", null, null, true, "Admin", true, "Admin", false, null, "Admin", null, "ADMIN", "AQAAAAEAACcQAAAAELu+P0z9xZxKJ7tKiU0pc/ViBKCFIN73QJrwXHg5IPoBp31KqruebRuIGz1SH+Mcwg==", "1234567890", false, "123456789", 0m, "143dc87e-bb4e-425a-a74e-e2463a628558", false, "Admin" });
+                values: new object[,]
+                {
+                    { new Guid("a3f8190f-9386-477e-bc6a-6be5bb3b7fad"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "bbc57a39-f084-4a75-aa85-effb09690a1e", new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(5148), null, "123", null, null, true, "Admin", true, "Admin", false, null, "Admin", null, "ADMIN", "AQAAAAEAACcQAAAAEDZBBzT4OOH1TKlL8WWAi2x3v7S+NtXpRFdcLxTcn1YcNeRwQfPOGluzDY/2t6O11A==", "1234567890", false, "123456789", 0m, "693e7b68-8f56-44e1-9cba-fba5511aa82d", false, "Admin" },
+                    { new Guid("ae7afbf4-7a7a-4137-bdad-9756e974aae3"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "5fb817ca-7646-4a31-ac43-3efabae0440b", new DateTime(2022, 12, 6, 3, 7, 20, 184, DateTimeKind.Local).AddTicks(9529), null, "2934827162", null, null, true, "Johnny", true, "Johnathan", true, null, "Doe", null, "JOHN", "AQAAAAEAACcQAAAAENsnXSC8kOrcdXrecTz905UJj5S5SFxy1J+C5i7Oh7Ba3bS91xbl9MByUSy5sAyMmQ==", "08923471624", false, "324123539", 9000m, "db920d16-fbb8-44c5-b822-b7449c517865", false, "John" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "Id", "CreatedOn", "DeletedOn", "Description", "EditedOn", "EmployeeCount", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 5, 0, 18, 45, 186, DateTimeKind.Local).AddTicks(4257), null, "Some Department", null, null, true, "F&B" },
-                    { 2, new DateTime(2022, 12, 5, 0, 18, 45, 186, DateTimeKind.Local).AddTicks(4301), null, "This is the human resource department with access to employee management and hiring new employees.", null, null, true, "Human Resources" },
-                    { 3, new DateTime(2022, 12, 5, 0, 18, 45, 186, DateTimeKind.Local).AddTicks(4306), null, "This is the IT department with access to employee management, hiring new employees, admin panel and front desk.", null, null, true, "IT department" },
-                    { 4, new DateTime(2022, 12, 5, 0, 18, 45, 186, DateTimeKind.Local).AddTicks(4311), null, "This is the front desk/reception department with access to reservations and front desk.", null, null, true, "Reservations" },
-                    { 5, new DateTime(2022, 12, 5, 0, 18, 45, 186, DateTimeKind.Local).AddTicks(4507), null, "This is the director department with access to employee management, hiring new employees, admin panel and front desk.", null, null, true, "Director" },
-                    { 6, new DateTime(2022, 12, 5, 0, 18, 45, 186, DateTimeKind.Local).AddTicks(4519), null, "This is full access! NOT RECOMMENDED", null, null, true, "Owner" }
+                    { 1, new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4019), null, "Some Department", null, null, true, "F&B" },
+                    { 2, new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4080), null, "This is the human resource department with access to employee management and hiring new employees.", null, null, true, "Human Resources" },
+                    { 3, new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4086), null, "This is the IT department with access to employee management, hiring new employees, admin panel and front desk.", null, null, true, "IT department" },
+                    { 4, new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4091), null, "This is the front desk/reception department with access to reservations and front desk.", null, null, true, "Reservations" },
+                    { 5, new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4097), null, "This is the director department with access to employee management, hiring new employees, admin panel and front desk.", null, null, true, "Director" },
+                    { 6, new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4106), null, "This is full access! NOT RECOMMENDED", null, null, true, "Owner" }
                 });
 
             migrationBuilder.InsertData(
@@ -390,10 +394,10 @@ namespace HotelManagement.Data.Migrations
                 columns: new[] { "Id", "CreatedOn", "DeletedOn", "EditedOn", "FloorNumber", "IsActive" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true },
-                    { 2, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true },
-                    { 3, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true },
-                    { 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 4, true }
+                    { 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true },
+                    { 2, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true },
+                    { 3, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true },
+                    { 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 4, true }
                 });
 
             migrationBuilder.InsertData(
@@ -414,16 +418,16 @@ namespace HotelManagement.Data.Migrations
                 columns: new[] { "Id", "CreatedOn", "DeletedOn", "EditedOn", "IsActive", "PricePerPerson", "Type" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 100m, "Standard" },
-                    { 2, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 150m, "Apartment" },
-                    { 3, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 250m, "Deluxe" },
-                    { 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 400m, "President" }
+                    { 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 100m, "Standard" },
+                    { 2, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 150m, "Apartment" },
+                    { 3, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 250m, "Deluxe" },
+                    { 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, true, 400m, "President" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("7700fc19-4f7e-49ce-b9de-c65125a267bf"), new Guid("63b55242-19bb-47fa-bc5e-fa6cd014bfa3") });
+                values: new object[] { new Guid("03009dfa-ea12-4e49-80e3-093326ef111d"), new Guid("a3f8190f-9386-477e-bc6a-6be5bb3b7fad") });
 
             migrationBuilder.InsertData(
                 table: "RolesDepartments",
@@ -452,25 +456,25 @@ namespace HotelManagement.Data.Migrations
                 columns: new[] { "Id", "Capacity", "CreatedOn", "DeletedOn", "EditedOn", "FloorId", "IsActive", "IsCleaned", "IsOccupied", "IsOutOfService", "RoomNumber", "RoomTypeId" },
                 values: new object[,]
                 {
-                    { 1, 3, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 101, 1 },
-                    { 2, 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 102, 2 },
-                    { 3, 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 103, 2 },
-                    { 4, 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 104, 1 },
-                    { 5, 3, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 105, 1 },
-                    { 6, 3, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, false, false, true, 106, 1 },
-                    { 7, 3, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, false, false, true, 107, 1 },
-                    { 8, 2, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 201, 1 },
-                    { 9, 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 202, 2 },
-                    { 10, 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 203, 2 },
-                    { 11, 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 204, 1 },
-                    { 12, 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, false, false, false, 205, 1 },
-                    { 13, 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, true, 205, 1 },
-                    { 14, 2, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, true, false, false, 301, 3 },
-                    { 15, 1, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, true, false, false, 302, 2 },
-                    { 16, 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, true, false, false, 303, 3 },
-                    { 17, 4, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, false, false, false, 303, 3 },
-                    { 18, 2, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 4, true, true, false, false, 401, 4 },
-                    { 19, 2, new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Local), null, null, 4, true, true, false, false, 402, 4 }
+                    { 1, 3, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 101, 1 },
+                    { 2, 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 102, 2 },
+                    { 3, 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 103, 2 },
+                    { 4, 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 104, 1 },
+                    { 5, 3, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, true, false, false, 105, 1 },
+                    { 6, 3, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, false, false, true, 106, 1 },
+                    { 7, 3, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 1, true, false, false, true, 107, 1 },
+                    { 8, 2, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 201, 1 },
+                    { 9, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 202, 2 },
+                    { 10, 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 203, 2 },
+                    { 11, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, false, 204, 1 },
+                    { 12, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, false, false, false, 205, 1 },
+                    { 13, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 2, true, true, false, true, 205, 1 },
+                    { 14, 2, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, true, false, false, 301, 3 },
+                    { 15, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, true, false, false, 302, 2 },
+                    { 16, 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, true, false, false, 303, 3 },
+                    { 17, 4, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 3, true, false, false, false, 303, 3 },
+                    { 18, 2, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 4, true, true, false, false, 401, 4 },
+                    { 19, 2, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, 4, true, true, false, false, 402, 4 }
                 });
 
             migrationBuilder.CreateIndex(

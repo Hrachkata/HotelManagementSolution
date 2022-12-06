@@ -1,37 +1,23 @@
-﻿using System.Runtime.CompilerServices;
-using HotelManagement.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using HotelManagement.Data.Models.Models;
-using System.Reflection.Emit;
 using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Seeding;
+using HotelManagement.Data.ApplicationDbConfiguration;
+using HotelManagement.Data.Seeding.Contracts;
+
 
 namespace HotelManagement.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, Guid>
     {
 
-        private SeedUserData UserSeeder;
-        private readonly SeedDeparments departmentSeeder;
-        private readonly SeedFloors floorSeeder;
-        private readonly SeedRoomTypes roomTypeSeeder;
-        private readonly SeedRooms roomSeeder;
+        private ISeedUserData UserSeeder;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-            SeedUserData _UserSeeder,
-            SeedDeparments _DepartmentSeeder,
-            SeedFloors _FloorSeeder,
-            SeedRoomTypes _RoomTypeSeeder,
-            SeedRooms _RoomSeeder)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            UserSeeder = _UserSeeder;
-            departmentSeeder = _DepartmentSeeder;
-            floorSeeder = _FloorSeeder;
-            roomTypeSeeder = _RoomTypeSeeder;
-            roomSeeder = _RoomSeeder;
+
         }
 
         public DbSet<Department> Departments { get; set; }
@@ -80,24 +66,30 @@ namespace HotelManagement.Data
             builder.Entity<ApplicationUser>().HasIndex(u => u.UserName).IsUnique();
             builder.Entity<ApplicationUser>().HasIndex(u => u.RFID).IsUnique();
 
-            UserSeeder.SeedRoles(builder);
+            builder.ApplyConfiguration(new RoleNameConfiguration());
 
-            UserSeeder.SeedUsers(builder);
-
-            UserSeeder.SeedUserRoles(builder);
-
-            UserSeeder.SeedRoleNameItems(builder);
-
-            departmentSeeder.SeedDepartments(builder);
-
-            departmentSeeder.SeedDepartmentRoles(builder);
-
-            floorSeeder.SeedFloorsWithoutRooms(builder);           
+            builder.ApplyConfiguration(new DepartmentConfiguration());
             
-            roomTypeSeeder.SeedRoomTypesWithoutRooms(builder);
-           
-            roomSeeder.SeedRoomsOnEveryFloor(builder);
+            builder.ApplyConfiguration(new FloorsConfiguration());
 
+            builder.ApplyConfiguration(new RoomConfiguration());
+
+            builder.ApplyConfiguration(new RoomTypeConfiguration());
+
+
+            var adminGuid = Guid.NewGuid();
+
+            builder.ApplyConfiguration(new UserConfiguration(adminGuid));
+
+            var ownerGuid = Guid.NewGuid();
+
+            builder.ApplyConfiguration(new RoleConfiguration(ownerGuid));
+
+
+            builder.ApplyConfiguration(new IdentityUserRoleConfiguration(adminGuid, ownerGuid));
+
+            builder.ApplyConfiguration(new RoleDepartmentConfiguration());
+            
             base.OnModelCreating(builder);
         }
     }

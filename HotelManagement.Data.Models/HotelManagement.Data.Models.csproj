@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotelManagement.Data.Common\HotelManagement.Data.Common.csproj" />
-    <ProjectReference Include="..\ModelValidationConstants\ModelValidationConstants.csproj" />
+    <ProjectReference Include="..\ModelValidationConstants\HotelManagement.ModelValidationConstants.csproj" />
   </ItemGroup>
 
 </Project>

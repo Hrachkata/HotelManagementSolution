@@ -1,11 +1,12 @@
 ﻿using HotelManagement.Data.Models.Models;
+using HotelManagement.Data.Seeding.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Seeding;
 
-public class SeedRoomTypes
+public class SeedRoomTypes : ISeedRoomTypes
 {
-    public void SeedRoomTypesWithoutRooms(ModelBuilder builder)
+    public ICollection<RoomType> SeedRoomTypesWithoutRooms()
     {
         var models = new List<RoomType>()
         {
@@ -36,10 +37,10 @@ public class SeedRoomTypes
                 Type = "President",
                 PricePerPerson = 400,
                 CreatedOn = DateTime.Today
-            },
+            }
         };
 
 
-        builder.Entity<RoomType>().HasData(models);
+        return models;
     }
 }
