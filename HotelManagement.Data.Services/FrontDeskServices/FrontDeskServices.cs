@@ -118,7 +118,7 @@ namespace HotelManagement.Data.Services.FrontDeskServices
         }
 
 
-       public async Task<int> SetRoomOccupation(IQueryable<Room>? roomQuery)
+       private async Task<int> SetRoomOccupation(IQueryable<Room>? roomQuery)
        {
            foreach (var room in roomQuery)
             {

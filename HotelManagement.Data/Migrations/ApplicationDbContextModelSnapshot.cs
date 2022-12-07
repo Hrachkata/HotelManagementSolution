@@ -63,7 +63,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4019),
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(8438),
                             Description = "Some Department",
                             IsActive = true,
                             Name = "F&B"
@@ -71,7 +71,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4080),
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(8489),
                             Description = "This is the human resource department with access to employee management and hiring new employees.",
                             IsActive = true,
                             Name = "Human Resources"
@@ -79,7 +79,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4086),
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(8493),
                             Description = "This is the IT department with access to employee management, hiring new employees, admin panel and front desk.",
                             IsActive = true,
                             Name = "IT department"
@@ -87,7 +87,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4091),
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(8497),
                             Description = "This is the front desk/reception department with access to reservations and front desk.",
                             IsActive = true,
                             Name = "Reservations"
@@ -95,7 +95,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4097),
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(8502),
                             Description = "This is the director department with access to employee management, hiring new employees, admin panel and front desk.",
                             IsActive = true,
                             Name = "Director"
@@ -103,7 +103,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(4106),
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(8507),
                             Description = "This is full access! NOT RECOMMENDED",
                             IsActive = true,
                             Name = "Owner"
@@ -156,28 +156,28 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorNumber = 1,
                             IsActive = true
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorNumber = 2,
                             IsActive = true
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorNumber = 3,
                             IsActive = true
                         },
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorNumber = 4,
                             IsActive = true
                         });
@@ -255,6 +255,103 @@ namespace HotelManagement.Data.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Reservations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "RFWSU6Q8",
+                            Address = "Ararwaerawe st. 2",
+                            ArrivalDate = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            CheckedIn = false,
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            DepartureDate = new DateTime(2022, 12, 12, 0, 0, 0, 0, DateTimeKind.Local),
+                            GuestEmail = "bachokiro@abv.bg",
+                            GuestFirstName = "Jogn",
+                            GuestLastName = "Bonbon",
+                            GuestNationality = "Ebnasdg",
+                            GuestPhoneNumber = "43252352",
+                            IsActive = true,
+                            NumberOfChildren = 1,
+                            NumberOfGuests = 2,
+                            RoomId = 1,
+                            totalPrice = 300m
+                        },
+                        new
+                        {
+                            Id = "ROATFZB7",
+                            Address = "Berlinm st. 2",
+                            ArrivalDate = new DateTime(2022, 11, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            CheckedIn = true,
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            DepartureDate = new DateTime(2022, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            GuestEmail = "aeiotawi@abv.bg",
+                            GuestFirstName = "Gorgon",
+                            GuestLastName = "Maimun",
+                            GuestNationality = "Etipiq",
+                            GuestPhoneNumber = "432522342552",
+                            IsActive = true,
+                            NumberOfChildren = 1,
+                            NumberOfGuests = 3,
+                            RoomId = 4,
+                            totalPrice = 7000m
+                        },
+                        new
+                        {
+                            Id = "RPQF4POU",
+                            Address = "Avenue 235 st. 2",
+                            ArrivalDate = new DateTime(2022, 12, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            CheckedIn = true,
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            DepartureDate = new DateTime(2022, 12, 12, 0, 0, 0, 0, DateTimeKind.Local),
+                            GuestEmail = "bacro@abv.bg",
+                            GuestFirstName = "Alex",
+                            GuestLastName = "Malex",
+                            GuestNationality = "Bulgarian",
+                            GuestPhoneNumber = "74572",
+                            IsActive = true,
+                            NumberOfChildren = 1,
+                            NumberOfGuests = 5,
+                            RoomId = 6,
+                            totalPrice = 3000m
+                        },
+                        new
+                        {
+                            Id = "RPD6746R",
+                            Address = "Sofia 34 st. 2",
+                            ArrivalDate = new DateTime(2022, 12, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            CheckedIn = false,
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            DepartureDate = new DateTime(2022, 12, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            GuestEmail = "karakan@abv.bg",
+                            GuestFirstName = "Kapucin",
+                            GuestLastName = "Krava",
+                            GuestNationality = "Tigan",
+                            GuestPhoneNumber = "4643453453352",
+                            IsActive = true,
+                            NumberOfChildren = 0,
+                            NumberOfGuests = 2,
+                            RoomId = 7,
+                            totalPrice = 3840m
+                        },
+                        new
+                        {
+                            Id = "R72TSXV2",
+                            Address = "Svishtov 532",
+                            ArrivalDate = new DateTime(2022, 12, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            CheckedIn = false,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2023, 1, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            GuestEmail = "gasgao@abv.bg",
+                            GuestFirstName = "Makaron",
+                            GuestLastName = "Sharan",
+                            GuestNationality = "Lujica",
+                            GuestPhoneNumber = "247457452",
+                            IsActive = true,
+                            NumberOfChildren = 1,
+                            NumberOfGuests = 2,
+                            RoomId = 3,
+                            totalPrice = 1000m
+                        });
                 });
 
             modelBuilder.Entity("HotelManagement.Data.Models.Models.RoleDepartment", b =>
@@ -477,7 +574,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 1,
                             Capacity = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = true,
@@ -490,7 +587,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 2,
                             Capacity = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = true,
@@ -503,7 +600,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 3,
                             Capacity = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = true,
@@ -516,7 +613,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 4,
                             Capacity = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = true,
@@ -529,7 +626,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 5,
                             Capacity = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = true,
@@ -542,7 +639,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 6,
                             Capacity = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = false,
@@ -555,7 +652,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 7,
                             Capacity = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 1,
                             IsActive = true,
                             IsCleaned = false,
@@ -568,7 +665,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 8,
                             Capacity = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 2,
                             IsActive = true,
                             IsCleaned = true,
@@ -581,7 +678,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 9,
                             Capacity = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 2,
                             IsActive = true,
                             IsCleaned = true,
@@ -594,7 +691,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 10,
                             Capacity = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 2,
                             IsActive = true,
                             IsCleaned = true,
@@ -607,7 +704,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 11,
                             Capacity = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 2,
                             IsActive = true,
                             IsCleaned = true,
@@ -620,7 +717,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 12,
                             Capacity = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 2,
                             IsActive = true,
                             IsCleaned = false,
@@ -633,7 +730,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 13,
                             Capacity = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 2,
                             IsActive = true,
                             IsCleaned = true,
@@ -646,7 +743,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 14,
                             Capacity = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 3,
                             IsActive = true,
                             IsCleaned = true,
@@ -659,7 +756,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 15,
                             Capacity = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 3,
                             IsActive = true,
                             IsCleaned = true,
@@ -672,7 +769,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 16,
                             Capacity = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 3,
                             IsActive = true,
                             IsCleaned = true,
@@ -685,7 +782,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 17,
                             Capacity = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 3,
                             IsActive = true,
                             IsCleaned = false,
@@ -698,7 +795,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 18,
                             Capacity = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 4,
                             IsActive = true,
                             IsCleaned = true,
@@ -711,7 +808,7 @@ namespace HotelManagement.Data.Migrations
                         {
                             Id = 19,
                             Capacity = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             FloorId = 4,
                             IsActive = true,
                             IsCleaned = true,
@@ -758,7 +855,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
                             PricePerPerson = 100m,
                             Type = "Standard"
@@ -766,7 +863,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
                             PricePerPerson = 150m,
                             Type = "Apartment"
@@ -774,7 +871,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
                             PricePerPerson = 250m,
                             Type = "Deluxe"
@@ -782,7 +879,7 @@ namespace HotelManagement.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedOn = new DateTime(2022, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
                             PricePerPerson = 400m,
                             Type = "President"
@@ -907,11 +1004,11 @@ namespace HotelManagement.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a3f8190f-9386-477e-bc6a-6be5bb3b7fad"),
+                            Id = new Guid("36fdc4d6-b4cc-4608-8f95-03c45b3c645f"),
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "bbc57a39-f084-4a75-aa85-effb09690a1e",
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 168, DateTimeKind.Local).AddTicks(5148),
+                            ConcurrencyStamp = "23d715aa-ff53-409b-8792-ee33f39391ba",
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 305, DateTimeKind.Local).AddTicks(9314),
                             EGN = "123",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -920,22 +1017,22 @@ namespace HotelManagement.Data.Migrations
                             LockoutEnabled = false,
                             MiddleName = "Admin",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDZBBzT4OOH1TKlL8WWAi2x3v7S+NtXpRFdcLxTcn1YcNeRwQfPOGluzDY/2t6O11A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELoqjr00aDM4zu/IT+YOfqVCNVE7ecgiLPacsFyHZecmm/wK7cXMeSjzNtiHASrecw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
                             RFID = "123456789",
                             Salary = 0m,
-                            SecurityStamp = "693e7b68-8f56-44e1-9cba-fba5511aa82d",
+                            SecurityStamp = "27a510f7-a0ad-4c7e-84b1-26b751660ad8",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("ae7afbf4-7a7a-4137-bdad-9756e974aae3"),
+                            Id = new Guid("6bce7f0c-4460-4b56-b0c2-c1bca44db2d5"),
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "5fb817ca-7646-4a31-ac43-3efabae0440b",
-                            CreatedOn = new DateTime(2022, 12, 6, 3, 7, 20, 184, DateTimeKind.Local).AddTicks(9529),
+                            ConcurrencyStamp = "fe82ed2d-8b3b-4709-988c-fa90debb4f7e",
+                            CreatedOn = new DateTime(2022, 12, 7, 21, 43, 56, 315, DateTimeKind.Local).AddTicks(856),
                             EGN = "2934827162",
                             EmailConfirmed = true,
                             FirstName = "Johnny",
@@ -944,12 +1041,12 @@ namespace HotelManagement.Data.Migrations
                             LockoutEnabled = true,
                             MiddleName = "Doe",
                             NormalizedUserName = "JOHN",
-                            PasswordHash = "AQAAAAEAACcQAAAAENsnXSC8kOrcdXrecTz905UJj5S5SFxy1J+C5i7Oh7Ba3bS91xbl9MByUSy5sAyMmQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEG31bDVgPY8eVsnZg7Jw0RBfSgUQntGLitLpAq5x2DvOxzRMxRPmtkGPzPaXWINqw==",
                             PhoneNumber = "08923471624",
                             PhoneNumberConfirmed = false,
                             RFID = "324123539",
                             Salary = 9000m,
-                            SecurityStamp = "db920d16-fbb8-44c5-b822-b7449c517865",
+                            SecurityStamp = "e02a17d2-e90a-4dd3-8ada-43ae3df1bda8",
                             TwoFactorEnabled = false,
                             UserName = "John"
                         });
@@ -985,50 +1082,50 @@ namespace HotelManagement.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("75f3fa42-0f75-448e-9ed3-7c08626e70eb"),
-                            ConcurrencyStamp = "6b6d52d7-7638-4276-8679-1ad0c37872fc",
+                            Id = new Guid("f23493fb-e3c0-4cea-8404-9b79361291d4"),
+                            ConcurrencyStamp = "a4958d33-1d96-4ff1-a27b-df9cbb2a46dd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("d327e5f2-d777-426a-a938-e553d3f253f8"),
-                            ConcurrencyStamp = "a4976e11-0e11-4066-a7c5-37a4cf11fbcc",
+                            Id = new Guid("08b4f8c4-b864-4a53-a32e-06de1bc719ac"),
+                            ConcurrencyStamp = "d44c7d61-926d-4388-bc5a-cd1d3def6d96",
                             Name = "f&b",
                             NormalizedName = "F&B"
                         },
                         new
                         {
-                            Id = new Guid("fc35fd51-993c-4c51-b6c4-556552507f22"),
-                            ConcurrencyStamp = "4643b655-6291-427b-a6d1-ad15f01cee02",
+                            Id = new Guid("275f7748-cd52-48bb-8809-a84fa4f11e7e"),
+                            ConcurrencyStamp = "f6392e6c-bcf0-47aa-80c0-aacd4556729f",
                             Name = "Human Resources",
                             NormalizedName = "HUMAN RESOURCES"
                         },
                         new
                         {
-                            Id = new Guid("a5421f2b-768d-4224-a285-e69f9803e577"),
-                            ConcurrencyStamp = "fb34b98d-fa65-4c1b-9bad-09dc19c5da9a",
+                            Id = new Guid("f2e65074-9d5d-428b-8e33-917b11d323f5"),
+                            ConcurrencyStamp = "3d8f28a1-4bc3-4de2-8928-8edb734d6d74",
                             Name = "Director",
                             NormalizedName = "DIRECTOR"
                         },
                         new
                         {
-                            Id = new Guid("70d8c4db-b82f-4ec8-a2c3-cb78276fbbe6"),
-                            ConcurrencyStamp = "f28fc7da-ca75-4347-96da-d6c148812875",
+                            Id = new Guid("49533d2e-e49c-4f9c-aebd-4c2296a792ea"),
+                            ConcurrencyStamp = "a2e98dd7-a913-492a-baea-8f4a5466e29b",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = new Guid("03009dfa-ea12-4e49-80e3-093326ef111d"),
-                            ConcurrencyStamp = "880b7806-e0a5-44fd-a8ac-2607803492b1",
+                            Id = new Guid("2239660f-9cd7-40a5-8c95-a1041451b375"),
+                            ConcurrencyStamp = "8e774255-5454-45f9-9d48-340055a53d77",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = new Guid("74843ba4-d311-4647-88ac-0ce4a7c708ab"),
-                            ConcurrencyStamp = "78af149f-784f-4cf5-88bf-27259c4d8230",
+                            Id = new Guid("0b2967c0-87f8-4634-8500-b6224f482bb7"),
+                            ConcurrencyStamp = "9ea1191c-3c2c-445f-9a70-3d0986c1488f",
                             Name = "Front Desk",
                             NormalizedName = "FRONT DESK"
                         });
@@ -1122,8 +1219,8 @@ namespace HotelManagement.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("a3f8190f-9386-477e-bc6a-6be5bb3b7fad"),
-                            RoleId = new Guid("03009dfa-ea12-4e49-80e3-093326ef111d")
+                            UserId = new Guid("36fdc4d6-b4cc-4608-8f95-03c45b3c645f"),
+                            RoleId = new Guid("2239660f-9cd7-40a5-8c95-a1041451b375")
                         });
                 });
 

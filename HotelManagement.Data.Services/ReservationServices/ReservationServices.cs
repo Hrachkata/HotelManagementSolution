@@ -98,10 +98,12 @@ namespace HotelManagement.Data.Services.ReservationServices
 
             var room = await context.Rooms.FindAsync(roomId);
 
-            if (reservation == null)
+            if (reservation == null || room == null)
             {
-                throw new ArgumentNullException("Reservation id is invalid or reservation doesnt exist.");
+                throw new ArgumentNullException("Reservation/room id is invalid or reservation doesnt exist.");
             }
+
+            
             
             reservation.CheckedIn = true;
 

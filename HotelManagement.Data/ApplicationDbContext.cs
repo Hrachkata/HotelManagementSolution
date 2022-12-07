@@ -75,7 +75,8 @@ namespace HotelManagement.Data
             builder.ApplyConfiguration(new RoomConfiguration());
 
             builder.ApplyConfiguration(new RoomTypeConfiguration());
-
+                
+           
 
             var adminGuid = Guid.NewGuid();
 
@@ -89,6 +90,8 @@ namespace HotelManagement.Data
             builder.ApplyConfiguration(new IdentityUserRoleConfiguration(adminGuid, ownerGuid));
 
             builder.ApplyConfiguration(new RoleDepartmentConfiguration());
+            
+            builder.ApplyConfiguration(new ReservationsConfiguration());
             
             base.OnModelCreating(builder);
         }

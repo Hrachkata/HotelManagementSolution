@@ -42,13 +42,22 @@ namespace HotelManagement.Data.Services.Tests
             .Options;
 
             this.context = new ApplicationDbContext(options);
-            this.context.AddRange(users);
-            this.context.AddRange(departments);
+            this.context.Users.AddRange(users);
+            this.context.Departments.AddRange(departments);
             this.context.SaveChanges();
 
             accountServices = new AccountServices.AccountServices(userManager, mapper, emailService, context);
         }
 
+        [TearDown]
+        public void Teardown()
+        {
+            this.context.Users.RemoveRange(users);
+            this.context.Departments.RemoveRange(departments);
+
+            this.context.SaveChanges();
+        }
+        
         [Test]
         public void AreTheCorrectNumberOfDepartmentsAddedToDb()
         {

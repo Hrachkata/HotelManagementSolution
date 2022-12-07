@@ -35,7 +35,7 @@ namespace HotelManagement.Data.Services.Tests
 
         private IMapper mapperTest;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Setup()
         {
             
@@ -61,6 +61,16 @@ namespace HotelManagement.Data.Services.Tests
             this.context.SaveChanges();
         }
 
+        
+        [TearDown]
+        public void Teardown()
+        {
+            this.context.Floors.RemoveRange(floors);
+            this.context.RoomTypes.RemoveRange(roomTypes);
+            this.context.Rooms.RemoveRange(rooms);
+
+            this.context.SaveChanges();
+        }
         [Test]
         public void AreTheCorrectNumberOfRoomsAddedToDb()
         {
@@ -127,7 +137,7 @@ namespace HotelManagement.Data.Services.Tests
 
 
         [Test]
-        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenQueryParams()
+        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenIsAvailableTrue()
         {
            
             var floorServices = new FloorServices.FloorServices(context, mapperTest);
@@ -136,7 +146,47 @@ namespace HotelManagement.Data.Services.Tests
 
             Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive && r.IsOccupied == false && r.IsCleaned == true && r.IsOutOfService == false).Count(), result.Rooms.Count());
         }
+        [Test]
+        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenIsActiveAndIsAvailableFalse()
+        {
+           
+            var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
+            var result = await floorServices.All(RoomSorting.Newest, "", false, "", false, 0, 99999, 0);
+
+            Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive == false && r.IsOccupied == false && r.IsCleaned == true && r.IsOutOfService == true).Count(), result.Rooms.Count());
+        }
+        
+        [Test]
+        [TestCase("1")]
+        [TestCase("0")]
+        [TestCase("102")]
+        [TestCase("Lagag")]
+        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithThSearchValue(string search)
+        {
+            search = search.ToLower();
+            
+            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+
+            var result = await floorServices.All(RoomSorting.Newest, "", true, search, false, 0, 99999, 0);
+
+            Assert.AreEqual(this.context.Rooms.Where( r=> r.RoomNumber.ToString().Contains(search)).Count(), result.Rooms.Count());
+        }
+        
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(6)]
+        [TestCase(1120)]
+        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheCorrectFloorId(int floorId)
+        {
+            
+            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+
+            var result = await floorServices.All(RoomSorting.Newest, "", true, "", false, 0, 99999, floorId);
+
+            Assert.AreEqual(this.context.Rooms.Where(r => r.FloorId == floorId).Count(), result.Rooms.Count());
+        }
 
         [Test]
         public async Task GetRoomMethodAllShouldWorkWhenGivenPaginationParameters()
