@@ -67,8 +67,7 @@ public class SendGridEmail
 
         result += UriHelper.BuildAbsolute("https", new HostString("localhost", 7132), pathBase: "/Account/Account/ResetPassword",
             PathString.Empty, QueryString.Create(values), FragmentString.Empty);
-
-        Console.WriteLine(result);
+        
 
         return fluentMailSend(email, "Hotel Management Reset Password", "Tag", result);
     }

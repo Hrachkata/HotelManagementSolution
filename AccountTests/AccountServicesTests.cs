@@ -34,8 +34,9 @@ namespace HotelManagement.Data.Services.Tests
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .EnableDetailedErrors()
                 .UseInMemoryDatabase(databaseName: "HotelManagementInMemoryDb")
+                
             .Options;
-
+           
             this.context = new ApplicationDbContext(options);
             this.context.AddRange(users);
             this.context.SaveChanges();
@@ -45,7 +46,7 @@ namespace HotelManagement.Data.Services.Tests
 
         [Test]
         public void AreTheCorrectNumberOfUsersAddedToDb()
-        {
+        {            
             Assert.AreEqual(2, this.context.Users.Count());
         }
 

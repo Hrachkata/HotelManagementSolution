@@ -15,9 +15,9 @@ using HotelManagement.Data.Services.ReservationServices;
 using HotelManagement.Data.Services.ReservationServices.Contracts;
 using HotelManagement.Data.Services.RoomServices.Contracts;
 using HotelManagement.Data.Services.RoomServices;
-using HotelManagement.Data.Services.ViewServices;
 using HotelManagement.EmailService;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using HotelManagement.Data.Services.FloorServices.ViewServices;
 
 namespace HotelManagement;
 

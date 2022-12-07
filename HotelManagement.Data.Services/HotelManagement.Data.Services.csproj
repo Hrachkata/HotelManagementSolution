@@ -23,7 +23,7 @@
     <Folder Include="EmployeeServices\Contracts\" />
     <Folder Include="FloorServices\Contracts\" />
     <Folder Include="ReservationServices\Contracts\" />
-    <Folder Include="ViewServices\" />
+    <Folder Include="FloorServices\ViewServices\" />
   </ItemGroup>
 
 </Project>

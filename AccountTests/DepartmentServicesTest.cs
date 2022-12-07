@@ -55,11 +55,11 @@ namespace HotelManagement.Data.Services.Tests
             Assert.AreEqual(departments.Count, this.context.Departments.Count());
         }
 
-        [Test]
-        public void GetUserWithDepartments()
-        {
-            //TODO tree seednem 200 raboti 
-            Assert.AreEqual(departments.Count, this.context.Departments.Count());
-        }
+        //[Test]
+        //public void GetUserWithDepartments()
+        //{
+        //    //TODO tree seednem 200 raboti 
+        //    Assert.AreEqual(departments.Count, this.context.Departments.Count());
+        //}
     }
 }

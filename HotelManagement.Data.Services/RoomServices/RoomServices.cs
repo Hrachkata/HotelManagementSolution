@@ -104,6 +104,11 @@ namespace HotelManagement.Data.Services.RoomServices
             {
                 throw new ArgumentNullException("Room with this Id is non existent or the id is invalid.");
             }
+            
+            if (model.Reservations.Any())
+            {
+                throw new OperationCanceledException("There are reservations registered with this room.");
+            }
 
             model.IsOutOfService = true;
 
