@@ -6,10 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections;
+using HotelManagement.EmailService.Contracts;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace HotelManagement.EmailService;
-public class SendGridEmail
+public class SendGridEmail : ISendGridEmail
 {
     public IConfigurationRoot config { get; set; }
 

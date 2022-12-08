@@ -18,6 +18,7 @@ using HotelManagement.Data.Services.RoomServices;
 using HotelManagement.EmailService;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using HotelManagement.Data.Services.FloorServices.ViewServices;
+using HotelManagement.EmailService.Contracts;
 
 namespace HotelManagement;
 
@@ -60,7 +61,7 @@ public class ProgramConfiguration
 
 
 
-        builder.Services.AddTransient<SendGridEmail, SendGridEmail>();
+        builder.Services.AddTransient<ISendGridEmail, SendGridEmail>();
 
         builder.Services.AddScoped<FloorVisualisationServices, FloorVisualisationServices>();
 

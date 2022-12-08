@@ -4,6 +4,7 @@ using FluentEmail.Core.Models;
 using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Services.AccountServices.Contracts;
 using HotelManagement.EmailService;
+using HotelManagement.EmailService.Contracts;
 using HotelManagement.Web.ViewModels.AccountModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +17,12 @@ public class AccountServices : IAccountServices
 {
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IMapper mapper;
-    private readonly SendGridEmail emailService;
+    private readonly ISendGridEmail emailService;
     private readonly ApplicationDbContext context;
 
     public AccountServices(UserManager<ApplicationUser> _userManager,
         IMapper _mapper,
-        SendGridEmail _emailService,
+        ISendGridEmail _emailService,
         ApplicationDbContext _context)
     {
         this.userManager = _userManager;
@@ -67,12 +68,12 @@ public class AccountServices : IAccountServices
 
             if (!resultRoles.Succeeded)
             {
-                resultUser.Errors.Concat(resultRoles.Errors);
+                resultUser.Errors?.Concat(resultRoles.Errors);
             }
         }
                 
 
-        if (resultUser.Succeeded && resultUser.Errors.Count() == 0)
+        if (resultUser.Succeeded && resultUser.Errors?.Count() == 0)
         {
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 

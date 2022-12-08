@@ -7,6 +7,13 @@ using HotelManagement.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Claims;
+using HotelManagement.AutoMapper;
+using HotelManagement.Data.Models.Models;
+using HotelManagement.EmailService.Contracts;
+using HotelManagement.MockedLibraries;
+using HotelManagement.Web.ViewModels.AccountModels;
+using Moq;
 
 namespace HotelManagement.Data.Services.Tests
 {
@@ -16,19 +23,39 @@ namespace HotelManagement.Data.Services.Tests
         private ApplicationDbContext context;
 
         private List<ApplicationUser> users;
+        private List<Department> departments;
+        private List<ApplicationUserRole> roles;
+        private List<IdentityUserRole<Guid>> userRoles;
+        private List<RoleName> roleNames;
 
-        private readonly IMapper mapper;
+        private IMapper mapper;
 
-        private readonly SendGridEmail emailService;
+        private ISendGridEmail emailService;
 
-        private readonly UserManager<ApplicationUser> userManager;
+        private UserManager<ApplicationUser> userManager;
 
         private AccountServices.AccountServices accountServices;
-
+        
+        
+        
+        [OneTimeSetUp]
+        public void InitMapper()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+            mapper = config.CreateMapper();
+        }
+        
         [SetUp]
         public void Setup()
         {
             users = new SeedUserData().SeedUsers(Guid.NewGuid()).ToList();
+
+            departments = new SeedDepartments().SeedDepartmentModels().ToList();
+
+            roles = new SeedUserData().SeedRoles(Guid.NewGuid()).ToList();
+            
+            userRoles = new SeedUserData().SeedUserRoles(Guid.NewGuid(), Guid.NewGuid()).ToList();
+            roleNames = new SeedUserData().SeedRoleNameItems().ToList();
 
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -39,17 +66,72 @@ namespace HotelManagement.Data.Services.Tests
            
             this.context = new ApplicationDbContext(options);
             this.context.AddRange(users);
+            this.context.AddRange(roles);
+            this.context.AddRange(userRoles);
+            this.context.AddRange(departments);
+            this.context.AddRange(roleNames);
             this.context.SaveChanges();
 
+            userManager = new MockUserManager().CreateUserManager();
+
+            emailService = new MockEmailService().SendGridEmailMocked();
+            
             accountServices = new AccountServices.AccountServices(userManager, mapper, emailService, context);
         }
 
-        [Test]
-        public void AreTheCorrectNumberOfUsersAddedToDb()
-        {            
-            Assert.AreEqual(2, this.context.Users.Count());
+        [TearDown]
+        public void TearDown()
+        {
+            this.context.RemoveRange(users);
+            this.context.RemoveRange(roles);
+            this.context.RemoveRange(userRoles);
+            this.context.RemoveRange(departments);
+            this.context.RemoveRange(roleNames);
+            this.context.SaveChanges();
         }
 
+        [Test]
+        public async Task AccountServicesTestGetUserById()
+        {
+           Assert.AreEqual("Atanas", (await accountServices.GetUserByIdAsync("ratata")).FirstName);
+
+            
+        }
+
+        [Test]
+        public async Task AccountServicesTestGetUserByEmail()
+        {
+            Assert.AreEqual("Atanas", (await accountServices.GetUserByEmailAsync("ratata")).FirstName);
+           
+        }
+        
+        [Test]
+        public async Task AccountServicesTestGetUserByUserName()
+        {
+            Assert.AreEqual("Atanas", (await accountServices.GetUserByUserNameAsync("ratata")).FirstName);
+           
+        }
+        
+        [Test]
+        public async Task AccountServicesTestCreateUser()
+        {
+            Assert.That((await accountServices.CreateUserAsync(new RegisterViewModel()
+            {
+                UserName = "AdminAki",
+                MiddleName = "Admin",
+                DepartmentId = 3,
+                EGN = "123",
+                PhoneNumber = "1234567890",
+                CreatedOn = DateTime.Now,
+                FirstName = "Admin",
+                LastName = "Admin",
+                Password = "Balagal21@a",
+                Salary = 0,
+                RFID = "123456789",
+                })).Succeeded, Is.EqualTo(true));
+           
+        }
+        
         [Test]
         public void AreTheUsersAddedWithCorrectData()
         {
