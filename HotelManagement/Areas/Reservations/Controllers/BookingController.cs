@@ -13,7 +13,6 @@ namespace HotelManagement.Areas.Reservations.Controllers
     {
         private readonly IBookingService bookingService;
 
-        private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public BookingController(IBookingService _bookingService)
         {
             bookingService = _bookingService;
@@ -59,29 +58,15 @@ namespace HotelManagement.Areas.Reservations.Controllers
             }
             catch (DBConcurrencyException ex)
             {
-                if (envir == "Development")
-                {
-                    throw ex;
-                }
-                var error = new ErrorViewModel()
-                {
-                    ErrorMessage = ex.Message,
-                };
+                TempData["status"] = 400;
 
-                return View("Error", error);
+                throw;
             }
             catch (Exception ex)
             {
-                if (envir == "Development")
-                {
-                    throw ex;
-                }
-                var error = new ErrorViewModel()
-                {
-                    ErrorMessage = "Critical error occurred try again later, if error persists contact your system administrator."
-                };
+                TempData["status"] = 404;
 
-                return View("Error", error);
+                throw;
             }
 
 

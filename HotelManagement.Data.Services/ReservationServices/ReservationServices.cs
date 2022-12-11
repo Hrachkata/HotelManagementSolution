@@ -102,8 +102,6 @@ namespace HotelManagement.Data.Services.ReservationServices
             {
                 throw new ArgumentNullException("Reservation/room id is invalid or reservation doesnt exist.");
             }
-
-            
             
             reservation.CheckedIn = true;
 
@@ -112,14 +110,17 @@ namespace HotelManagement.Data.Services.ReservationServices
             room.IsOccupied = true;
             
             var result = await context.SaveChangesAsync();
-
+            
             if (result != 0)
             {
                 
                 return true;
             }
+            else
+            {
+                return false;
+            }
             
-            return false;
             
         }
 
@@ -129,7 +130,7 @@ namespace HotelManagement.Data.Services.ReservationServices
 
             var room = await context.Rooms.FindAsync(roomId);
 
-            if (reservation == null)
+            if (reservation == null || room == null)
             {
                 throw new ArgumentNullException("Reservation id is invalid or reservation doesnt exist.");
             }
@@ -158,7 +159,7 @@ namespace HotelManagement.Data.Services.ReservationServices
         {
             var reservation = await context.Reservations.FindAsync(reservationId);
 
-            if (reservation == null)
+            if (reservation == null )
             {
                 throw new ArgumentNullException("Reservation id is invalid or reservation doesnt exist.");
             }

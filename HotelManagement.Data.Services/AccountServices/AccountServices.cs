@@ -90,19 +90,18 @@ public class AccountServices : IAccountServices
     
     public async Task<IdentityResult> UpdateUserAsync(EmployeeEditViewModel model)
     {
+        
         var user = await GetUserByIdAsync(model.Id.ToString());
 
         if (user == null)
         {
             throw new ArgumentNullException("User with id doesn't exist.");
         }
-
-        var checkEmail = await GetUserByEmailAsync(model.Email);
-
-        var checkUsername = await GetUserByUserNameAsync(model.UserName);
+       
 
         if (model.UserName != user.UserName)
         {
+            var checkUsername = await GetUserByUserNameAsync(model.UserName);
             if (checkUsername != null)
             {
                 throw new InvalidOperationException("Username not free, there's already a user with this username.");
@@ -111,6 +110,7 @@ public class AccountServices : IAccountServices
 
         if (model.Email != user.Email)
         {
+            var checkEmail = await GetUserByEmailAsync(model.Email);
             if (checkEmail != null)
             {
                 throw new InvalidOperationException("Email not free, there's already a user with this email.");
@@ -158,7 +158,6 @@ public class AccountServices : IAccountServices
     public async Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync()
     {
         var departments =await this.context.Departments.Where(d => d.IsActive).ProjectTo<DepartmentDto>(mapper.ConfigurationProvider).ToListAsync();
-            //ProjectTo(typeof(DepartmentDto), mapper.ConfigurationProvider);
 
         return new RegisterViewModel()
         {
@@ -231,8 +230,8 @@ public class AccountServices : IAccountServices
         return result;
     }
 
-    public Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
-    {
-        throw new NotImplementedException();
-    }
+    // public Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

@@ -101,7 +101,7 @@ namespace HotelManagement.Data.Services.EmployeeServices
 
             if (user == null)
             {
-                throw new NotFoundException($"User with id {id} not found.");
+                throw new ArgumentNullException($"User with id {id} not found.");
             }
 
             return mapper.Map<EmployeeDetailsModel>(user);
@@ -195,12 +195,17 @@ namespace HotelManagement.Data.Services.EmployeeServices
 
             var result = await context.Users.Include(u => u.EmployeeDepartment).FirstOrDefaultAsync();
 
+            if (result == null)
+            {
+                throw new ArgumentNullException("User doesn't exist or id is invalid.");
+            }
+            
             var depToRemove = result.EmployeeDepartment.Where(ed => ed.DepartmentId == departmentId).FirstOrDefault();
             
             if (depToRemove == null)
 
             {
-                throw new ArgumentException("Department id is invalid or user isn't present in the department.");
+                throw new ArgumentNullException("Department id is invalid or user isn't present in the department.");
             }
 
             result.EmployeeDepartment.Remove(depToRemove);

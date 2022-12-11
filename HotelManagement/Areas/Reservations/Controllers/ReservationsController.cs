@@ -13,8 +13,6 @@ namespace HotelManagement.Areas.Reservations.Controllers
     public class ReservationsController : Controller
     {
         private readonly IReservationServices reservationServices;
-
-        private readonly string envir = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         public ReservationsController(IReservationServices _reservationServices)
         {
             reservationServices = _reservationServices;
@@ -65,7 +63,9 @@ namespace HotelManagement.Areas.Reservations.Controllers
             }
             catch (DBConcurrencyException e)
             {
-                ModelState.AddModelError("", e.Message);
+                TempData["status"] = 400;
+
+                throw;
             }
             catch (InvalidOperationException e)
             {
@@ -73,14 +73,9 @@ namespace HotelManagement.Areas.Reservations.Controllers
             }
             catch (Exception e)
             {
-                if (envir == "Development")
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Critical error occurred, please try again later.");
-                }
+                TempData["status"] = 400;
+
+                throw;
             }
 
             ViewData["Status"] = "Check in";
@@ -118,14 +113,9 @@ namespace HotelManagement.Areas.Reservations.Controllers
             }
             catch (Exception e)
             {
-                if (envir == "Development")
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Critical error occurred, please try again later.");
-                }
+                TempData["status"] = 400;
+
+                throw;
             }
 
             ViewData["Status"] = "Check out";
@@ -170,19 +160,14 @@ namespace HotelManagement.Areas.Reservations.Controllers
             }
             catch (Exception e)
             {
-                if (envir == "Development")
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Critical error occurred, please try again later.");
-                }
+                TempData["status"] = 400;
+
+                throw;
             }
 
             ViewBag.PaymentSuccess = "true";
 
-            return RedirectToAction("ReservationDetails", model);
+            return View("ReservationDetails", model);
         }
 
 
@@ -215,18 +200,13 @@ namespace HotelManagement.Areas.Reservations.Controllers
             }
             catch (Exception e)
             {
-                if (envir == "Development")
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Critical error occurred, please try again later.");
-                }
+                TempData["status"] = 400;
+
+                throw;
             }
 
 
-            return RedirectToAction("ReservationDetails", model);
+            return View("ReservationDetails", model);
         }
     }
 }

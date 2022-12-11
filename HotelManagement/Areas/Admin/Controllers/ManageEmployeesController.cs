@@ -201,7 +201,6 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Authorize]
         public async Task<IActionResult> Disable(string id)
         {
-            var errorModel = new ErrorViewModel();
 
             var result = new IdentityResult();
             try
@@ -232,7 +231,6 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Authorize]
         public async Task<IActionResult> Enable(string id)
         {
-            var errorModel = new ErrorViewModel();
 
             var result = new IdentityResult();
             try

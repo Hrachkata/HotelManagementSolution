@@ -19,195 +19,194 @@ using System.Text;
 using System.Threading.Tasks;
 using static HotelManagement.Web.ViewModels.FloorModels.ServiceModels.RoomSortingClass;
 
-namespace HotelManagement.Data.Services.Tests
+namespace HotelManagement.Data.Services.Tests;
+
+[TestFixture]
+internal class FloorServicesTests
 {
-    [TestFixture]
-    internal class FloorServicesTests
-    {
         
-        private ApplicationDbContext context;
+    private ApplicationDbContext context;
 
-        private List<Floor> floors;
+    private List<Floor> floors;
 
-        private List<Room> rooms;
+    private List<Room> rooms;
 
-        private List<RoomType> roomTypes;
+    private List<RoomType> roomTypes;
 
-        private IMapper mapperTest;
+    private IMapper mapperTest;
 
-        [SetUp]
-        public void Setup()
-        {
+    [SetUp]
+    public void Setup()
+    {
             
 
-            roomTypes = new SeedRoomTypes().SeedRoomTypesWithoutRooms().ToList();
+        roomTypes = new SeedRoomTypes().SeedRoomTypesWithoutRooms().ToList();
 
-            floors = new SeedFloors().SeedFloorsWithoutRooms().ToList();
+        floors = new SeedFloors().SeedFloorsWithoutRooms().ToList();
 
-            rooms = new SeedRooms().SeedRoomsOnEveryFloor().ToList();
+        rooms = new SeedRooms().SeedRoomsOnEveryFloor().ToList();
             
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .EnableDetailedErrors()
-                .UseInMemoryDatabase(databaseName: "HotelManagementInMemoryDb")
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .EnableDetailedErrors()
+            .UseInMemoryDatabase(databaseName: "HotelManagementInMemoryDb")
             .Options;
 
-            this.context = new ApplicationDbContext(options);
-            this.context.RoomTypes.AddRange(roomTypes);
+        this.context = new ApplicationDbContext(options);
+        this.context.RoomTypes.AddRange(roomTypes);
             
-            this.context.Floors.AddRange(floors);
+        this.context.Floors.AddRange(floors);
             
-            this.context.Rooms.AddRange(rooms);
+        this.context.Rooms.AddRange(rooms);
 
-            this.context.SaveChanges();
-        }
+        this.context.SaveChanges();
+    }
 
         
-        [TearDown]
-        public void Teardown()
-        {
-            this.context.Floors.RemoveRange(floors);
-            this.context.RoomTypes.RemoveRange(roomTypes);
-            this.context.Rooms.RemoveRange(rooms);
+    [TearDown]
+    public void Teardown()
+    {
+        this.context.Floors.RemoveRange(floors);
+        this.context.RoomTypes.RemoveRange(roomTypes);
+        this.context.Rooms.RemoveRange(rooms);
 
-            this.context.SaveChanges();
-        }
-        [Test]
-        public void AreTheCorrectNumberOfRoomsAddedToDb()
-        {
-            Assert.AreEqual(rooms.Count, this.context.Rooms.Count());
-        }
+        this.context.SaveChanges();
+    }
+    [Test]
+    public void AreTheCorrectNumberOfRoomsAddedToDb()
+    {
+        Assert.AreEqual(rooms.Count, this.context.Rooms.Count());
+    }
 
-        [Test]
-        public void AreTheCorrectNumberOfFloorsAddedToDb()
-        {
-            Assert.AreEqual(floors.Count, this.context.Floors.Count());
-        }
+    [Test]
+    public void AreTheCorrectNumberOfFloorsAddedToDb()
+    {
+        Assert.AreEqual(floors.Count, this.context.Floors.Count());
+    }
         
-        [Test]
-        public void AreTheCorrectNumberOfRoomTypesAddedToDb()
-        {
-            Assert.AreEqual(roomTypes.Count, this.context.RoomTypes.Count());
-        }
+    [Test]
+    public void AreTheCorrectNumberOfRoomTypesAddedToDb()
+    {
+        Assert.AreEqual(roomTypes.Count, this.context.RoomTypes.Count());
+    }
 
-        [OneTimeSetUp]
-        public void InitMapper()
-        {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-            mapperTest = config.CreateMapper();
-        }
+    [OneTimeSetUp]
+    public void InitMapper()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        mapperTest = config.CreateMapper();
+    }
 
-        [Test]
-        public async Task GetRoomTypesShouldReturnTheCorrectCount()
-        {
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+    [Test]
+    public async Task GetRoomTypesShouldReturnTheCorrectCount()
+    {
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.GetRoomTypes();
+        var result = await floorServices.GetRoomTypes();
 
-            Assert.AreEqual(this.context.RoomTypes.Count(), result.Count());
-        }
+        Assert.AreEqual(this.context.RoomTypes.Count(), result.Count());
+    }
 
-        [Test]
-        public async Task GetRoomTypesShouldReturnCorrectValues()
-        {
+    [Test]
+    public async Task GetRoomTypesShouldReturnCorrectValues()
+    {
           
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.GetRoomTypes();
+        var result = await floorServices.GetRoomTypes();
 
-            var resultAsList = result.ToList();
+        var resultAsList = result.ToList();
 
-            var dbTypes = context.RoomTypes.ToList();
+        var dbTypes = context.RoomTypes.ToList();
 
-            for (int i = 0; i < result.Count(); i++)
-            {
-                Assert.AreEqual(dbTypes[i].Type, resultAsList[i]);
-            } 
-        }
-
-        [Test]
-        public async Task GetRoomMethodAllShouldReturnAllActiveRoomsWithNoQueryParams()
+        for (int i = 0; i < result.Count(); i++)
         {
+            Assert.AreEqual(dbTypes[i].Type, resultAsList[i]);
+        } 
+    }
+
+    [Test]
+    public async Task GetRoomMethodAllShouldReturnAllActiveRoomsWithNoQueryParams()
+    {
                         
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.All(RoomSorting.Newest,"",true,"",false, 0, 99999, 0);
+        var result = await floorServices.All(RoomSorting.Newest,"",true,"",false, 0, 99999, 0);
 
-            Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive).Count(), result.Rooms.Count());
-        }
+        Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive).Count(), result.Rooms.Count());
+    }
 
 
-        [Test]
-        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenIsAvailableTrue()
-        {
+    [Test]
+    public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenIsAvailableTrue()
+    {
            
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.All(RoomSorting.Newest, "", true, "", true, 0, 99999, 0);
+        var result = await floorServices.All(RoomSorting.Newest, "", true, "", true, 0, 99999, 0);
 
-            Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive && r.IsOccupied == false && r.IsCleaned == true && r.IsOutOfService == false).Count(), result.Rooms.Count());
-        }
-        [Test]
-        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenIsActiveAndIsAvailableFalse()
-        {
+        Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive && r.IsOccupied == false && r.IsCleaned == true && r.IsOutOfService == false).Count(), result.Rooms.Count());
+    }
+    [Test]
+    public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheGivenIsActiveAndIsAvailableFalse()
+    {
            
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.All(RoomSorting.Newest, "", false, "", false, 0, 99999, 0);
+        var result = await floorServices.All(RoomSorting.Newest, "", false, "", false, 0, 99999, 0);
 
-            Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive == false && r.IsOccupied == false && r.IsCleaned == true && r.IsOutOfService == true).Count(), result.Rooms.Count());
-        }
+        Assert.AreEqual(this.context.Rooms.Where(r => r.IsActive == false && r.IsOccupied == false && r.IsCleaned == true && r.IsOutOfService == true).Count(), result.Rooms.Count());
+    }
         
-        [Test]
-        [TestCase("1")]
-        [TestCase("0")]
-        [TestCase("102")]
-        [TestCase("Lagag")]
-        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithThSearchValue(string search)
-        {
-            search = search.ToLower();
+    [Test]
+    [TestCase("1")]
+    [TestCase("0")]
+    [TestCase("102")]
+    [TestCase("Lagag")]
+    public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithThSearchValue(string search)
+    {
+        search = search.ToLower();
             
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.All(RoomSorting.Newest, "", true, search, false, 0, 99999, 0);
+        var result = await floorServices.All(RoomSorting.Newest, "", true, search, false, 0, 99999, 0);
 
-            Assert.AreEqual(this.context.Rooms.Where( r=> r.RoomNumber.ToString().Contains(search)).Count(), result.Rooms.Count());
-        }
+        Assert.AreEqual(this.context.Rooms.Where( r=> r.RoomNumber.ToString().Contains(search)).Count(), result.Rooms.Count());
+    }
         
-        [Test]
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(6)]
-        [TestCase(1120)]
-        public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheCorrectFloorId(int floorId)
-        {
+    [Test]
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(6)]
+    [TestCase(1120)]
+    public async Task GetRoomMethodAllShouldReturnWorkCorrectlyWithTheCorrectFloorId(int floorId)
+    {
             
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.All(RoomSorting.Newest, "", true, "", false, 0, 99999, floorId);
+        var result = await floorServices.All(RoomSorting.Newest, "", true, "", false, 0, 99999, floorId);
 
-            Assert.AreEqual(this.context.Rooms.Where(r => r.FloorId == floorId).Count(), result.Rooms.Count());
-        }
+        Assert.AreEqual(this.context.Rooms.Where(r => r.FloorId == floorId).Count(), result.Rooms.Count());
+    }
 
-        [Test]
-        public async Task GetRoomMethodAllShouldWorkWhenGivenPaginationParameters()
-        {
+    [Test]
+    public async Task GetRoomMethodAllShouldWorkWhenGivenPaginationParameters()
+    {
          
-            var floorServices = new FloorServices.FloorServices(context, mapperTest);
+        var floorServices = new FloorServices.FloorServices(context, mapperTest);
 
-            var result = await floorServices.All(RoomSorting.Newest, "", true, "", false, 1, 10, 0);
+        var result = await floorServices.All(RoomSorting.Newest, "", true, "", false, 1, 10, 0);
 
-            Assert.AreEqual(this.context.Rooms.Skip(10).Take(10).Count(), result.Rooms.Count());
-        }
+        Assert.AreEqual(this.context.Rooms.Skip(10).Take(10).Count(), result.Rooms.Count());
+    }
 
-        [Test]
-        public async Task FloorServiceForVisualization()
-        {
+    [Test]
+    public async Task FloorServiceForVisualization()
+    {
 
-            var floorUiServices = new FloorVisualisationServices(context, mapperTest);
+        var floorUiServices = new FloorVisualisationServices(context, mapperTest);
 
-            var result = await floorUiServices.GetFloorItems();
+        var result = await floorUiServices.GetFloorItems();
 
-            Assert.AreEqual(this.context.Floors.Count(), result.Count());
-        }
+        Assert.AreEqual(this.context.Floors.Count(), result.Count());
     }
 }

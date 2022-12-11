@@ -22,13 +22,16 @@ public class BookingService : IBookingService
     }
     public BookingModel projectRoomModelToBookingModel(SingleFreeRoomModel model)
     {
+        var result = mapper.Map<BookingModel>(model);
 
-        return mapper.Map<BookingModel>(model);
-        
+
+        return result;
+
     }
 
     public async Task<bool> reserveRoom(BookingModel model)
     {
+        
         var resId = await Nanoid.Nanoid.GenerateAsync("0123456789ABCDEFGHJKLMNOPQRSTUVWXYZ", 7);
 
         //var isLoyal = await IsLoyalGuest(model);

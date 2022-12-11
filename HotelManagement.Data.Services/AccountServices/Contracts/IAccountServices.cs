@@ -23,7 +23,7 @@ public interface IAccountServices
 
     Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
 
-    Task GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+    // Task GenerateEmailConfirmationTokenAsync(ApplicationUser user);
 
     Task<RegisterViewModel> GetRegisterViewModelWithRolesAndDepartmentsAsync();
 

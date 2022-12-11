@@ -14,6 +14,9 @@ public class MockEmailService
         emailService.Setup(s => s.sendConfirmationEmail(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
             .Returns(new SendResponse());
 
+        emailService.Setup(s => s.SendForgotPasswordEmail(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(new SendResponse());
+        
         return emailService.Object;
     }
 }

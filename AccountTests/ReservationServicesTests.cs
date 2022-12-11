@@ -10,6 +10,7 @@ using HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.Tests;
+
 [TestFixture]
 internal class ReservationServicesTests
 {
