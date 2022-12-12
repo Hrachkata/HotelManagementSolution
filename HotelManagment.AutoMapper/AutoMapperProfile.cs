@@ -17,6 +17,9 @@ namespace HotelManagement.AutoMapper;
 
 public class AutoMapperProfile : Profile
 {
+    /// <summary>
+    /// Full automapper profile
+    /// </summary>
     public AutoMapperProfile()
     {
         CreateMap<Department, DepartmentDto>()

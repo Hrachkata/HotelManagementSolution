@@ -2,10 +2,15 @@
 using HotelManagement.Web.ViewModels.RoomModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Data;
 
 namespace HotelManagement.Areas.Hotel.Controllers
 {
+
+    /// <summary>
+    /// Room controller that enables viewing and manipulation of rooms.
+    /// </summary>
     [Area("Hotel")]
     public class RoomController : Controller
     {
@@ -18,6 +23,11 @@ namespace HotelManagement.Areas.Hotel.Controllers
             roomServices = _roomServices;
         }
 
+        /// <summary>
+        /// Gets the room details.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View with room details</returns>
         // GET: RoomController/Details/5
         [HttpGet]
         public async Task<ActionResult> Details(int id)
@@ -41,7 +51,11 @@ namespace HotelManagement.Areas.Hotel.Controllers
 
 
 
-
+        /// <summary>
+        /// Room edit get.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Edit view for room.</returns>
 
         // GET: RoomController/Edit/5
         [HttpGet]
@@ -65,6 +79,12 @@ namespace HotelManagement.Areas.Hotel.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Edit post, edits rooms.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // POST: RoomController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,12 +115,17 @@ namespace HotelManagement.Areas.Hotel.Controllers
 
                 throw;
             }
-
+            Log.Logger.Information("User {0} edited room with number {1}", this.User?.Identity?.Name ?? "NAME MISSING", model.RoomNumber);
 
             return RedirectToAction("Details", "Room", new { id = model.Id.ToString() });
         }
 
 
+        /// <summary>
+        /// Disables room
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: RoomController/Delete/5
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
@@ -130,9 +155,17 @@ namespace HotelManagement.Areas.Hotel.Controllers
                 throw;
             }
 
+            Log.Logger.Information("User {0} disabled room with id {1}", this.User?.Identity?.Name ?? "NAME MISSING", id);
+
             return RedirectToAction(result ? "Details" : "Edit", "Room", new { id });
         }
 
+
+        /// <summary>
+        /// Enables room 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: RoomController/Delete/5
         [HttpGet]
         public async Task<ActionResult> Enable(int id)
@@ -162,9 +195,17 @@ namespace HotelManagement.Areas.Hotel.Controllers
                 throw;
             }
 
+            Log.Logger.Information("User {0} enabled room with id {1}", this.User?.Identity?.Name ?? "NAME MISSING", id);
+
             return RedirectToAction(result ? "Details" : "Edit", "Room", new { id });
         }
 
+
+        /// <summary>
+        /// Sets room status to cleaned
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> IsCleaned(int id)
         {
@@ -193,8 +234,16 @@ namespace HotelManagement.Areas.Hotel.Controllers
                 throw;
             }
 
+            Log.Logger.Information("User {0} set status cleaned to room with id {1}", this.User?.Identity?.Name ?? "NAME MISSING", id);
+
             return RedirectToAction(result ? "Details" : "Edit", "Room", new { id });
         }
+
+        /// <summary>
+        /// Sets room status to dirty
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet]
         public async Task<ActionResult> IsDirty(int id)
@@ -224,9 +273,16 @@ namespace HotelManagement.Areas.Hotel.Controllers
                 throw;
             }
 
+            Log.Logger.Information("User {0} set status dirty to room with id {1}", this.User?.Identity?.Name ?? "NAME MISSING", id);
+
             return RedirectToAction(result ? "Details" : "Edit", "Room", new { id });
         }
 
+        /// <summary>
+        /// Sets room status to out of service
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet]
         public async Task<ActionResult> OutOfService(int id)
@@ -257,8 +313,17 @@ namespace HotelManagement.Areas.Hotel.Controllers
                 throw;
             }
 
+
+            Log.Logger.Information("User {0} set status OutOfService to room with id {1}", this.User?.Identity?.Name ?? "NAME MISSING", id);
+
             return RedirectToAction(result ? "Details" : "Edit", "Room", new { id });
         }
+
+        /// <summary>
+        /// Sets room status to in service
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet]
         public async Task<ActionResult> InService(int id)
@@ -288,6 +353,9 @@ namespace HotelManagement.Areas.Hotel.Controllers
 
                 throw;
             }
+
+
+            Log.Logger.Information("User {0} set status InService to room with id {1}", this.User?.Identity?.Name ?? "NAME MISSING", id);
 
             return RedirectToAction(result ? "Details" : "Edit", "Room", new { id });
         }

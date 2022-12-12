@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.Areas.Hotel.Controllers
 {
+    /// <summary>
+    /// Controller that sorts rooms by floors, mainly used to monitor rooms
+    /// </summary>
     [Area("Hotel")]
     public class FloorController : Controller
     {
@@ -18,6 +21,12 @@ namespace HotelManagement.Areas.Hotel.Controllers
             floorServices = _floorServices;
         }
 
+        /// <summary>
+        /// Returns all rooms based on floor id or query params.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: FloorController
         [HttpGet]
         [Authorize]

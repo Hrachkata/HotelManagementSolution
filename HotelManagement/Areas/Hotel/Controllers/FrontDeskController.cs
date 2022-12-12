@@ -11,6 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.Areas.Hotel.Controllers
 {
+
+    /// <summary>
+    /// Controller used to see rooms available for reservation.
+    /// </summary>
+
+    [Authorize]
     [Area("Hotel")]
     public class FrontDeskController : Controller
     {
@@ -25,7 +31,12 @@ namespace HotelManagement.Areas.Hotel.Controllers
             floorServices = _floorServices;
         }
 
-
+        /// <summary>
+        /// Lists all rooms available for reservation based on query params.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         // GET: FrontDeskController/Create
         [HttpGet]

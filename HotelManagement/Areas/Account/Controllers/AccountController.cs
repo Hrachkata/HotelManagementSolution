@@ -4,9 +4,16 @@ using HotelManagement.Web.ViewModels.AccountModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+
+
 
 namespace HotelManagement.Areas.Account.Controllers
 {
+/// <summary>
+/// The (User) controller, used by admins or H&R to add employees.
+/// </summary>
+    [Authorize]
     [Area("Account")]
     public class AccountController : Controller
     {
@@ -25,6 +32,10 @@ namespace HotelManagement.Areas.Account.Controllers
             userManager = _userManager;
         }
 
+        /// <summary>
+        /// Login get method.
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         [AllowAnonymous]
@@ -40,6 +51,11 @@ namespace HotelManagement.Areas.Account.Controllers
 
         }
 
+
+        /// <summary>
+        /// Register get method.
+        /// </summary>
+        /// <returns>View with departments.</returns>
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Register()
@@ -47,12 +63,17 @@ namespace HotelManagement.Areas.Account.Controllers
             
             var model = await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync();
 
+            Log.Logger.Information("User: {0}, requested create employee page.", this.User?.Identity?.Name ?? "ERROR MISSING USERNAME / TEST ENVIRONMENT");
 
             return View(model);
 
         }
 
-
+        /// <summary>
+        /// Login post method.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>If employee is successful in loggin in they are redirected to the home page.</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -78,6 +99,8 @@ namespace HotelManagement.Areas.Account.Controllers
                     EmailVerified = false
                 };
 
+                Log.Logger.Information("User: {0}, attempted to login but their email isn't confirmed.", model.UserName);
+
                 return RedirectToAction("ConfirmEmail", ConfirmEmailViewModel);
             }
 
@@ -87,14 +110,23 @@ namespace HotelManagement.Areas.Account.Controllers
 
             if (!result.Succeeded || result.IsNotAllowed)
             {
+                Log.Logger.Information("User: {0}, attempted to login.", model.UserName);
                 ModelState.AddModelError("", "Try again.");
                 return View(model);
             }
+
+            Log.Logger.Information("User: {0}, logged in.", model.UserName);
 
             return RedirectToAction("Index", "Home", new {area = ""});
 
         }
         
+        /// <summary>
+        /// Register post method, used to register new employees in the app.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -126,8 +158,18 @@ namespace HotelManagement.Areas.Account.Controllers
                 return View(await accountServices.GetRegisterViewModelWithRolesAndDepartmentsAsync());
             }
 
+            Log.Logger.Information("User: {0}, registered a new employee.", model.UserName);
+
             return Redirect("/Admin");
         }
+
+        /// <summary>
+        /// Confirm email, used to confirm email of user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [AllowAnonymous]
@@ -153,6 +195,12 @@ namespace HotelManagement.Areas.Account.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Confirm email post method, generates and sends the email confirmation token.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -172,6 +220,8 @@ namespace HotelManagement.Areas.Account.Controllers
 
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
+                Log.Logger.Information("Sent confirmation email to {0}.", model.Email);
+
                 accountServices.SendConfirmationEmail(user, token);
 
                 model.EmailSent = true;
@@ -186,6 +236,11 @@ namespace HotelManagement.Areas.Account.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Logout method.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Logout()
@@ -195,6 +250,12 @@ namespace HotelManagement.Areas.Account.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
+
+        /// <summary>
+        /// Forgot password get method, returns the forgot password view.
+        /// </summary>
+        /// <returns></returns>
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword()
@@ -202,6 +263,12 @@ namespace HotelManagement.Areas.Account.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Forgot password post method, sends the forgotPassword email to user.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -220,11 +287,20 @@ namespace HotelManagement.Areas.Account.Controllers
 
                 ModelState.Clear();
 
+                Log.Logger.Information("Sent forgot password email to {0}.", model.Email);
+
                 model.EmailSent = true;
             }
             return View(model);
         }
 
+
+        /// <summary>
+        /// Reset password get method.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(string userId, string token)
@@ -235,9 +311,17 @@ namespace HotelManagement.Areas.Account.Controllers
                 Token = token
             };
 
+            Log.Logger.Information("User with id: {0} requested reset password.", userId);
+
             return View(resetModel);
         }
 
+
+        /// <summary>
+        /// Reset password post method, resets the user password.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -249,7 +333,10 @@ namespace HotelManagement.Areas.Account.Controllers
 
                 if (result.Succeeded)
                 {
+                    Log.Logger.Information("User with id: {0} reset password.", model.UserId);
+
                     return View("ResetPasswordConfirmation");
+
                 }
 
                 foreach (var error in result.Errors)
@@ -261,6 +348,11 @@ namespace HotelManagement.Areas.Account.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Reset password confirmation method.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()

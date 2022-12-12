@@ -3,11 +3,18 @@ using HotelManagement.Data.Services.BookingServices.Contracts;
 using HotelManagement.Models;
 using HotelManagement.Web.ViewModels.BookingModels;
 using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace HotelManagement.Areas.Reservations.Controllers
 {
+    /// <summary>
+    /// Controller used to book reservations
+    /// </summary>
+    [Authorize]
+    
     [Area("Reservations")]
     public class BookingController : Controller
     {
@@ -18,6 +25,11 @@ namespace HotelManagement.Areas.Reservations.Controllers
             bookingService = _bookingService;
         }
 
+        /// <summary>
+        /// Returns the reserve view for the dates in the front desk controller query.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Reserve(SingleFreeRoomModel model)
         {
@@ -28,6 +40,12 @@ namespace HotelManagement.Areas.Reservations.Controllers
 
         }
 
+
+        /// <summary>
+        /// Post method for room reservation
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Reserve(BookingModel model)
         {
@@ -68,9 +86,9 @@ namespace HotelManagement.Areas.Reservations.Controllers
 
                 throw;
             }
-
-
-
+            
+            Log.Logger.Information("User {0} reserved room with number {1}, ArrivalDate {2} DepartureDate {3}, guest {4}", this.User?.Identity?.Name ?? "NAME MISSING", model.RoomNumber, model.ArrivalDate, model.DepartureDate);
+            
             return RedirectToAction("FreeRooms", "FrontDesk", new { area= "Hotel", arrivalDate = model.ArrivalDate.Value.ToString("yyyy-MM-dd"), departureDate = model.DepartureDate.Value.ToString("yyyy-MM-dd") });
 
         }

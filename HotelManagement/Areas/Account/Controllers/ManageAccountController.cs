@@ -3,11 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text;
 using HotelManagement.Data.Services.AccountServices.Contracts;
 using HotelManagement.Web.ViewModels.AccountModels;
+using Serilog;
 
 namespace HotelManagement.Areas.Account.Controllers
 {
+    /// <summary>
+    /// Manage your account controller.
+    /// </summary>
     [Area("Account")]
     public class ManageAccountController : Controller
     {
@@ -26,6 +31,11 @@ namespace HotelManagement.Areas.Account.Controllers
             userManager = _userManager;
         }
 
+        /// <summary>
+        /// Settings get method.
+        /// </summary>
+        /// <returns>Your account settings.</returns>
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Settings()
@@ -41,6 +51,12 @@ namespace HotelManagement.Areas.Account.Controllers
 
         }
 
+
+        /// <summary>
+        /// Setting post method, changes made to your account are made here.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Settings(EditViewModel model)
@@ -81,13 +97,21 @@ namespace HotelManagement.Areas.Account.Controllers
 
             if (!updateResult.Succeeded)
             {
+                var logMessages = new StringBuilder();
+
                 foreach (var error in updateResult.Errors)
                 {
+
+                    logMessages.Append(error.Description);
                     ModelState.AddModelError("", error.Description);
                 }
 
+                Log.Logger.Error("Errors: {0} while attempting to update user: {1}", logMessages.ToString(), this.User?.Identity?.Name ?? "ERROR MISSING USERNAME / TEST ENVIRONMENT");
+
                 return View(accountServices.ProjectApplicationUserToEditViewModel(user));
             }
+
+            Log.Logger.Information("User: {0}, made changes to their account.", this.User?.Identity?.Name ?? "ERROR MISSING USERNAME / TEST ENVIRONMENT");
 
             return RedirectToAction("Index", "Home", new {area = ""});
         }

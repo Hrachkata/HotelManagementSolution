@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HotelManagement.Core\HotelManagement.Core.csproj" />
+      <ProjectReference Include="..\HotelManagement.Data.Models\HotelManagement.Data.Models.csproj" />
+      <ProjectReference Include="..\HotelManagement.Data.Seeding\HotelManagement.Data.Seeding.csproj" />
+      <ProjectReference Include="..\HotelManagment.AutoMapper\HotelManagement.AutoMapper.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.10" />
+      <PackageReference Include="Moq" Version="4.18.3" />
+    </ItemGroup>
+
+</Project>

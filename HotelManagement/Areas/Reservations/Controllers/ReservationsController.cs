@@ -6,9 +6,14 @@ using HotelManagement.Web.ViewModels.ReservationsModels;
 using HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace HotelManagement.Areas.Reservations.Controllers
 {
+    /// <summary>
+    /// This is the controller used for checking in and out guests and viewing reservations
+    /// </summary>
+    [Authorize]
     [Area("Reservations")]
     public class ReservationsController : Controller
     {
@@ -18,6 +23,11 @@ namespace HotelManagement.Areas.Reservations.Controllers
             reservationServices = _reservationServices;
         }
 
+        /// <summary>
+        /// Returns all reservations based on query params
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -41,6 +51,12 @@ namespace HotelManagement.Areas.Reservations.Controllers
             return View(query);
         }
 
+
+        /// <summary>
+        /// Checks in guests
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
 
@@ -78,10 +94,18 @@ namespace HotelManagement.Areas.Reservations.Controllers
                 throw;
             }
 
+
+            Log.Logger.Information("User {0} checked IN reservation with ID:{1}", this.User?.Identity?.Name ?? "NAME MISSING", model.Id);
+
             ViewData["Status"] = "Check in";
             return View("ReservationDetails", model);
         }
 
+        /// <summary>
+        /// Checks reservation out
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -118,11 +142,19 @@ namespace HotelManagement.Areas.Reservations.Controllers
                 throw;
             }
 
+
+
+            Log.Logger.Information("User {0} checked OUT reservation with ID:{1}", this.User?.Identity?.Name ?? "NAME MISSING", model.Id);
+
             ViewData["Status"] = "Check out";
             return View("ReservationDetails", model);
         }
 
-
+        /// <summary>
+        /// Get reservation details view
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> ReservationDetails(SingleReservationViewModel model)
@@ -130,7 +162,11 @@ namespace HotelManagement.Areas.Reservations.Controllers
             return View(model);
         }
 
-
+        /// <summary>
+        /// Prints the fiscal folio when guest has paid either on check in or check out
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> PrintFolio(SingleReservationViewModel model)
@@ -164,12 +200,21 @@ namespace HotelManagement.Areas.Reservations.Controllers
 
                 throw;
             }
+            
+            Log.Logger.Information("User {0} Printed folio for reservation with ID:{1}", this.User?.Identity?.Name ?? "NAME MISSING", model.Id);
+            Log.Logger.Information("Reservation with ID: {0}, Total: {1} paid", model.Id, model.totalPrice);
 
             ViewBag.PaymentSuccess = "true";
 
             return View("ReservationDetails", model);
         }
 
+
+        /// <summary>
+        /// Cancels reservation
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -205,6 +250,7 @@ namespace HotelManagement.Areas.Reservations.Controllers
                 throw;
             }
 
+            Log.Logger.Information("User {0} CANCELED reservation with ID:{1}", this.User?.Identity?.Name ?? "NAME MISSING", model.Id);
 
             return View("ReservationDetails", model);
         }

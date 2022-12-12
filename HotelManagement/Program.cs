@@ -3,6 +3,7 @@ using HotelManagement.Data;
 using HotelManagement.Data.Models.UserModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,14 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
+Log.Logger = logger;
 
 var config = new ProgramConfiguration();
 
@@ -51,12 +59,15 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     Console.WriteLine("Development");
+    Log.Logger.Information("Development environment.");
 
     app.UseMigrationsEndPoint();
 }
 else
 {
     Console.WriteLine("Production");
+
+    Log.Logger.Information("Production environment.");
 
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
