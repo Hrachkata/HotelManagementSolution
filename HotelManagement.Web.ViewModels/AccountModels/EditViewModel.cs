@@ -4,6 +4,9 @@ using static ModelValidationConstants.AccountConstants.AccountConstants;
 
 namespace HotelManagement.Web.ViewModels.AccountModels;
 
+/// <summary>
+/// Edit model dto
+/// </summary>
 public class EditViewModel : AccountBaseViewModel
 {
     public Guid Id { get; set; }

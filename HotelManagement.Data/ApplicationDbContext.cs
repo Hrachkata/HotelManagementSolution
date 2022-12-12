@@ -5,6 +5,7 @@ using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Seeding;
 using HotelManagement.Data.ApplicationDbConfiguration;
 using HotelManagement.Data.Seeding.Contracts;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace HotelManagement.Data
@@ -84,10 +85,15 @@ namespace HotelManagement.Data
 
             var ownerGuid = Guid.NewGuid();
 
-            builder.ApplyConfiguration(new RoleConfiguration(ownerGuid));
+            var adminRoleGuid = Guid.NewGuid();
 
+            var HRRoleGuid = Guid.NewGuid();
 
-            builder.ApplyConfiguration(new IdentityUserRoleConfiguration(adminGuid, ownerGuid));
+            var directorRoleGuid = Guid.NewGuid();
+
+            builder.ApplyConfiguration(new RoleConfiguration(ownerGuid, adminRoleGuid, HRRoleGuid, directorRoleGuid));
+
+            builder.ApplyConfiguration(new IdentityUserRoleConfiguration(adminGuid, ownerGuid, adminRoleGuid, HRRoleGuid, directorRoleGuid));
 
             builder.ApplyConfiguration(new RoleDepartmentConfiguration());
             

@@ -5,7 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-HotelManagement-A41C9F8C-F9F7-4AAF-A27E-80C3652A3C69</UserSecretsId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  <UseRazorSourceGenerator>false</UseRazorSourceGenerator>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
@@ -33,6 +36,21 @@
     <Folder Include="Areas\Hotel\Models\" />
     <Folder Include="Areas\Reservations\Data\" />
     <Folder Include="Areas\Reservations\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

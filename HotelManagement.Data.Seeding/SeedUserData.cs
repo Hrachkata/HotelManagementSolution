@@ -69,13 +69,13 @@ namespace HotelManagement.Data.Seeding
             return models;
         }
 
-        public ICollection<ApplicationUserRole> SeedRoles(Guid ownerGuid)
+        public ICollection<ApplicationUserRole> SeedRoles(Guid ownerGuid, Guid adminGuid, Guid HRguid, Guid directorGuid)
         {
             var models = new List<ApplicationUserRole>()
             {
                 new ApplicationUserRole()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = adminGuid,
                     Name = "Admin",
                     NormalizedName = "ADMIN"
                 },
@@ -87,13 +87,13 @@ namespace HotelManagement.Data.Seeding
                 },
                 new ApplicationUserRole()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = HRguid,
                     Name = "Human Resources",
                     NormalizedName = "HUMAN RESOURCES"
                 },
                 new ApplicationUserRole()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = directorGuid,
                     Name = "Director",
                     NormalizedName = "DIRECTOR"
                 },
@@ -159,12 +159,19 @@ namespace HotelManagement.Data.Seeding
             return models;
         }
 
-        public ICollection<IdentityUserRole<Guid>> SeedUserRoles(Guid adminGuid, Guid ownerGuid)
+        public ICollection<IdentityUserRole<Guid>> SeedUserRoles(Guid adminGuid, Guid ownerGuid, Guid adminRoleGuid, Guid HRRoleGuid, Guid directorRoleGuid)
         {
             return new List<IdentityUserRole<Guid>>()
             {
                 new IdentityUserRole<Guid>()
-                    { RoleId = ownerGuid, UserId = adminGuid }
+                    { RoleId = ownerGuid, UserId = adminGuid },
+                new IdentityUserRole<Guid>()
+                    { RoleId = adminRoleGuid, UserId = adminGuid },
+                new IdentityUserRole<Guid>()
+                    { RoleId = HRRoleGuid, UserId = adminGuid },
+                new IdentityUserRole<Guid>()
+                    { RoleId = directorRoleGuid, UserId = adminGuid },
+
             };
         }
 

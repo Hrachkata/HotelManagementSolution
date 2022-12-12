@@ -2,6 +2,9 @@
 using static ModelValidationConstants.AccountConstants.AccountConstants;
 namespace HotelManagement.Web.ViewModels.AccountModels;
 
+/// <summary>
+/// Forgot password dto
+/// </summary>
 public class ForgotPasswordViewModel
 {
 

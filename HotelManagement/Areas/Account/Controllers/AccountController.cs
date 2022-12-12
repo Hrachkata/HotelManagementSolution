@@ -30,6 +30,7 @@ namespace HotelManagement.Areas.Account.Controllers
             signInManager = _signInManager;
 
             userManager = _userManager;
+                        
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace HotelManagement.Areas.Account.Controllers
         /// </summary>
         /// <returns>View with departments.</returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> Register()
         {
             
@@ -128,7 +129,7 @@ namespace HotelManagement.Areas.Account.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

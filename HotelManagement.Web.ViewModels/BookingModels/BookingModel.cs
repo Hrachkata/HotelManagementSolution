@@ -8,6 +8,9 @@ using static ModelValidationConstants.RoomTypeConstants.RoomTypeConstants;
 
 namespace HotelManagement.Web.ViewModels.BookingModels;
 
+/// <summary>
+/// Reservation dto
+/// </summary>
 public class BookingModel
 {
     public string RoomType { get; set; }

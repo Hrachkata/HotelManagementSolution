@@ -1,5 +1,8 @@
 ﻿namespace HotelManagement.Web.ViewModels.RoomModels;
 
+/// <summary>
+/// Room details dto
+/// </summary>
 public class RoomDetailsViewModel
 {
     public int Id { get; set; }

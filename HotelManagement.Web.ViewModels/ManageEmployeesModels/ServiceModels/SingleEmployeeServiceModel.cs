@@ -1,5 +1,8 @@
 ﻿namespace HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 
+/// <summary>
+/// Single employee dto
+/// </summary>
 public class SingleEmployeeServiceModel
 {
     public Guid UserId { get; set; }

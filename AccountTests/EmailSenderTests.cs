@@ -4,6 +4,7 @@ using HotelManagement.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using HotelManagement.EmailService.Contracts;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework.Internal;
 using IConfigurationProvider = Microsoft.Extensions.Configuration.IConfigurationProvider;
@@ -17,7 +18,7 @@ public class EmailSenderTests
 
     private IMapper mapper;
 
-    private SendGridEmail emailService;
+    private ISendGridEmail emailService;
 
     private AccountServices.AccountServices accountServices;
 
@@ -34,7 +35,12 @@ public class EmailSenderTests
         this.context = new ApplicationDbContext(options);
         this.context.SaveChanges();
 
-        emailService = new SendGridEmail(new ConfigurationRoot(new List<IConfigurationProvider>()));
+        var config = new ConfigurationRoot(new List<IConfigurationProvider>());
+
+
+        var mock = new MockedLibraries.MockEmailService();
+
+        emailService = mock.SendGridEmailMocked();
     }
     
 

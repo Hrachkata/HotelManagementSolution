@@ -2,6 +2,9 @@
 
 namespace HotelManagement.Web.ViewModels.AccountModels;
 
+/// <summary>
+/// Reset password dto
+/// </summary>
 public class ResetPasswordModel
 {
     [Required]

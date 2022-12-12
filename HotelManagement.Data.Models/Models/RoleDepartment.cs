@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Data.Models.Models
 {
+    /// <summary>
+    /// Many-many connection rolenames and department
+    /// </summary>
     public class RoleDepartment
     {
         public int DepartmentId { get; set; }

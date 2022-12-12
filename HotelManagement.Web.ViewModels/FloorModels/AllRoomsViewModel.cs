@@ -2,8 +2,13 @@
 using HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
 using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 
+
 namespace HotelManagement.Web.ViewModels.FloorModels
 {
+
+    /// <summary>
+    /// Room query dto
+    /// </summary>
     public class AllRoomsViewModel
     {
         public const int RoomsPerPage = 12;

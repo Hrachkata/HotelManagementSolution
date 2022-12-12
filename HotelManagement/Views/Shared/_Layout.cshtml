@@ -56,26 +56,38 @@
                                 </button>
                                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="font-size: 25px">
                                     <ul class="navbar-nav flex-grow-1">
-                                        @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
+                                        @if ((User?.Identity?.IsAuthenticated ?? false))
                                         {
-                                            <partial name="./LayoutPartials/_EmployeesPartial"/>
-                    
-                                            <li class="nav-item">
-                                                <a class="nav-link text-white px-4" asp-area="Hotel" asp-controller="FrontDesk" asp-action="FreeRooms"> Front Desk </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-white px-4" asp-area="Reservations" asp-controller="Reservations" asp-action="AllReservations"> Reservations </a>
-                                            </li>
-                    
-                    
-                    
-                                            <partial name="./LayoutPartials/_FloorsPartial"/>
+
+                                            if (User.IsInRole("Human Resources") || User.IsInRole("Admin") || User.IsInRole("Owner") || User.IsInRole("Director"))
+                                            {
+                                                <partial name="./LayoutPartials/_EmployeesPartial.cshtml" />
+                                            }
+
+                                            if (User.IsInRole("Admin") || User.IsInRole("Owner") || User.IsInRole("Director") || User.IsInRole("Front Desk"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-white px-4" asp-area="Hotel" asp-controller="FrontDesk" asp-action="FreeRooms"> Front Desk </a>
+                                                </li>
+                                            }
+                                            if ( User.IsInRole("Admin") || User.IsInRole("Owner") || User.IsInRole("Director") || User.IsInRole("Front Desk"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-white px-4" asp-area="Reservations" asp-controller="Reservations" asp-action="AllReservations"> Reservations </a>
+                                                </li>
+
+                                            }
+                                            if (User.IsInRole("Admin") || User.IsInRole("Owner") || User.IsInRole("Director") || User.IsInRole("Front Desk") || User.IsInRole("Housekeeping"))
+                                            {
+                                                        
+                                                <partial name="./LayoutPartials/_FloorsPartial.cshtml" />
+                                            }
                                         }
                     
                     
                     
                                     </ul>
-                                    <partial name="./LayoutPartials/_LoginPartial"/>
+                                    <partial name="./LayoutPartials/_LoginPartial.cshtml"/>
                                 </div>
                             </div>
                         </nav>

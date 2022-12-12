@@ -11,6 +11,9 @@ using HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 
 namespace HotelManagement.Web.ViewModels.ManageEmployeesModels
 {
+    /// <summary>
+    /// All employees query model
+    /// </summary>
     public class AllEmployeesViewModel
     {
         public const int EmployeesPerPage = 9;

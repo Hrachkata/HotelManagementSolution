@@ -1,5 +1,9 @@
 ﻿namespace HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 
+
+/// <summary>
+/// Reservations services
+/// </summary>
 public class ReservationSortingClass
 {
     public enum ReservationSorting

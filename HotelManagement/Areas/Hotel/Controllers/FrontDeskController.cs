@@ -18,6 +18,7 @@ namespace HotelManagement.Areas.Hotel.Controllers
 
     [Authorize]
     [Area("Hotel")]
+    [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
     public class FrontDeskController : Controller
     {
         private readonly IFrontDeskServices frontDeskServices;

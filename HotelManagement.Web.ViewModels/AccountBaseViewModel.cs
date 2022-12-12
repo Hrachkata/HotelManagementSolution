@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using static ModelValidationConstants.AccountConstants.AccountConstants;
 namespace HotelManagement.Web.ViewModels;
 
+/// <summary>
+/// Base user/employee dto
+/// </summary>
 public class AccountBaseViewModel
 {
     [Required]

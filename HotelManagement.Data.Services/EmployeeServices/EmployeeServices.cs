@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HotelManagement.Data.Services.EmployeeServices
 {
+
+    /// <summary>
+    /// Employee services
+    /// </summary>
     public class EmployeeServices : IEmployeeServices
     {
         private readonly ApplicationDbContext context;
@@ -159,7 +163,7 @@ namespace HotelManagement.Data.Services.EmployeeServices
                 throw new ArgumentNullException("User doesn't exist or id is invalid.");
             }
 
-            var dep = await context.Departments.FindAsync(departmentId);
+            var dep = await context.Departments.Include(d => d.RoleDepartment).ThenInclude(rd => rd.RoleName).Where(d => d.Id == departmentId).FirstOrDefaultAsync();
 
             if (dep == null)
             {
@@ -169,12 +173,18 @@ namespace HotelManagement.Data.Services.EmployeeServices
             result.EmployeeDepartment.Add(new EmployeeDepartment
             {
                 DepartmentId = departmentId,
-                ApplicationUserId = idToGuid
+                Department = dep,
+                ApplicationUserId = idToGuid,
+                ApplicationUser = result
             });
+
+            var roleNames = dep.RoleDepartment.Select(rd => rd.RoleName.NameOfRole).ToList();
+
+            var addingResult = await accountServices.AddUserToRolesAsync(result, roleNames);
 
             var resultSaveChanges = await context.SaveChangesAsync();
 
-            if (resultSaveChanges > 0)
+            if (resultSaveChanges > 0 || addingResult.Succeeded)
             {
                 return true;
             }
@@ -210,9 +220,15 @@ namespace HotelManagement.Data.Services.EmployeeServices
 
             result.EmployeeDepartment.Remove(depToRemove);
 
+            var dep = await context.Departments.Include(d => d.RoleDepartment).ThenInclude(rd => rd.RoleName).Where(d => d.Id == departmentId).FirstOrDefaultAsync();
+
+            var roleNames = dep.RoleDepartment.Select(rd => rd.RoleName.NameOfRole).ToList();
+
+            var removingResult = await accountServices.RemoveRolesAsync(result, roleNames);
+
             var resultSaveChanges = await context.SaveChangesAsync();
 
-            if (resultSaveChanges > 0)
+            if (resultSaveChanges > 0 || removingResult.Succeeded)
             {
                 return true;
             }

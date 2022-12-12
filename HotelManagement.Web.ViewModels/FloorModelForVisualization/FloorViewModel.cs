@@ -2,6 +2,10 @@
 
 namespace HotelManagement.Web.ViewModels.FloorModelForVisualization;
 using static ModelValidationConstants.FloorConstants.FloorConstants;
+
+/// <summary>
+/// Floor dto
+/// </summary>
 public class FloorViewModel
 {
 

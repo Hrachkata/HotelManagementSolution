@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.BookingServices;
 
+/// <summary>
+/// Booking services
+/// </summary>
 public class BookingService : IBookingService
 {
     private readonly IMapper mapper;

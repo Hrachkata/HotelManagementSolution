@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 
+/// <summary>
+/// Single room dto
+/// </summary>
 public class SingleFreeRoomModel
 {
     public int RoomId { get; set; }

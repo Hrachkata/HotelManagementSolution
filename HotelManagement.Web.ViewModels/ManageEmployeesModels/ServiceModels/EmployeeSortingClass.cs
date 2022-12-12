@@ -1,5 +1,8 @@
 ﻿namespace HotelManagement.Web.ViewModels.ManageEmployeesModels.ServiceModels;
 
+/// <summary>
+/// Employee sorting
+/// </summary>
 public class EmployeeSortingClass
 {
     public enum EmployeeSorting

@@ -6,6 +6,9 @@ using HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 
 namespace HotelManagement.Web.ViewModels.ReservationsModels;
 
+/// <summary>
+/// All reservations view dto
+/// </summary>
 public class AllReservationsModel
 {
     public const int ReservationsPerPage = 12;

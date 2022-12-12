@@ -10,6 +10,9 @@ using HotelManagement.Web.ViewModels.RoomModels.ServiceModels;
 
 namespace HotelManagement.Web.ViewModels.ReservationsModels
 {
+    /// <summary>
+    /// Reservation dto
+    /// </summary>
     public class ReservationsViewModel
     {
         public string Id { get; set; }

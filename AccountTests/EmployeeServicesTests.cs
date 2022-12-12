@@ -50,9 +50,9 @@ public class EmployeeServicesTests
         departments = new SeedDepartments().SeedDepartmentModels().ToList();
 
        
-        roles = new SeedUserData().SeedRoles(Guid.NewGuid()).ToList();
+        roles = new SeedUserData().SeedRoles(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()).ToList();
             
-        userRoles = new SeedUserData().SeedUserRoles(Guid.NewGuid(), Guid.NewGuid()).ToList();
+        userRoles = new SeedUserData().SeedUserRoles(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()).ToList();
         roleNames = new SeedUserData().SeedRoleNameItems().ToList();
 
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()

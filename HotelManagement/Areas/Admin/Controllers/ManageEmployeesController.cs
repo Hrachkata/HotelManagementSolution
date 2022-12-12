@@ -17,7 +17,7 @@ namespace HotelManagement.Areas.Admin.Controllers
     /// Manage employees controller, admin controller for managing all the employees.
     /// </summary>
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
     public class ManageEmployeesController : Controller
     {
         public IEmployeeServices employeeServices { get; set; }
@@ -37,7 +37,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> All([FromQuery] AllEmployeesViewModel query) 
         {
             var queryResult = await this.employeeServices
@@ -65,7 +65,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> Details(string id)
         {
             EmployeeDetailsModel user = new EmployeeDetailsModel();
@@ -93,7 +93,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> Edit(string id)
         {
             EmployeeEditViewModel user = new EmployeeEditViewModel();
@@ -130,7 +130,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> Edit(EmployeeEditViewModel employee)
         {
             IdentityResult result;
@@ -186,7 +186,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <exception cref="ArgumentNullException"></exception>
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<ActionResult> RemoveDepartment(EmployeeEditViewModel model)
         {
             bool result;
@@ -232,7 +232,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<ActionResult> AddDepartment(EmployeeEditViewModel model)
         {
             bool result;
@@ -277,7 +277,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> Disable(string id)
         {
 
@@ -315,7 +315,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = ("Human Resources,Owner,Director,Manager,Admin"))]
         public async Task<IActionResult> Enable(string id)
         {
 

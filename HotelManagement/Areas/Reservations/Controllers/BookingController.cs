@@ -13,9 +13,10 @@ namespace HotelManagement.Areas.Reservations.Controllers
     /// <summary>
     /// Controller used to book reservations
     /// </summary>
-    [Authorize]
-    
+
+    [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
     [Area("Reservations")]
+
     public class BookingController : Controller
     {
         private readonly IBookingService bookingService;

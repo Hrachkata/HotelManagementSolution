@@ -2,6 +2,10 @@
 
 using System.ComponentModel.DataAnnotations;
 using static ModelValidationConstants.AccountConstants.AccountConstants;
+
+/// <summary>
+/// Confirm email dto
+/// </summary>
 public class ConfirmEmailViewModel
 {
 

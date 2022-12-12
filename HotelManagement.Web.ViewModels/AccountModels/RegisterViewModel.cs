@@ -6,6 +6,9 @@ using static ModelValidationConstants.AccountConstants.AccountConstants;
 
 namespace HotelManagement.Web.ViewModels.AccountModels
 {
+    /// <summary>
+    /// Register dto
+    /// </summary>
     public class RegisterViewModel : AccountBaseViewModel
     {
         public Guid Id { get; set; }

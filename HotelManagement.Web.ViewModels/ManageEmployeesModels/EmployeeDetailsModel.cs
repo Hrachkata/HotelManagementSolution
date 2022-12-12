@@ -1,5 +1,8 @@
 ﻿namespace HotelManagement.Web.ViewModels.ManageEmployeesModels;
 
+/// <summary>
+/// Employee details model
+/// </summary>
 public class EmployeeDetailsModel
 {
     public Guid Id { get; set; }

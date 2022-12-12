@@ -14,6 +14,7 @@ namespace HotelManagement.Areas.Account.Controllers
     /// Manage your account controller.
     /// </summary>
     [Area("Account")]
+    [Authorize]
     public class ManageAccountController : Controller
     {
         public SignInManager<ApplicationUser> signInManager { get; set; }
@@ -37,7 +38,6 @@ namespace HotelManagement.Areas.Account.Controllers
         /// <returns>Your account settings.</returns>
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Settings()
         {
             if (User.Identity == null)
@@ -58,7 +58,6 @@ namespace HotelManagement.Areas.Account.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Settings(EditViewModel model)
         {
             if (!ModelState.IsValid)

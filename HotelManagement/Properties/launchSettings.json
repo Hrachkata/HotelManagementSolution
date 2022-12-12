@@ -4,7 +4,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_SENDGRID_API": "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"
       },
       "dotnetRunMessages": true,

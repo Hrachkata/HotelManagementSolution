@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FluentEmail.Core;
 using FluentEmail.Core.Models;
 using HotelManagement.Data.Models.UserModels;
 using HotelManagement.Data.Services.AccountServices.Contracts;
@@ -13,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace HotelManagement.Data.Services.AccountServices;
 
+/// <summary>
+/// Account services
+/// </summary>
 public class AccountServices : IAccountServices
 {
     private readonly UserManager<ApplicationUser> userManager;
@@ -64,7 +68,7 @@ public class AccountServices : IAccountServices
 
         if (department != null && roleNames != null)
         {
-            var resultRoles = await userManager.AddToRolesAsync(user, roleNames);
+            var resultRoles = await AddUserToRolesAsync(user, roleNames);
 
             if (!resultRoles.Succeeded)
             {
@@ -229,6 +233,46 @@ public class AccountServices : IAccountServices
         
         return result;
     }
+
+    public async Task<IdentityResult> AddUserToRolesAsync(ApplicationUser user, ICollection<string> roleNames)
+    {
+        var resultRoles = IdentityResult.Success;
+
+        foreach (var roleName in roleNames)
+        {
+            if (!(await userManager.IsInRoleAsync(user, roleName)))
+            {
+                var currentResult = await userManager.AddToRoleAsync(user, roleName);
+
+                if (!currentResult.Succeeded)
+                {
+                    resultRoles = IdentityResult.Failed(currentResult.Errors.FirstOrDefault());
+                }
+            }
+        }
+    
+        return resultRoles;
+    }
+
+    public async Task<IdentityResult> RemoveRolesAsync(ApplicationUser user, ICollection<string> roleNames)
+    {
+        var resultRoles = IdentityResult.Success;
+
+        foreach (var roleName in roleNames)
+        {
+            if (await userManager.IsInRoleAsync(user, roleName))
+            {
+                var currentResult = await userManager.RemoveFromRoleAsync(user, roleName);
+
+                if (!currentResult.Succeeded)
+                {
+                    resultRoles = IdentityResult.Failed(currentResult.Errors.FirstOrDefault());
+                }
+            }
+        }
+        return resultRoles;
+    }
+
 
     // public Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
     // {

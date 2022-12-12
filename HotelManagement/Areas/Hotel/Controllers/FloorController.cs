@@ -12,6 +12,7 @@ namespace HotelManagement.Areas.Hotel.Controllers
     /// Controller that sorts rooms by floors, mainly used to monitor rooms
     /// </summary>
     [Area("Hotel")]
+    [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
     public class FloorController : Controller
     {
         private readonly IFloorServices floorServices;

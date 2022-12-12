@@ -13,7 +13,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
     /// <summary>
     /// This is the controller used for checking in and out guests and viewing reservations
     /// </summary>
-    [Authorize]
+
+    [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
     [Area("Reservations")]
     public class ReservationsController : Controller
     {
@@ -30,7 +31,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+
+        [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
         public async Task<IActionResult> AllReservations([FromQuery] AllReservationsModel query)
         {
 
@@ -58,7 +60,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+
+        [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
 
         public async Task<IActionResult> CheckIn(SingleReservationViewModel model)
         {
@@ -108,7 +111,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+
+        [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
 
         public async Task<IActionResult> CheckOut(SingleReservationViewModel model)
         {
@@ -156,7 +160,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+
+        [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
         public async Task<IActionResult> ReservationDetails(SingleReservationViewModel model)
         {
             return View(model);
@@ -168,7 +173,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+
+        [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
         public async Task<IActionResult> PrintFolio(SingleReservationViewModel model)
         {
             bool result;
@@ -217,7 +223,8 @@ namespace HotelManagement.Areas.Reservations.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+
+        [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
         public async Task<IActionResult> Cancel(SingleReservationViewModel model)
         {
             bool result;

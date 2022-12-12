@@ -5,6 +5,9 @@ namespace HotelManagement.Data.Models.Models
 {
     public class EmployeeDepartment
     {
+        /// <summary>
+        /// Many-many connection user and department entities
+        /// </summary>
         public Guid ApplicationUserId { get; set; }
         [ForeignKey(nameof(ApplicationUserId))]
         public ApplicationUser ApplicationUser{ get; set; }

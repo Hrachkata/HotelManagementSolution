@@ -1,5 +1,6 @@
 ﻿using HotelManagement.Data.Services.RoomServices.Contracts;
 using HotelManagement.Web.ViewModels.RoomModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -12,6 +13,7 @@ namespace HotelManagement.Areas.Hotel.Controllers
     /// Room controller that enables viewing and manipulation of rooms.
     /// </summary>
     [Area("Hotel")]
+    [Authorize(Roles = ("Owner,Director,Manager,Admin,Front Desk,Manager"))]
     public class RoomController : Controller
     {
         private readonly IRoomServices roomServices;

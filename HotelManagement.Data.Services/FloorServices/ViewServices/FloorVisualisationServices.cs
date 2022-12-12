@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Data.Services.FloorServices.ViewServices;
 
+
+/// <summary>
+/// Used to visualize the layout
+/// </summary>
 public class FloorVisualisationServices
 {
     private readonly ApplicationDbContext context;

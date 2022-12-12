@@ -1,5 +1,8 @@
 ﻿namespace HotelManagement.Web.ViewModels.FloorModels.ServiceModels;
 
+/// <summary>
+/// Single room dto
+/// </summary>
 public class SingleRoomServiceModel
 {
     public int RoomId { get; set; }

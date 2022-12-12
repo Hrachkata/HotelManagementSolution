@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Http.Extensions;
 namespace HotelManagement.EmailService;
 public class SendGridEmail : ISendGridEmail
 {
+
+    /// <summary>
+    /// Send email services
+    /// </summary>
     public IConfigurationRoot config { get; set; }
 
     public SendGridEmail(IConfigurationRoot _config)
@@ -39,6 +43,13 @@ public class SendGridEmail : ISendGridEmail
 
     }
 
+    /// <summary>
+    /// Sends confirmation email
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="token"></param>
+    /// <param name="email"></param>
+    /// <returns></returns>
     public SendResponse sendConfirmationEmail(string userId, string token, string email)
     {
 
@@ -56,6 +67,14 @@ public class SendGridEmail : ISendGridEmail
         return fluentMailSend(email, "Hotel Management Email Confirm", "Tag", result);
     }
 
+
+    /// <summary>
+    /// Sends forgot password email
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="token"></param>
+    /// <param name="email"></param>
+    /// <returns></returns>
     public SendResponse SendForgotPasswordEmail(string userId, string token, string email)
     {
 

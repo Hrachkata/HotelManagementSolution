@@ -4,6 +4,9 @@ using HotelManagement.Web.ViewModels.FrontDeskModels.ServiceModels;
 
 namespace HotelManagement.Web.ViewModels.FrontDeskModels
 {
+    /// <summary>
+    /// All freee rooms query model
+    /// </summary>
     public class AllFreeRoomsViewModel
     {
         public const int RoomsPerPage = 12;

@@ -5,6 +5,9 @@ using static ModelValidationConstants.RoomConstants.RoomConstants;
 
 namespace HotelManagement.Web.ViewModels.RoomModels
 {
+    /// <summary>
+    /// Room edit model dto
+    /// </summary>
     public class RoomEditViewModel
     {
         public int Id { get; set; }

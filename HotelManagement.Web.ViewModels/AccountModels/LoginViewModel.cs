@@ -3,9 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using static ModelValidationConstants.AccountConstants.AccountConstants;
 //using static Library.Constants.UserConstants;
 
-
 namespace HotelManagement.Web.ViewModels.AccountModels
 {
+    /// <summary>
+    /// Login dto
+    /// </summary>
     public class LoginViewModel
     {
         [Required]

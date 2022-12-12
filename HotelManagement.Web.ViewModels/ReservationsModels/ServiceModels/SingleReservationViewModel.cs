@@ -2,6 +2,10 @@
 
 namespace HotelManagement.Web.ViewModels.ReservationsModels.ServiceModels;
 
+
+/// <summary>
+/// Single reservation dto
+/// </summary>
 public class SingleReservationViewModel
 {
     public string Id { get; set; }

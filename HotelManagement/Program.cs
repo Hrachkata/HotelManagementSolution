@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using HotelManagement;
 using HotelManagement.Data;
 using HotelManagement.Data.Models.UserModels;
@@ -42,9 +43,8 @@ config.AddServicesToBuidler(builder);
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-
-    //TODO UNAUTHORIZED VERY IMPORTANT B^)
-    //options.AccessDeniedPath = "//"
+    
+    options.AccessDeniedPath = "/Unauthorized";
     
     options.LogoutPath = "/Account/Account/Logout";
     options.LoginPath = "/Account/Account/Login";

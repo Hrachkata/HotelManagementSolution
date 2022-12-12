@@ -8,6 +8,9 @@ using static ModelValidationConstants.AccountConstants.AccountConstants;
 
 namespace HotelManagement.Data.Models.UserModels
 {
+    /// <summary>
+    /// Extended user entity 
+    /// </summary>
     public class ApplicationUser : IdentityUser<Guid>, IDeletableModel, IDateInfoModel
     {
         [Required]

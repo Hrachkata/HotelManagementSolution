@@ -5,6 +5,9 @@ using static ModelValidationConstants.AccountConstants.AccountConstants;
 
 namespace HotelManagement.Web.ViewModels.ManageEmployeesModels
 {
+    /// <summary>
+    /// Employee edit dto
+    /// </summary>
     public class EmployeeEditViewModel : AccountBaseViewModel
     {
         public Guid Id { get; set; }
