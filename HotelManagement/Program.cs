@@ -44,7 +44,7 @@ config.AddServicesToBuidler(builder);
 builder.Services.ConfigureApplicationCookie(options =>
 {
     
-    options.AccessDeniedPath = "/Unauthorized";
+    options.AccessDeniedPath = new PathString("/Home/Unauthorized");
     
     options.LogoutPath = "/Account/Account/Logout";
     options.LoginPath = "/Account/Account/Login";

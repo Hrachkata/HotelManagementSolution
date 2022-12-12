@@ -24,6 +24,12 @@ namespace HotelManagement.Controllers
 
         }
 
+        public IActionResult Unauthorized()
+        {
+            return View();
+
+        }
+
         public IActionResult Privacy()
         {
             Log.Logger.Information("{Info}", "Privacy page");
