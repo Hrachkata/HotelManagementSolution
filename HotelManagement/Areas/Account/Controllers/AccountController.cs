@@ -257,7 +257,7 @@ namespace HotelManagement.Areas.Account.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
             }
-
+    
             return View(model);
         }
 

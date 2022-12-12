@@ -98,6 +98,9 @@ namespace HotelManagement.MockedLibraries
             
             //.ReturnsAsync(context.Users.First);
        
+            userManager.Setup(s => s.GeneratePasswordResetTokenAsync(It.IsAny<ApplicationUser>()))
+                .ReturnsAsync("lalalla");
+            
         userManager.Setup(s => s.ResetPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         
         userManager.Setup(s => s.ConfirmEmailAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
