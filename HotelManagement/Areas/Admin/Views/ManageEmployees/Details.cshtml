@@ -7,11 +7,11 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="container" style="display:inline">
+<div >
     <div class="row">
         <div class="col-4">
         </div>
-        <div class="card col-8 border-0" style="font-size:20px;">
+        <div class="card col-4 border-2" style="font-size:20px;">
             <p style="font-size:40px;">Username: <b><u>@Model.UserName</u></b></p>
             <p >Name: <b>@Model.FirstName @Model.MiddleName @Model.LastName </b></p>
             <p>Departments: <b>@(String.Join(" ; ", Model.Departments))</b></p>

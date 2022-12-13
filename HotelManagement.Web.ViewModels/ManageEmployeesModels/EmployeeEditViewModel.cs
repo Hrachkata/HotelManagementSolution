@@ -22,9 +22,12 @@ namespace HotelManagement.Web.ViewModels.ManageEmployeesModels
         [StringLength(MaxRFIDLength, MinimumLength = MinRFIDLength)]
         public string RFID { get; set; }
         public ICollection<DepartmentDto> DepartmentsOfEmployee { get; set; } = new List<DepartmentDto>();
+
+        [DisplayName("remove department")]
         public int DepartmentOfEmployeeId { get; set; }
 
         public ICollection<DepartmentDto> DepartmentsEmployeeDoesntHave { get; set; } = new List<DepartmentDto>();
+        [DisplayName("add department")]
         public int DepartmentEmployeeDoesntHaveId { get; set; }
 
 
