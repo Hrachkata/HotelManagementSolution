@@ -210,7 +210,7 @@ namespace HotelManagement.Areas.Reservations.Controllers
             Log.Logger.Information("User {0} Printed folio for reservation with ID:{1}", this.User?.Identity?.Name ?? "NAME MISSING", model.Id);
             Log.Logger.Information("Reservation with ID: {0}, Total: {1} paid", model.Id, model.totalPrice);
 
-            ViewBag.PaymentSuccess = "true";
+            ViewData["Status"] = $"Paid - {model.totalPrice}";
 
             return View("ReservationDetails", model);
         }

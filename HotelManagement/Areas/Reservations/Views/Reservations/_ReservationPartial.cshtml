@@ -10,25 +10,25 @@
         border-radius: 10% / 50%;
     }
 
-    #checkOutRow {
+    #cancelRow {
         background-color: lightcoral;
         border-radius: 10% / 50%;
     }
 
-    #cancelRow {
+    #checkOutRow {
         background-color: lightgoldenrodyellow;
         border-radius: 10% / 50%;
     }
 
 </style>
 
-@if (@Model.CheckedIn == true)
+@if (@Model.CheckedIn == true && Model.DepartureDate >=DateTime.Today)
 {
     <tr id="checkOutRow">
         <partial name="_ReservationPartialRow" />
     </tr>
 }
-else if (@Model.CheckedIn == false)
+else if (@Model.CheckedIn == false && Model.DepartureDate >= DateTime.Today)
 {
     <tr id="checkInRow">
         <partial name="_ReservationPartialRow" />
